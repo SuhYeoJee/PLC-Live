@@ -3,7 +3,7 @@ if __debug__:
     sys.path.append(r"X:\Github\PLC-Live")
 # -------------------------------------------------------------------------------------------
 import socket
-import queue
+from module.queue_plus import queue_plus
 # from igzg.utils import write_error
 import re
 # ===========================================================================================
@@ -90,11 +90,10 @@ class LS_plc():
         addr_type = addr[2]
 
         if addr_type in ['X','x']: # bit addr
-            addr = addr[:2] + 'W' + str(int(addr[3:])//10)
+            addr = addr[:2] + 'W' + str(addr[3:-1])
         elif addr_type in ['B','b']: # byte addr
-            addr = addr[:2] + 'W' + str(int(addr[3:])*2)
+            addr = f"{addr[:2]}W{int(addr[3:], 16)//2:X}"
         else:...
-        
 
         return addr+_+option
     # --------------------------
@@ -158,7 +157,7 @@ class LS_plc():
         xgt_header = self._get_xgt_header(len(xgt_cmd))
         return xgt_header + xgt_cmd
     # [결과 해석] ===========================================================================================
-    def _get_single_read_result(self,recv:bytes)->queue.Queue:
+    def _get_single_read_result(self,recv:bytes)->queue_plus:
         recv_body = self._get_recv_body(recv)
         result = self._get_single_read_recvs(recv_body)
         return result
@@ -180,7 +179,7 @@ class LS_plc():
         recv_body = recv[20:21+recv_length]
         return recv_body
     # --------------------------
-    def _get_single_read_recvs(self, recv_body:bytes)->queue.Queue:
+    def _get_single_read_recvs(self, recv_body:bytes)->queue_plus:
         '''
         single read     (10 + [2+data_length])
 
@@ -201,7 +200,7 @@ class LS_plc():
         error_info = recv_body[8:10]
         block_length = int.from_bytes(recv_body[8:10],'little')
 
-        result = queue.Queue()
+        result = queue_plus()
         idx = 10
         for i in range(block_length):
             data_length = int.from_bytes(recv_body[idx:idx+2],'little')
@@ -212,30 +211,52 @@ class LS_plc():
         return result
     # --------------------------
 
-    def single_read(self,addrs=["%DW500#01I00","%DW10008#01I00"]):
-        cmd = self._get_xgt_cmd('r',addrs)
-        recv = self._get_plc_recv(cmd)
-        byte_queue = self._get_single_read_result(recv)
-        for addr in enumerate(addrs):
-            # byte_queued에서 꺼내서 option에 맞춰서 디코딩
-            plc_addr,_,option = addr.partition('#')
-            addr_size = int(option[:2])
-            data_type = option[2]
-            data_scale = int(option[3:])
-            # n 개 꺼내서 디코딩 함수로 보내기
+    def _data_decoding(self,datas,addr)->str:
 
-    def _data_decoding(self,data,option)->str:
-        addr_size = int(option[:2])
+        plc_addr,_,option = addr.partition('#')
+        addr_type = plc_addr[2]
+        # data_size = int(option[:2])
         data_type = option[2]
         data_scale = int(option[3:])
 
-        result = None
-        if data_type == 'I': # unsigned int
+        if addr_type == 'X': # DX5004 = DW500.4
+            idx = int(plc_addr[-1],16) #하위 idx번째 비트
+            result = int(''.join(format(byte, '08b') for byte in reversed(datas[0]))[15 - idx])
+        elif addr_type == 'B': # DW5004 = DBA008 + DBA009
+            if int(plc_addr[-1],16) % 2 == 1:
+                datas = [x[:1] for x in datas] # 홀수
+            else: 
+                datas = [x[1:] for x in datas] # 짝수
+        else:
+            result = None
+        data = b''.join(datas)
+
+        if data_type == 'S': # string
+            result = re.sub(r'[\x00-\x1F\x7F]', '', data.decode('ASCII'))
+        elif data_type == 'I': # unsigned int
             result = int.from_bytes(data,'little') * pow(10,data_scale)
         elif data_type == 'i': # signed int
             result = int.from_bytes(data,'little',signed=True) * pow(10,data_scale)
+        elif data_type == 'F': # unsigned float
+            result = int.from_bytes(data,'little') / pow(10,data_scale)
+        elif data_type == 'f': # signed float
+            result = int.from_bytes(data,'little',signed=True) / pow(10,data_scale)
+        else: ...
 
         return str(result)
+    # [호출 함수] ===========================================================================================
+    def single_read(self,addrs=["%DW500#01I00","%DW10008#01I00"]):
+        cmd = self._get_xgt_cmd('r',addrs=addrs)
+        recv = self._get_plc_recv(cmd)
+        byte_queue = self._get_single_read_result(recv)
+        result = []
+        for addr in addrs:
+            # byte_queue에서 꺼내서 option에 맞춰서 디코딩
+            data_size = int(addr.split('#')[-1][:2])
+            datas = byte_queue.get_cnt_item(data_size)
+            result.append(self._data_decoding(datas,addr))
+        print (result)
+        return result
 
 # ===========================================================================================
 class LS_plc_test():
@@ -243,7 +264,7 @@ class LS_plc_test():
         self.plc = LS_plc("192.168.0.50")
 
     def recv_test(self):
-        cmd = self.plc._get_xgt_cmd('r',addrs=["%DW500#01I00","%DW10008#01I00"])
+        cmd = self.plc._get_xgt_cmd('r',addrs=["%DW500#01I00"])
         print(cmd)
         # print(cmd.hex())
         recv = self.plc._get_plc_recv(cmd)
@@ -253,9 +274,15 @@ class LS_plc_test():
         while not res.empty():
             print(res.get())
 
+    def single_read_test(self):
+        self.plc.single_read(addrs=["%DW5004#01I00","%DW5004#01i00"])
+        self.plc.single_read(addrs=["%DBA008#01I00","%DBA009#01I00"])
+        self.plc.single_read(addrs=["%DW500#01I00"])
+        self.plc.single_read(addrs=["%DX5000#01X00","%DX5001#01X00","%DX500E#01X00","%DX500F#01X00"])
+
 
 # ===========================================================================================
 if __name__ == "__main__":
     test = LS_plc_test()
-    test.recv_test()
+    test.single_read_test()
     
