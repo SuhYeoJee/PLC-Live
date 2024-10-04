@@ -3,6 +3,7 @@ if __debug__:
     sys.path.append(r"X:\Github\PLC-Live")
 # -------------------------------------------------------------------------------------------
 import socket
+import queue
 # from igzg.utils import write_error
 import re
 # ===========================================================================================
@@ -149,7 +150,6 @@ class LS_plc():
         return cmd
     """
 
-
     def _get_xgt_cmd(self,op,**kwargs):
         if op in ["read",'r']:
             xgt_cmd = self._get_single_read_cmd(kwargs["addrs"])
@@ -157,7 +157,85 @@ class LS_plc():
         
         xgt_header = self._get_xgt_header(len(xgt_cmd))
         return xgt_header + xgt_cmd
+    # [결과 해석] ===========================================================================================
+    def _get_single_read_result(self,recv:bytes)->queue.Queue:
+        recv_body = self._get_recv_body(recv)
+        result = self._get_single_read_recvs(recv_body)
+        return result
+    # --------------------------
+    def _get_recv_body(self, recv:bytes)->bytes:
+        '''
+        header                (20)
 
+        CompanyID          (10)
+        PLC Info            (2)
+        CPU Info            (1)
+        Source of Frame     (1)
+        Invoke ID           (2)
+        Length              (2)
+        net_pos             (1)
+        BCC                 (1)
+        '''
+        recv_length = int.from_bytes(recv[16:19],'little')
+        recv_body = recv[20:21+recv_length]
+        return recv_body
+    # --------------------------
+    def _get_single_read_recvs(self, recv_body:bytes)->queue.Queue:
+        '''
+        single read     (10 + [2+data_length])
+
+        op                          (2)
+        block_type                  (2)
+        reserve                     (2)
+        error_state                 (2)
+        error_info/block_length     (2)
+
+        data_length                 (2)
+        data                        (data_length)
+
+        '''
+
+        op = recv_body[:2]
+        block_type = recv_body[2:4]
+        error_state = recv_body[6:8]
+        error_info = recv_body[8:10]
+        block_length = int.from_bytes(recv_body[8:10],'little')
+
+        result = queue.Queue()
+        idx = 10
+        for i in range(block_length):
+            data_length = int.from_bytes(recv_body[idx:idx+2],'little')
+            data = recv_body[idx+2:idx+2+data_length]
+            idx = idx+2+data_length
+            result.put(data)
+
+        return result
+    # --------------------------
+
+    def single_read(self,addrs=["%DW500#01I00","%DW10008#01I00"]):
+        cmd = self._get_xgt_cmd('r',addrs)
+        recv = self._get_plc_recv(cmd)
+        byte_queue = self._get_single_read_result(recv)
+        for addr in enumerate(addrs):
+            # byte_queued에서 꺼내서 option에 맞춰서 디코딩
+            plc_addr,_,option = addr.partition('#')
+            addr_size = int(option[:2])
+            data_type = option[2]
+            data_scale = int(option[3:])
+            # n 개 꺼내서 디코딩 함수로 보내기
+
+    def _data_decoding(self,data,option)->str:
+        addr_size = int(option[:2])
+        data_type = option[2]
+        data_scale = int(option[3:])
+
+        result = None
+        if data_type == 'I': # unsigned int
+            result = int.from_bytes(data,'little') * pow(10,data_scale)
+        elif data_type == 'i': # signed int
+            result = int.from_bytes(data,'little',signed=True) * pow(10,data_scale)
+
+        return str(result)
 
 # ===========================================================================================
 class LS_plc_test():
@@ -165,12 +243,15 @@ class LS_plc_test():
         self.plc = LS_plc("192.168.0.50")
 
     def recv_test(self):
-        cmd = self.plc._get_xgt_cmd('r',addrs=["%DX5000#01I00"])
+        cmd = self.plc._get_xgt_cmd('r',addrs=["%DW500#01I00","%DW10008#01I00"])
         print(cmd)
         # print(cmd.hex())
         recv = self.plc._get_plc_recv(cmd)
         print(recv)
         # print(recv.hex())
+        res = self.plc._get_single_read_result(recv)
+        while not res.empty():
+            print(res.get())
 
 
 # ===========================================================================================
