@@ -4,9 +4,7 @@ if __debug__:
 # -------------------------------------------------------------------------------------------
 import socket
 from module.queue_plus import queue_plus
-# from igzg.utils import write_error
 import re
-from typing import Literal
 # ===========================================================================================
 BIT         = b'\x00\x00'
 BYTE        = b'\x01\x00'
@@ -273,8 +271,7 @@ class LS_plc():
         result = queue_plus()
         result.put_list_data([recv_body[12 + idx:12 + idx+1] for idx in range(data_cnt)])
         return result
-    # ===========================================================================================
-
+    # --------------------------
     def _data_decoding(self,datas,addr)->str:
         plc_addr,_,option = addr.partition('#')
         addr_type = plc_addr[2]
@@ -284,12 +281,13 @@ class LS_plc():
 
         if addr_type == 'X': # DX5004 = DW500.4
             idx = int(plc_addr[-1],16) #하위 idx번째 비트
-            result = int(''.join(format(byte, '08b') for byte in reversed(datas[0]))[15 - idx])
+            result = int(''.join(format(byte, '08b') for byte in reversed(datas[0]))[(8*len(datas[0])-1) -idx])
+            return result
         elif addr_type == 'B': # DW5004 = DBA008 + DBA009
             if int(plc_addr[-1],16) % 2 == 1:
-                datas = [x[:1] for x in datas] # 홀수
+                datas = [x[1:] for x in datas]
             else: 
-                datas = [x[1:] for x in datas] # 짝수
+                datas = [x[:1] for x in datas]
         else:
             result = None
         data = b''.join(datas)
@@ -320,7 +318,6 @@ class LS_plc():
             # byte_queue에서 꺼내서 option에 맞춰서 디코딩
             datas = byte_queue.get_cnt_item(data_size)
             result[plc_addr] = self._data_decoding(datas,addr)
-        print (result)
         return result
     # --------------------------
     def multi_read(self,addr="%DX5004#01I00",size=2):
@@ -328,6 +325,8 @@ class LS_plc():
         addr부터 size만큼 byte 단위 읽기
         return => {'%DBA00': b'M', '%DBA01': b'\xf9'}
         '''
+        if addr[2] in ["W","w"]: # word data
+            size = size*2
         cmd = self._get_xgt_cmd('mr',addr=addr,size=size)
         recv = self._get_plc_recv(cmd)
         byte_queue = self._get_read_result(recv,True)
@@ -339,27 +338,45 @@ class LS_plc():
         while not byte_queue.empty():
             result[f'{addr_prefix}{addr_idx:X}'] = byte_queue.get()
             addr_idx += 1
-        print(result)
         return result
+    # --------------------------
+    def table_read(self,addrs:list, start_addr:str, size:int):
+        byte_dict = self.multi_read(start_addr, size)
+        result = {}
+        for addr in addrs:
+            plc_addr,_,option = addr.partition('#')
+            byte_addr,_,option = self._addr_to_byte_addr(addr).partition('#')
 
-    def table_read(self,table):
-        ...
-        # 여러개를 읽는데 디코딩을 각각 다르게 해야함.
-        # 원하는건 각자의 방식으로 디코딩된 값의 딕셔너리
-        
-        # 일단 최초 주소 기반으로 b 딕셔너리를 만들고 각각을 디코딩?
+            datas = []
+            datas.append(byte_dict[byte_addr])
+            if plc_addr[2] in ['W','w']:
+                byte_addr_idx = f"{byte_addr[:3]}{int(byte_addr[3:],16)+1:X}"
+                datas.append(byte_dict[byte_addr_idx])
 
-        # 디코딩 옵션을 보려면 전체 목록에 대한 주소 알아야함
-        # 읽고싶은 주소 목록 순회하면서
-            # 바이트 주소로 변환
-                # 바이트 사전에서 해당 값 찾아서 디코딩
-        
-        # 테이블 명 입력으로 시작주소, 전체 주소, 사이즈 얻어서 
-        # 시작주소, 사이즈로 멀티 호출
-        # 멀티 결과, 전체 주소로 디코딩
-        # 디코딩 결과 반환
-        # start addr, addrs, size
-
+            result[plc_addr] = self._data_decoding(datas,addr)
+        return result
+    # --------------------------
+    def read(self,**kwargs)->dict:
+        """
+        kwargs
+        - single = ["%DW500#01I00","%DW501#01i00","%DW502#01f00"]
+        - table = { "addrs":["%DW500#01I00","%DW501#01i00","%DW502#01f00"], "start_addr":"%DW500#01I00", "size": 3}
+        """
+        try:
+            if "single" in kwargs.keys(): #최대 16개 주소 읽기
+                addr_blocks = [kwargs["single"][i:i + 2] for i in range(0, len(kwargs["single"]), 2)]
+                results = [self.single_read(addr_block) for addr_block in addr_blocks]
+                result = {k: v for d in results for k, v in d.items()}
+            elif "table" in kwargs.keys(): #연달아 읽기
+                result = self.table_read(**kwargs["table"])
+            else:
+                result = None
+        except Exception as e:
+            print("***LS_PLC_READ_ERROR***")
+            print(e)
+            result = None
+        finally:
+            return result
 
 # ===========================================================================================
 class LS_plc_test():
@@ -388,39 +405,20 @@ class LS_plc_test():
         self.plc.multi_read(addr="%DB5004#01I00",size=4)
         self.plc.multi_read(addr="%DW500#01I00",size=20)
 
+    def table_read_test(self):
+        self.plc.table_read(["%DW500#01I00","%DW501#01i00","%DW502#01F00"], "%DW500#01I00",3) # => DBA00,DBA01 / DBA02,DBA03 / DBA04,DBA05
+        self.plc.table_read(["%DX5000#01X00","%DX5001#01X00","%DX500F#01X00"], "%DX5000#01I00",3) # => DBA00,DBA01 / DBA02,DBA03 / DBA04,DBA05
+        self.plc.table_read(["%DBA00#01X00","%DBA01#01X00","%DBA02#01X00"], "%DBA00#01I00",3) # => DBA00,DBA01 / DBA02,DBA03 / DBA04,DBA05
 
+    def read_test(self):
+        self.plc.read(single = ["%DW500#01I00","%DW501#01i00","%DW502#01f00"])
+        self.plc.read(table = { "addrs":["%DW500#01I00","%DW501#01i00","%DW502#01f00"], "start_addr":"%DW500#01I00", "size": 3})
 
 # ===========================================================================================
 if __name__ == "__main__":
     test = LS_plc_test()
     # test.single_read_test()
-    test.mulit_read_test()
+    # test.mulit_read_test()
+    # test.table_read_test()
+    test.read_test()
     
-# ===========================================================================================
-    # def __init__(self,v):
-    # def connect(self):
-    # def disconnect(self):
-    # def ensure_connected(func):     # PLC 연결 보장
-
-    # def _get_xgt_header(self, cmd_len:int): #헤더 생성
-    # def _get_single_read_cmd(self, block_type = "W", addrs=["%DW5004"]): #단읽 읽기 명령 생성
-    # def _get_multi_read_cmd(self, addr, size): #멀티 명령어 생성
-
-    # def _read_xgt_header(self, recv:bytes): #응답 헤더 제거
-    # def _read_xgt_recv(self, recv_cmd:bytes)->list: #단일읽기 응답 자르기
-    # def _get_xgt_read_result(self,recv): #단일읽기 머리자르고 내용 자르기
-    # def _read_xgt_recv_multi(self, recv_cmd:bytes)->list: #멀티 바디분리
-    # def _get_xgt_read_result_multi(self,recv): #멀티 머리떼고 바디분리
-    # def _get_plc_datas(self,addr,size): #멀티수행후 딕셔너리 반환
-
-    # def _get_plc_recv(self, xgt_cmd:bytes): #실제 통신
-
-    # def _data_decoding(self,data,data_type,data_scale,addr_type)->str: #결과 해석
-    # def get_plc_data(self,addr:str)->str: #single #전체함수 (호출함수)
-
-
-    # --------------------------
-    # def _get_xgt_read_cmd(self, block_type = "W", addrs=["%DW5004"]): #여러 주소 묶어서 단일로 보내기
-
-    # def get_prg_tables(self,dataset): #테이블 멀티호출함수
-    # def get_plc_dataset(self,dataset:dict)->dict: #데이터셋 멀티 호출함수
