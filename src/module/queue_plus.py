@@ -1,6 +1,11 @@
+if __debug__:
+    import sys
+    sys.path.append(r"X:\Github\PLC-Live")
+# -------------------------------------------------------------------------------------------
 import queue
+# ===========================================================================================
 
-class queue_plus(queue.Queue):
+class QueuePlus(queue.Queue):
     def __init__(self):
         super().__init__()
     

@@ -2,8 +2,8 @@ if __debug__:
     import sys
     sys.path.append(r"X:\Github\PLC-Live")
 # -------------------------------------------------------------------------------------------
+from src.module.queue_plus import QueuePlus
 import socket
-from module.queue_plus import queue_plus
 import re
 # ===========================================================================================
 BIT         = b'\x00\x00'
@@ -192,7 +192,7 @@ class LS_plc():
         xgt_header = self._get_xgt_header(len(xgt_cmd))
         return xgt_header + xgt_cmd
     # [결과 해석] ===========================================================================================
-    def _get_read_result(self,recv:bytes,is_multi:bool=False)->queue_plus:
+    def _get_read_result(self,recv:bytes,is_multi:bool=False)->QueuePlus:
         recv_body = self._get_recv_body(recv)
         if is_multi:
             result = self._get_multi_read_recvs(recv_body)
@@ -217,7 +217,7 @@ class LS_plc():
         recv_body = recv[20:21+recv_length]
         return recv_body
     # --------------------------
-    def _get_single_read_recvs(self, recv_body:bytes)->queue_plus:
+    def _get_single_read_recvs(self, recv_body:bytes)->QueuePlus:
         '''
         single read     (10 + [2+data_length])
 
@@ -238,7 +238,7 @@ class LS_plc():
         error_info = recv_body[8:10]
         block_length = int.from_bytes(recv_body[8:10],'little')
 
-        result = queue_plus()
+        result = QueuePlus()
         idx = 10
         for i in range(block_length):
             data_length = int.from_bytes(recv_body[idx:idx+2],'little')
@@ -248,7 +248,7 @@ class LS_plc():
 
         return result
     # --------------------------
-    def _get_multi_read_recvs(self, recv_body:bytes)->queue_plus:
+    def _get_multi_read_recvs(self, recv_body:bytes)->QueuePlus:
         '''
         multi read     (12 + [data_length])
 
@@ -268,7 +268,7 @@ class LS_plc():
         block_length = int.from_bytes(recv_body[8:10],'little')
         data_cnt = int.from_bytes(recv_body[10:12],'little')
 
-        result = queue_plus()
+        result = QueuePlus()
         result.put_list_data([recv_body[12 + idx:12 + idx+1] for idx in range(data_cnt)])
         return result
     # --------------------------
