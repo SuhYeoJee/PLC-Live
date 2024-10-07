@@ -7,6 +7,7 @@ import pandas as pd
 from os import path, makedirs, remove
 import shutil
 import json
+from pprint import pprint
 # ===========================================================================================
 
 '''
@@ -24,6 +25,7 @@ class SessionData:
             self.is_new:bool = True
             # 엑셀 형식 {시트명:[{열이름:값,}]} #갱신시 새 딕셔너리를 리스트에 추가
             self.data = self.get_data_form()
+            self.update_idx_sheet()
 
     # --------------------------
     def get_data_form(self):
@@ -31,7 +33,7 @@ class SessionData:
         json.PLC_ADDR 항목 자동으로 읽어옴
         DATASET 이름을 시트명으로, 주소명을 열제목으로 사용
         '''
-        with open("./src/spec/PLC_ADDR.json", 'r', encoding='utf-8') as file:
+        with open("./doc/PLC_ADDR.json", 'r', encoding='utf-8') as file:
             data = json.load(file)
         return {k:[v] for k,v in data["PLC_ADDR"].items()}
     # -------------------------------------------------------------------------------------------
@@ -42,27 +44,40 @@ class SessionData:
         '''
         update_target = self.data.get(sheet_name,False)
         if not update_target:
-            self.data[sheet_name] = []
-            
-        new_value = {k:v for k,v in self.data[sheet_name][-1].items()}
+            update_target = self.data[sheet_name] = []
+        
+        try:
+            new_value = {k:v for k,v in self.data[sheet_name][-1].items()}
+        except:
+            new_value = {}
         new_value.update(data)
         update_target.append(new_value)
     # --------------------------
     def save_data_to_excel(self):
         '''
-        sessionData를 엑셀로 저장 (초기 빈값 제외)
+        sessionData를 엑셀로 저장 
         '''
         temp_file_name = "temp.xlsx"
         try:
             if not path.exists('result'): makedirs('result')
             with pd.ExcelWriter(temp_file_name) as writer:
                 for sheet_name, sheet_data in self.data.items():
-                    df = pd.DataFrame(sheet_data[1:])
+                    # df = pd.DataFrame(sheet_data[1:]) # (초기 빈값 제외)
+                    df = pd.DataFrame(sheet_data)
                     df.to_excel(writer, sheet_name=sheet_name, index=False)
             shutil.copy(temp_file_name, self.file_name)
         finally:
             if path.exists(temp_file_name):
                 remove(temp_file_name)
+    
+    def update_idx_sheet(self):
+        '''
+        호출된 순간의 각 시트의 line 수를 idx 시트에 기록
+        '''
+        idx_dict = {k:len(self.data[k]) for k in self.data.keys()}
+        self.update_data('idx',idx_dict)
+        self.save_data_to_excel()
+    
     # --------------------------
     def read_data_from_excel(self,file_name):
         '''
@@ -89,7 +104,8 @@ class SessionData:
 # ===========================================================================================
 if __name__=="__main__":
     s = SessionData()
-    print(s.data)
-    s.update_data("AUTOMATIC",{"AUTOMATIC_PRGNO":"13","AUTOMATIC_PRGNAME":""})
-    print(s.data)
+    pprint(s.data)
+    s.update_data("AUTOMATIC",{"AUTOMATIC_PRGNO":"13","AUTOMATIC_PRGNAME":"dtf"})
+    s.update_idx_sheet()
+    pprint(s.data)
     s.save_data_to_excel()
