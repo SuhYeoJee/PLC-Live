@@ -3,7 +3,7 @@ if __debug__:
     sys.path.append(r"X:\Github\PLC-Live")
 # -------------------------------------------------------------------------------------------
 import json
-from src.module.session_data import sessionData
+from src.module.session_data import SessionData
 # ===========================================================================================
 
 class state_wait():
@@ -47,7 +47,7 @@ class state_wait():
         '''
         json 파일 전체 읽기
         '''
-        with open("./src/spec/PLC_ADDR.json", 'r', encoding='utf-8') as file:
+        with open("./doc/PLC_ADDR.json", 'r', encoding='utf-8') as file:
             data = json.load(file)
         return data 
     
@@ -59,7 +59,7 @@ class state_wait():
             dataset_list = self.dataset["PLC_ADDR"]
             self.dataset.pop("PLC_ADDR")
             for i in dataset_list:
-                self.dataset.update(self.addrs["PLC_ADDR"][i])
+                self.dataset.update({i:self.addrs["PLC_ADDR"][i]})
         except Exception as e:
             print(e)
             ...
@@ -119,16 +119,16 @@ class exit_wait(state_wait):
     def after_change_mode(self):
         '''
         exit_wait로 전환된 다음 실행
-        sessionData 생성
+        SessionData 생성
         '''
-        self.session = sessionData()
+        self.session = SessionData()
         self.session.data["graph"] = [{"AUTOMATIC_SEGSIZE_1" : "DW2910"}]
 
     def before_worker_tick(self):...
     def after_worker_tick(self,**kwargs):
         '''
         worker_tick 실행된 다음 실행
-        _save_excel: sessionData 갱신, 저장
+        _save_excel: SessionData 갱신, 저장
         '''
         update_data = kwargs['update_data']
         self._save_excel(update_data)
@@ -157,7 +157,7 @@ class view_wait(state_wait):
     def __init__(self,file_name:str):
         super().__init__()
         self.use_tick = False
-        self.session = sessionData(file_name)
+        self.session = SessionData(file_name)
 
 # ===========================================================================================
 

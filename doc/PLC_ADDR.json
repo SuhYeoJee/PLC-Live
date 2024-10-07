@@ -24,10 +24,10 @@
     },
     "DATASET":{
         "CONNECT_WAIT":{
-            "PLC_ADDR":["SYSTEM"]
+            "PLC_ADDR":["SYSTEM","ALARM"]
         },    
         "START_WAIT":{
-            "PLC_ADDR":["SYSTEM"]
+            "PLC_ADDR":["SYSTEM","ALARM"]
         },
         "EXIT_WAIT":{
             "PLC_ADDR":["AUTOMATIC","PROGRAM","PROGRAM_LIST","PROGRAM_VIEW","ALARM","SYSTEM"]
