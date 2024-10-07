@@ -103,15 +103,15 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
                 except AttributeError as e:
                     ...
                     #print_error_box(e,k,v)
-
+    # --------------------------
     def clear_table(self,table)->None:
         for row in range(table.rowCount()):
             for col in range(table.columnCount()):
                 table.setItem(row, col, QTableWidgetItem(''))
-
+    # --------------------------
     def clear_graph(self)->None:
         self.graph_widget.clear()
-
+    # --------------------------
     def clear_window(self)->None:
         self.clear_table(self.PROGRAM_TABLE)
         self.clear_table(self.PROGRAM_LIST_TABLE)
@@ -120,7 +120,6 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         self.clear_graph()
         for line_edit in self.findChildren(QLineEdit):
             line_edit.clear()
-
 
     # [external call] ===========================================================================================
     def open_file_dialog(self)->str:
@@ -131,7 +130,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         else:
             self.file_path = ''
         return self.file_path
-    
+    # --------------------------
     def show_alert(self, message):
         # 알림창 생성
         alert = QMessageBox(self)
@@ -140,7 +139,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         alert.setIcon(QMessageBox.Information)  # 알림창 아이콘 설정
         alert.setStandardButtons(QMessageBox.Ok)  # 확인 버튼 설정
         alert.exec_()  # 알림창 실행
-    
+    # --------------------------
     def change_window(self,title): 
         self.setWindowTitle(f"PressMonitor: {title}")
         
