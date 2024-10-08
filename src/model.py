@@ -15,8 +15,6 @@ class Model():
     def __init__(self):
         self.plc = LS_plc('192.168.0.50')
         self._init_state()
-        # self.graph_data = []
-        # self.alarm_data = self._init_alarm()
         self.alarms = {} # {label:'on', label:'off'}
         self.graph_value = None
 
@@ -64,17 +62,16 @@ class Model():
         self.state.before_worker_tick()
 
         update_data = self._get_update_data() # plc 데이터 읽기
-        alarm_data = self.update_alarm(update_data)
-        is_graph_update = self.update_graph(update_data)
+        alarm_data = self._update_alarm(update_data)
+        is_graph_update = self._update_graph(update_data)
 
         is_next = self.state._is_next(update_data[self.state.key]) # 읽은 항목에서 state체크
         if is_next: # state 넘어가기
             self._change_mode()
         self.state.after_worker_tick(update_data=update_data)
         return update_data,alarm_data,is_graph_update
-    
 
-    def update_alarm(self,update_data:dict)->dict:
+    def _update_alarm(self,update_data:dict)->dict:
         result = {}
         if 'alarm' not in update_data.keys():
             return result
@@ -101,7 +98,7 @@ class Model():
 
         return result #{arr_label:['on',timestr]}
 
-    def update_graph(self,update_data)->bool:
+    def _update_graph(self,update_data)->bool:
         if 'AUTOMATIC' not in update_data.keys():
             return False
         
