@@ -96,7 +96,8 @@ class LS_plc():
         if addr_type in ['X','x']: # bit addr
             word_addr = f"{addr[:2]}W{addr[3:-1]}"
         elif addr_type in ['B','b']: # byte addr
-            word_addr = f"{addr[:2]}W{int(addr[3:], 16)//2:X}"
+            # word_addr = f"{addr[:2]}W{int(addr[3:], 16)//2:X}"
+            word_addr = f"{addr[:2]}W{int(addr[3:], 10)//2}"
         else:
             word_addr = addr
 
@@ -112,10 +113,12 @@ class LS_plc():
         addr_type = addr[2]
 
         if addr_type in ['X', 'x']:  # bit addr
-            byte_addr = f"{addr[:2]}B{int(addr[3:-1],16)*2:X}"
+            # byte_addr = f"{addr[:2]}B{int(addr[3:-1],16)*2:X}"
+            byte_addr = f"{addr[:2]}B{int(addr[3:-1],10)*2}"
         elif addr_type in ['W', 'w']:  # word addr
-            byte_addr = f"{addr[:2]}B{int(addr[3:], 16)*2:X}"
-            # byte_addr2 = f"{addr[:2]}B{int(addr[3:], 16)*2+1:X}"
+            # byte_addr = f"{addr[:2]}B{int(addr[3:], 16)*2:X}" #주소체계
+            byte_addr = f"{addr[:2]}B{int(addr[3:], 10)*2}"
+
         else:
             byte_addr = addr
 
@@ -364,7 +367,9 @@ class LS_plc():
         return result
     # --------------------------
     
-
+    def string_read(self,addr="%DW8090#10S00",size=16):
+        byte_dict = self.multi_read(addr=addr,size=size)
+        print(byte_dict)
     
     
     def read(self,**kwargs)->dict:
@@ -440,5 +445,9 @@ if __name__ == "__main__":
     # test.single_read_test()
     # test.mulit_read_test()
     # test.table_read_test()
-    test.read_test()
+    # test.read_test()
+    # test.plc.string_read()
+    ㄱ = test.plc.single_read(addrs=["%DX5000#01X00","%DX5001#01X00","%DX500E#01X00","%DX500F#01X00"])
+    print(ㄱ)
+
     
