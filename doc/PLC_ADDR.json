@@ -19,7 +19,13 @@
                     "I":""
                 }
             }
-
+        ],
+        "TABLE_DATA":[
+            "MULTI READ로 읽을 테이블 단위 정의",
+            {
+                "테이블명" : {"시작주소1":"수량","시작주소2":"수량"},
+                "문자열 테이블명" : ["문자열1시작주소","문자열2시작주소"]
+            }
         ]
     },
     "DATASET":{
@@ -37,6 +43,7 @@
         "AUTOMATIC" :{
             "AUTOMATIC_PRGNO" : "%DW5004#01I00",
             "AUTOMATIC_PRGNAME" : "%DW2090#10S00",
+            "AUTOMATIC_SEGSIZE_1" : "%DW2910#01f02",
             "AUTOMATIC_SEGSIZE_3" : "%DW2912#01f02"
         },
         "PROGRAM":{

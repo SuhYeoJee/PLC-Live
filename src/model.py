@@ -107,11 +107,11 @@ class Model():
         return result #{arr_label:['on',timestr]}
 
     def _update_graph(self,update_data)->bool:
-        if 'AUTOMATIC' not in update_data.keys():
+        if 'AUTOMATIC_SEGSIZE_1' not in update_data.keys():
             return False
         
         # 그래프 갱신 판단
-        graph_value = self.state.addrs['AUTOMATIC']['graph_addr']
+        graph_value = update_data['AUTOMATIC_SEGSIZE_1']
         if graph_value != self.graph_value:
             self.graph_value = graph_value
             return True
