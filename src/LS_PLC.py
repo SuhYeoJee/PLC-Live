@@ -366,14 +366,12 @@ class LS_plc():
                 print(e)
         return result
     # --------------------------
-    
     def string_read(self,addr="%DW8090#10S00",size=10): #모니터 프로그램 "10워드들" 고정
         result = {}
         byte_dict = self.multi_read(addr=addr,size=size)
         result[addr] = self._data_decoding(byte_dict.values(),addr)
         return result[addr]
-    
-    
+    # --------------------------
     def read(self,**kwargs)->dict:
         """
         kwargs
@@ -401,7 +399,6 @@ class LS_plc():
         finally:
             # print(result)
             return result
-
 # ===========================================================================================
 class LS_plc_test():
     def __init__(self):

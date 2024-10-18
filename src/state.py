@@ -113,7 +113,7 @@ class exit_wait(state_wait):
         '''
         조건: SYSTEM_RUN 값이 0
         '''
-        return True if val == '0' else False
+        return True if val == 0 else False
     
     def before_change_mode(self):...
     def after_change_mode(self):
