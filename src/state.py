@@ -99,7 +99,7 @@ class start_wait(state_wait):
         '''
         조건: SYSTEM_RUN 값이 1
         '''
-        return True if val == '1' else False
+        return True if val == 1 else False
 # -------------------------------------------------------------------------------------------
 class exit_wait(state_wait):
     def __init__(self):

@@ -309,12 +309,16 @@ class LS_plc():
     # [호출 함수] ===========================================================================================
     def single_read(self,addrs=["%DW500#01I00","%DW10008#01I00"]):
         cmd = self._get_xgt_cmd('r',addrs=addrs)
+        print(cmd)
+        print(cmd.hex())
+        print('# --------------------------')
         recv = self._get_plc_recv(cmd)
         byte_queue = self._get_read_result(recv)
         result = {}
         for addr in addrs:
             plc_addr,_,option = addr.partition('#')
-            data_size = int(option[:2])
+            data_size = int(option[:2]) or 1
+
             # byte_queue에서 꺼내서 option에 맞춰서 디코딩
             datas = byte_queue.get_cnt_item(data_size)
             result[plc_addr] = self._data_decoding(datas,addr)
@@ -348,14 +352,21 @@ class LS_plc():
             byte_addr,_,option = self._addr_to_byte_addr(addr).partition('#')
 
             datas = []
-            datas.append(byte_dict[byte_addr])
-            if plc_addr[2] in ['W','w']:
-                byte_addr_idx = f"{byte_addr[:3]}{int(byte_addr[3:],16)+1:X}"
-                datas.append(byte_dict[byte_addr_idx])
+            try:
+                datas.append(byte_dict[byte_addr])
+                if plc_addr[2] in ['W','w']:
+                    byte_addr_idx = f"{byte_addr[:3]}{int(byte_addr[3:],16)+1:X}"
+                    datas.append(byte_dict[byte_addr_idx])
 
-            result[plc_addr] = self._data_decoding(datas,addr)
+                result[plc_addr] = self._data_decoding(datas,addr)
+            except Exception as e:
+                print(e)
         return result
     # --------------------------
+    
+
+    
+    
     def read(self,**kwargs)->dict:
         """
         kwargs
@@ -364,7 +375,12 @@ class LS_plc():
         """
         try:
             if "single" in kwargs.keys(): #최대 16개 주소 읽기
-                addr_blocks = [kwargs["single"][i:i + 2] for i in range(0, len(kwargs["single"]), 2)]
+                if any('S' in addr for addr in kwargs["single"]): #문자열
+                    ...
+                    # for i in kwargs["single"]:
+                    #     result = self.table_read(addrs=[i], start_addr=i, size= 16)
+                else:
+                    addr_blocks = [kwargs["single"][i:i + 2] for i in range(0, len(kwargs["single"]), 2)]
                 results = [self.single_read(addr_block) for addr_block in addr_blocks]
                 result = {k: v for d in results for k, v in d.items()}
             elif "table" in kwargs.keys(): #연달아 읽기
@@ -411,8 +427,12 @@ class LS_plc_test():
         self.plc.table_read(["%DBA00#01X00","%DBA01#01X00","%DBA02#01X00"], "%DBA00#01I00",3) # => DBA00,DBA01 / DBA02,DBA03 / DBA04,DBA05
 
     def read_test(self):
-        self.plc.read(single = ["%DW500#01I00","%DW501#01i00","%DW502#01f00"])
-        self.plc.read(table = { "addrs":["%DW500#01I00","%DW501#01i00","%DW502#01f00"], "start_addr":"%DW500#01I00", "size": 3})
+        # self.plc.read(single = ["%DW500#01I00","%DW501#01i00","%DW502#01f00"])
+        # self.plc.read(table = { "addrs":["%DW500#01I00","%DW501#01i00","%DW502#01f00"], "start_addr":"%DW500#01I00", "size": 3})
+        self.plc.read(table={"addrs":['%DW2339#00000'],"start_addr":"%DW2100","size":10})
+        self.plc.read(table={"addrs":['%DW2339#00000'],"start_addr":"%DW2110","size":10})
+        self.plc.read(table={"addrs":['%DW2339#00000'],"start_addr":"%DW2330","size":10})
+
 
 # ===========================================================================================
 if __name__ == "__main__":

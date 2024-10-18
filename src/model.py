@@ -28,24 +28,31 @@ class Model():
         self.e_w.next_state = self.s_w
         # --------------------------
         self.state = self.c_w # 초기상태
+        self.state = self.s_w # debug
 
     # [PLC] -------------------------------------------------------------------------------------------
     def _get_update_data(self)->dict:
         new_datas,result = {}, {}
         table_data = {
-            'PROGRAM':{"start_addr" : "","size" : 3},
-            'PROGRAM_LIST':{"start_addr" : "","size" : 3},
-            'PROGRAM_VIEW':{"start_addr" : "","size" : 3},
+            # 'PROGRAM':{"start_addr" : "%DW2100","size" : 384}, # DW2100 ~ DW2109 ~ DW2330 ~ DW2339
+            'PROGRAM':{"%DW2100" : 10,"%DW2110" : 10, }, # DW2100 ~ DW2109 ~ DW2330 ~ DW2339
+            'PROGRAM_LIST':["%DW8090#10S00","%DW8360#10S00",],
+            'PROGRAM_VIEW':{"%DW5100" : 10}, # DW5100 ~ DW5109 ~ DW5330 ~ DW5339
+        
         }
 
         for k,v in self.state.dataset.items():
             if 'PROGRAM' in k: # table
-                addrs = [addr for label, addr in v.items() if 'TABLE' in label]
-                new_datas.update(self.plc.read(table={"addrs":addrs,"start_addr":table_data[k]['start_addr'],"size":table_data[k]['size']}))
+                if isinstance(table_data[k], list):
+                    new_datas.update(self.plc.read(single=table_data[k]))
+                else:
+                    addrs = [addr for label, addr in v.items() if 'TABLE' in label]
+                    for start_addr,read_size in table_data[k].items():
+                        new_datas.update(self.plc.read(table={"addrs":addrs,"start_addr":start_addr,"size":read_size}))
             addrs = [addr for label,addr in v.items() if 'TABLE' not in label]
             new_datas.update(self.plc.read(single=addrs))
-            result.update({label: new_datas[addr] for label, addr in v.items() if addr in new_datas})
-        
+            result.update({label: new_datas[base] for label, addr in v.items() if (base := addr.split('#')[0]) in new_datas})
+            print(result)
         return result
 
     def _change_mode(self)->None:
@@ -69,6 +76,13 @@ class Model():
         if is_next: # state 넘어가기
             self._change_mode()
         self.state.after_worker_tick(update_data=update_data)
+
+        from pprint import pprint
+        pprint(update_data)
+        pprint(alarm_data)
+        pprint(is_graph_update)
+
+
         return update_data,alarm_data,is_graph_update
 
     def _update_alarm(self,update_data:dict)->dict:
@@ -114,7 +128,7 @@ class Model():
 # ===========================================================================================
 if __name__ == "__main__":
     m = Model()
-    m._get_update_data()
+    # m._get_update_data()
     ## json test
     # print(m.state.addrs["PLC_ADDR"]["AUTOMATIC"]["PRGNO"])
     ## ADDR PASING
@@ -124,3 +138,5 @@ if __name__ == "__main__":
     # for i in range(100):
     #     print(m.worker_tick())
 
+    while 1:
+        m.worker_tick()

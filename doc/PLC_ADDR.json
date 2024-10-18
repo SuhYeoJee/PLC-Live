@@ -35,27 +35,27 @@
     },
     "PLC_ADDR" : {
         "AUTOMATIC" :{
-            "AUTOMATIC_PRGNO" : "DW5004#01I00",
-            "AUTOMATIC_SEGSIZE_3" : "DW2912#01f02"
+            "AUTOMATIC_PRGNO" : "%DW5004#01I00",
+            "AUTOMATIC_SEGSIZE_3" : "%DW2912#01f02"
         },
         "PROGRAM":{
-            "PROGRAM_PRGNO":"DW5004#01I00",
-            "PROGRAM_TABLE_PRG24_SELECTDIA":"DW2339#00000"
+            "PROGRAM_PRGNO":"%DW5004#01I00",
+            "PROGRAM_TABLE_PRG24_SELECTDIA":"%DW2339#00000"
         },
         "PROGRAM_LIST":{
-            "PROGRAM_LIST_PRG_SELECT":"DW5002#01I00",
-            "PROGRAM_LIST_TABLE_PRG20":"DW13220#10S00"
+            "PROGRAM_LIST_PRG_SELECT":"%DW5002#01I00",
+            "PROGRAM_LIST_TABLE_PRG20":"%DW13220#10S00"
         },
         "PROGRAM_VIEW":{
-            "PROGRAM_VIEW_PRGNO":"DW5002#01I00",
-            "PROGRAM_VIEW_TABLE_PRG24_SELECTDIA":"DW5339#00000"
+            "PROGRAM_VIEW_PRGNO":"%DW5002#01I00",
+            "PROGRAM_VIEW_TABLE_PRG24_SELECTDIA":"%DW5339#00000"
         },
         "ALARM":{
-            "ALARM_SV1_ALARM":"DW7010#01I00",
-            "ALARM_SEG_EJECT_CONTINUOUS_NG":"MW203D#01A00"
+            "ALARM_SV1_ALARM":"%DW7010#01I00",
+            "ALARM_SEG_EJECT_CONTINUOUS_NG":"%MW203D#01A00"
         },
         "SYSTEM":{
-            "SYSTEM_RUN":"MX120#00000"
+            "SYSTEM_RUN":"%MX120#00000"
         }
     }
 }
