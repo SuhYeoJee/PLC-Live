@@ -15,7 +15,7 @@ class Model():
     def __init__(self):
         self.plc = LS_plc('192.168.0.50')
         self._init_state()
-        self.alarms = {} # {label:'on', label:'off'}
+        # self.alarms = {} # {label:'on', label:'off'}
         self.graph_value = None
 
     def _init_state(self)->None:
@@ -30,6 +30,7 @@ class Model():
         self.state = self.c_w # 초기상태
         # --------------------------
         self.table_data = self.state.addrs["TABLE_DATA"]
+        self.alarms = {k:'off' for k in self.state.addrs["PLC_ADDR"]["ALARM"].keys()}
 
     # [PLC] -------------------------------------------------------------------------------------------
     def _get_update_data(self)->dict:
@@ -93,7 +94,7 @@ class Model():
                 result[label] = [value,get_now_str()]
         else:
             self.alarms = alarms
-            
+
         return result #{arr_label:['on',timestr]}
 
     def _update_graph(self,update_data)->bool:
