@@ -60,8 +60,11 @@
             "PROGRAM_VIEW_TABLE_PRG1_STEPDIMENSION":"%DW5100#01F02"
         },
         "ALARM":{
-            "ALARM_SV1_ALARM":"%DW7010#01I00",
-            "ALARM_SEG_EJECT_CONTINUOUS_NG":"%MW203D#01A00"
+            "ALARM_SEG_EJECT_CONTINUOUS_NG":"%MW203D#01A00",
+            "ALARM_APM_X_ERROR":"%DB7000#01A01",
+            "ALARM_APM_Y_ERROR":"%DB7000#01A02",
+            "ALARM_APM_Z_ERROR":"%DB7000#01A03",
+            "ALARM_EMERGENCY_STOP":"%PW36#01a00"
         },
         "SYSTEM":{
             "SYSTEM_RUN":"%MX120#00000"

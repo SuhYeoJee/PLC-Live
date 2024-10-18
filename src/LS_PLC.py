@@ -305,6 +305,10 @@ class LS_plc():
             result = int.from_bytes(data,'little') / pow(10,data_scale)
         elif data_type == 'f': # signed float
             result = int.from_bytes(data,'little',signed=True) / pow(10,data_scale)
+        elif data_type == "A": # alarm (1 = on)
+            result = 'on' if int.from_bytes(data,'little')  == 1 else 'off'
+        elif data_type == "a": # alarm (0 = on)
+            result = 'off' if int.from_bytes(data,'little')  == 1 else 'on'
         else:
             result = data.hex()
 
