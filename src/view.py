@@ -51,6 +51,8 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         self.graph_widget = pg.PlotWidget()
         self.graph_widget.setBackground('w')
         QVBoxLayout(self.graph_frame).addWidget(self.graph_widget)
+        self.vertical_line = pg.InfiniteLine(pos=0, angle=90, pen=pg.mkPen('r', width=2))
+
 
     # [TABLE 라벨 매핑] ===========================================================================================
     def _set_text_PROGRAM_TABLE(self, key, val)->None:

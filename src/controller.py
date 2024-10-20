@@ -11,6 +11,7 @@ from src.state import view_wait
 # --------------------------
 import subprocess
 from os import makedirs
+import ast
 # ===========================================================================================
 class Worker(QThread):
     data_generated = pyqtSignal(list)
@@ -66,11 +67,16 @@ class Controller:
             self.graph_points.append(float(update_data['AUTOMATIC_SEGSIZE_1']))
             print(self.graph_points)
             self.view.update_graph(self.graph_points)
-            if self.model.state.session:
-                self.model.state.session.update_idx_sheet()
+            try:self.model.state.session.update_idx_sheet()
+            except AttributeError:...
+            except Exception as e:print(e)
 
         if alarm_data:
             print(alarm_data)
+            try:
+                self.model.state.session.update_data('alarm_list',alarm_data)
+            except AttributeError:...
+            except Exception as e:print(e)
             self.view.set_alarm(alarm_data)
     # --------------------------
     def exit_monitoring(self)->None:
@@ -118,7 +124,7 @@ class Controller:
     def _view_update_data_from_session_data(self,idx:int=-1):
         update_data = {}
         for sheet,sheet_idx in self.idxs[idx].items():
-            if sheet in ['idx','graph']:
+            if sheet in ['idx','graph','ALARM']:
                 continue
             update_data.update(self.model.state.session.data[sheet][sheet_idx-1])
         self.view.set_text(update_data)
@@ -138,6 +144,13 @@ class Controller:
         result = [{sheet: to_int(idx) for sheet, idx in idx_line.items()} for idx_line in self.model.state.session.data['idx'] if idx_line]
         return result[1:]
 
+    def _init_alarm_from_session_data(self):
+        alarm_datas = self.model.state.session.data['alarm_list']
+        for alarm_data in alarm_datas:
+            for k,v in alarm_data.items():
+                self.view.set_alarm({k:ast.literal_eval(v)}) 
+
+
     def load_data(self): #엑셀 파일열기
         self.model.c_w.use_tick=False
         file_name = self.view.open_file_dialog()
@@ -148,6 +161,7 @@ class Controller:
         self.graph_points = [float(x) for x in self._init_graph_points_from_session_data(self.idxs)[1:]]
         self.view.update_graph(self.graph_points)
         self.slider_update(0)
+        self._init_alarm_from_session_data()
 
     def slider_update(self, value): #슬라이더 갱신
         '''
@@ -161,11 +175,11 @@ class Controller:
             self.view.graph_widget.setXRange(value - self.view.graph_width/2, value + self.view.graph_width/2)
             self._view_update_data_from_session_data(value)
             
-
-
     def close_data(self):
         self.view.clear_window()
+        self.model.state.before_change_mode()
         self.model.state = self.model.c_w
+        print(f'_change_mode:{type(self.model.state).__name__}')
 
 # ===========================================================================================
 

@@ -72,6 +72,9 @@ class Model():
         is_next = self.state._is_next(update_data[self.state.key]) # 읽은 항목에서 state체크
         if is_next: # state 넘어가기
             self._change_mode()
+            if self.state == self.e_w: #임시 알람 초기화
+                self.alarms = {k:'off' for k in self.state.addrs["PLC_ADDR"]["ALARM"].keys()}
+
         self.state.after_worker_tick(update_data=update_data)
 
         return [update_data,alarm_data,is_graph_update]
