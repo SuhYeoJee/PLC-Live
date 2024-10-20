@@ -1,11 +1,13 @@
 # todo
 
-- [ ] view 알람, 그래프 함수 작성  
+- [x] view 알람, 그래프 함수 작성  
     - [x] 그래프 함수 작성  
     - [x] 알람 함수 작성  
-    - [ ] view._slider_update_vertical_line
+
+
 - [ ] ctrl 작성  
-    - [ ] crtl.set_load_data
+    - [x] ctrl.load_data
+    - [x] ctrl._slider_update
 - [ ] model 수정
     - [?] 테이블 읽기 오류 
         - 테이블 전체를 좌르륵 읽고서 타겟 주소 찾기

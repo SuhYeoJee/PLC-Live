@@ -24,6 +24,7 @@ class Worker(QThread):
     def run(self):
         while self.running:
             if self.model.state.use_tick: #틱갱신
+                # print('tick')
                 tick_data = self.model.worker_tick()
                 self.data_generated.emit(tick_data)
             self.msleep(self.time)
@@ -47,9 +48,9 @@ class Controller:
         self.view.close_action.triggered.connect(self.close_data)
         self.view.connect_action.triggered.connect(self.connect_plc)
         self.view.disconnect_action.triggered.connect(self.disconnect_plc)
+        self.view.horizontalSlider.valueChanged.connect(self.slider_update)
+        
     # -------------------------------------------------------------------------------------------
-
-    # --------------------------
     def start_monitoring(self)->None:
         if self.worker is None or not self.worker.isRunning():
             self.graph_points = []
@@ -65,6 +66,8 @@ class Controller:
             self.graph_points.append(float(update_data['AUTOMATIC_SEGSIZE_1']))
             print(self.graph_points)
             self.view.update_graph(self.graph_points)
+            if self.model.state.session:
+                self.model.state.session.update_idx_sheet()
 
         if alarm_data:
             print(alarm_data)
@@ -107,19 +110,58 @@ class Controller:
         print(f'_change_mode:{type(self.model.state).__name__}')
         self.exit_monitoring()
 
+    def _init_graph_points_from_session_data(self,idxs):
+        graph_idxs = [int(x['graph']) for x in idxs]
+        graph_points = [self.model.state.session.data['graph'][x-1]['AUTOMATIC_SEGSIZE_1'] for x in graph_idxs]
+        return graph_points
+    
+    def _view_update_data_from_session_data(self,idx:int=-1):
+        update_data = {}
+        for sheet,sheet_idx in self.idxs[idx].items():
+            if sheet in ['idx','graph']:
+                continue
+            update_data.update(self.model.state.session.data[sheet][sheet_idx-1])
+        self.view.set_text(update_data)
+
+    def _init_idxs(self)->list:
+        '''
+        [{'ALARM': 1,'AUTOMATIC': 1,'SYSTEM': 1,'graph': 0,'idx': 0},
+        {'ALARM': 3,'AUTOMATIC': 3,'SYSTEM': 3,'graph': 3,'idx': 1},]
+        '''
+        def to_int(idx):
+            try:
+                int(idx)
+            except:
+                return 0
+            else:
+                return int(idx)
+        result = [{sheet: to_int(idx) for sheet, idx in idx_line.items()} for idx_line in self.model.state.session.data['idx'] if idx_line]
+        return result[1:]
+
     def load_data(self): #엑셀 파일열기
         self.model.c_w.use_tick=False
         file_name = self.view.open_file_dialog()
         self.model.v_w = view_wait(file_name)
         self.model.state = self.model.v_w
-        self.set_load_data(-1)
 
-    # idx값으로 테이블 세팅하기
-    # 이거를.. 뷰에서 역호출 하면 안되지 않나
-    def set_load_data(self,idx): #엑셀에서 값세팅: view에서 호출
-        for key, val in self.model.v_w.session.data.items():
-            target = val[idx] # 마지막값 -> 이거 인덱스 값으로 전환
-            self.view.set_text(target)
+        self.idxs = self._init_idxs()
+        self.graph_points = [float(x) for x in self._init_graph_points_from_session_data(self.idxs)[1:]]
+        self.view.update_graph(self.graph_points)
+        self.slider_update(0)
+
+    def slider_update(self, value): #슬라이더 갱신
+        '''
+        슬라이더 이동시 동작
+        - 세로선 갱신
+        - 그래프 위치 갱신
+        - set_text 갱신
+        '''
+        if self.model.state == self.model.v_w:
+            self.view.vertical_line.setPos(value)
+            self.view.graph_widget.setXRange(value - self.view.graph_width/2, value + self.view.graph_width/2)
+            self._view_update_data_from_session_data(value)
+            
+
 
     def close_data(self):
         self.view.clear_window()

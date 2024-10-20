@@ -53,9 +53,9 @@ class Model():
         return result
 
     def _change_mode(self)->None:
-        print(f'_change_mode:{type(self.state).__name__}')
         self.state.before_change_mode()
         self.state = self.state.next_state
+        print(f'_change_mode:{type(self.state).__name__}')
         self.state.after_change_mode()
 
     def worker_tick(self)->list:
