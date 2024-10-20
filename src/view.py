@@ -148,6 +148,8 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         except: ...
         self.vertical_line = pg.InfiniteLine(pos=self.horizontalSlider.value(), angle=90, pen=pg.mkPen('r', width=2))
         self.graph_widget.addItem(self.vertical_line)
+        self.horizontal_line = pg.InfiniteLine(pos=0, angle=0, pen=pg.mkPen('k', width=2))
+        self.graph_widget.addItem(self.horizontal_line)
         self.horizontalSlider.valueChanged.connect(self._slider_update_vertical_line)
 
     # [external call] ===========================================================================================
@@ -184,7 +186,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         self.vertical_line.setPos(value)
         self.graph_widget.setXRange(value - self.graph_width/2, value + self.graph_width/2)
         # 여기 VALUE값을 IDX로해서 테이블 갱신필.
-        # self.c.set_load_data(value)
+        # self.c.set_load_data(value)     
         # 여기서 테이블 값을 가져오는 방법...
         
 

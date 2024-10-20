@@ -1,41 +1,99 @@
-from PyQt5.QtWidgets import QApplication, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget
-from PyQt5.QtGui import QColor
+import sys
+import time
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel
+from PyQt5.QtCore import QThread, pyqtSignal
 
-class AlarmTable(QWidget):
+# 모델 클래스
+class HardwareModel:
+    def __init__(self):
+        self.state = True  # 모델의 상태 초기값
+
+    def communicate_with_hardware(self):
+        print("Communicating with hardware...")
+        time.sleep(10)  # 10초 대기, 하드웨어와의 통신 시뮬레이션
+        print("Communication complete.")
+
+# 워커 클래스
+class CommunicationWorker(QThread):
+    finished = pyqtSignal()  # 통신 완료 신호
+
+    def __init__(self, model):
+        super().__init__()
+        self.model = model
+        self.running = True
+
+    def run(self):
+        while self.running:
+            if self.model.state:  # 모델의 상태가 True인 경우
+                self.handle_true_state()  # 상태가 True일 때의 처리
+            else:
+                self.handle_false_state()  # 상태가 False일 때의 처리
+            self.msleep(5000)  # 5초 대기
+
+    def handle_true_state(self):
+        self.model.communicate_with_hardware()  # 모델의 통신 메서드 호출
+        self.finished.emit()  # 통신 완료 신호 전송
+
+    def handle_false_state(self):
+        print("model state: False")  # 상태가 False일 경우 출력
+
+    def stop(self):
+        self.running = False
+
+# 뷰 클래스
+class HardwareView(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.ALARM_TABLE = QTableWidget(self)
-        self.ALARM_TABLE.setColumnCount(1)  # 열 수 설정
-        self.ALARM_TABLE.setHorizontalHeaderLabels(["Alarm Status"])  # 헤더 설정
+        self.initUI()
 
-        layout = QVBoxLayout()
-        layout.addWidget(self.ALARM_TABLE)
-        self.setLayout(layout)
+    def initUI(self):
+        self.layout = QVBoxLayout()
 
-    def add_row(self, val):
-        row_position = self.ALARM_TABLE.rowCount()
-        self.ALARM_TABLE.insertRow(row_position)
+        self.label = QLabel('Waiting for communication...', self)
+        self.layout.addWidget(self.label)
 
-        # 새 행에 아이템 추가
-        item = QTableWidgetItem("Alarm ON" if val else "Alarm OFF")
-        self.ALARM_TABLE.setItem(row_position, 0, item)
+        self.start_button = QPushButton('Start Communication', self)
+        self.layout.addWidget(self.start_button)
 
-        # 배경 색상 설정
-        if val:
-            self.ALARM_TABLE.item(row_position, 0).setBackground(QColor(0, 255, 0))  # 초록색
-        else:
-            self.ALARM_TABLE.item(row_position, 0).setBackground(QColor(255, 0, 0))  # 빨간색
+        self.stop_button = QPushButton('Stop Communication', self)
+        self.layout.addWidget(self.stop_button)
+
+        self.setLayout(self.layout)
+        self.setWindowTitle('Hardware Communication')
+
+# 컨트롤러 클래스
+class HardwareController:
+    def __init__(self, view, model):
+        self.view = view
+        self.model = model
+        self.worker = None  # 워커 초기화
+
+        # 버튼 클릭 시 통신 시작
+        self.view.start_button.clicked.connect(self.start_communication)
+        self.view.stop_button.clicked.connect(self.stop_communication)
+
+    def start_communication(self):
+        if self.worker is None or not self.worker.isRunning():
+            self.view.label.setText('Starting communication...')
+            self.worker = CommunicationWorker(self.model)  # 새로운 워커 인스턴스 생성
+            self.worker.finished.connect(self.update_view)  # 신호 연결
+            self.worker.start()  # 워커 스레드 시작
+
+    def stop_communication(self):
+        self.view.label.setText('Stopping communication...')
+        if self.worker is not None:
+            self.worker.stop()  # 워커 중지
+
+    def update_view(self):
+        self.view.label.setText('Communication completed.')
 
 if __name__ == "__main__":
-    import sys
-
     app = QApplication(sys.argv)
 
-    window = AlarmTable()
-    window.add_row(True)   # 초록색 행 추가
-    window.add_row(False)  # 빨간색 행 추가
-    window.resize(300, 200)
-    window.show()
+    model = HardwareModel()
+    view = HardwareView()
+    controller = HardwareController(view, model)
 
+    view.show()
     sys.exit(app.exec_())

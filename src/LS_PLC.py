@@ -316,9 +316,6 @@ class LS_plc():
     # [호출 함수] ===========================================================================================
     def single_read(self,addrs=["%DW500#01I00","%DW10008#01I00"]):
         cmd = self._get_xgt_cmd('r',addrs=addrs)
-        print(cmd)
-        print(cmd.hex())
-        print('# --------------------------')
         recv = self._get_plc_recv(cmd)
         byte_queue = self._get_read_result(recv)
         result = {}
@@ -354,10 +351,9 @@ class LS_plc():
     def table_read(self,addrs:list, start_addr:str, size:int):
         byte_dict = self.multi_read(start_addr, size)
         result = {}
-        for addr in addrs:
+        for addr in addrs: #addrs 순회는 비효율, 수정필
             plc_addr,_,option = addr.partition('#')
             byte_addr,_,option = self._addr_to_byte_addr(addr).partition('#')
-
             datas = []
             try:
                 datas.append(byte_dict[byte_addr])
@@ -366,6 +362,7 @@ class LS_plc():
                     datas.append(byte_dict[byte_addr_idx])
 
                 result[plc_addr] = self._data_decoding(datas,addr)
+            except KeyError: ...
             except Exception as e:
                 print(e)
         return result

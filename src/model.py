@@ -44,7 +44,9 @@ class Model():
                 table_addrs = [addr for label, addr in v.items() if 'TABLE' in label]
                 if table_addrs:
                     for start_addr,read_size in self.table_data[k].items():
-                        new_datas.update(self.plc.read(table={"addrs":table_addrs,"start_addr":start_addr,"size":read_size}))
+                        temp_datas = self.plc.read(table={"addrs":table_addrs,"start_addr":start_addr,"size":read_size})
+                        new_datas.update(temp_datas)
+                        table_addrs = [x for x in table_addrs if x not in temp_datas] #테이블 누락 확인필
             addrs = [addr for label, addr in v.items() if 'TABLE' not in label]
             new_datas.update(self.plc.read(single=addrs))
             result.update({label: new_datas[base] for label, addr in v.items() if (base := addr.split('#')[0]) in new_datas})
@@ -56,7 +58,7 @@ class Model():
         self.state = self.state.next_state
         self.state.after_change_mode()
 
-    def worker_tick(self)->dict:
+    def worker_tick(self)->list:
         '''
         1. PLC 데이터 갱신
         2. state 전환
@@ -72,7 +74,7 @@ class Model():
             self._change_mode()
         self.state.after_worker_tick(update_data=update_data)
 
-        return update_data,alarm_data,is_graph_update
+        return [update_data,alarm_data,is_graph_update]
 
     def _update_alarm(self,update_data:dict)->dict:
         result = {}
