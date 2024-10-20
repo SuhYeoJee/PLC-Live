@@ -41,9 +41,10 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
     def init_table(self):
         self.PROGRAM_TABLE.setHorizontalHeaderLabels(["STEP\nDIMENSION","CHARGE\nDIMENSION","FWD\nTIME","SELECT\nCAR","OSC\nCOUNT","BWD\nTIME","PRESS\nPOSITION","FINAL\nPRESSURE","SELECT\nDIA"])
         self.PROGRAM_VIEW_TABLE.setHorizontalHeaderLabels(["STEP\nDIMENSION","CHARGE\nDIMENSION","FWD\nTIME","SELECT\nCAR","OSC\nCOUNT","BWD\nTIME","PRESS\nPOSITION","FINAL\nPRESSURE","SELECT\nDIA"])
+        self.ALARM_TABLE.setHorizontalHeaderLabels(["TIME","ALARM","STATE"])
         self.PROGRAM_LIST_TABLE.setColumnWidth(0, 50)
         self.PROGRAM_LIST_TABLE.setColumnWidth(2, 50)
-        self.ALARM_TABLE.setColumnWidth(0, 100)
+        self.ALARM_TABLE.setColumnWidth(0, 200)
     
     def init_graph(self):
         self.graph_widget = pg.PlotWidget()
@@ -73,15 +74,20 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
             if not (item in key): continue
             self.PROGRAM_VIEW_TABLE.setItem(i, j, QTableWidgetItem(val))
     # --------------------------
-    def set_text_ALARM_TABLE(self,key,val):
-        if val == '1':
-            now_time = get_now_str("%H:%M:%S")
+    def set_text_ALARM_TABLE(self,key,val)->None:
+        '''
+        key = 'ALARM_EMERGENCY_STOP'
+        val = ['on', '2024-10-20 15:44:13']
+        '''
+        state, timestr = val
+        row_position = self.ALARM_TABLE.rowCount()
+        self.ALARM_TABLE.insertRow(row_position)
 
-            row_position = self.ALARM_TABLE.rowCount()
-            self.ALARM_TABLE.insertRow(row_position)
-
-            for col, value in enumerate([now_time,key]):
-                self.ALARM_TABLE.setItem(row_position, col, QTableWidgetItem(str(value)))
+        color = QColor(255, 0, 0) if state == 'on' else QColor(200, 200, 200) if state == 'off' else None
+        for col, item in enumerate([QTableWidgetItem(timestr),QTableWidgetItem(key)]):
+            self.ALARM_TABLE.setItem(row_position, col, item)
+            if color:
+                item.setBackground(color)
 
     # [view update] ===========================================================================================
     def set_text(self,update_data:dict)->None:
@@ -142,14 +148,12 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
     # --------------------------
     def change_window(self,title): 
         self.setWindowTitle(f"PressMonitor: {title}")
-        
+    # --------------------------
+    def set_alarm(self,alarm_data:dict)->None:
+        for k,v in alarm_data.items():
+            self.set_text_ALARM_TABLE(k,v)     
 
 # ===========================================================================================
-    # def set_alarm(self,alarm_data:dict)->None:
-    #     for k,v in alarm_data.items():
-    #         if 'ALARM' in k:
-    #             self.set_text_ALARM_TABLE(k,v)
-
     # def update_graph(self,graph_points):
     #     self.graph_width = 7
 

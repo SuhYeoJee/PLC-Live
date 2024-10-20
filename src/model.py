@@ -72,12 +72,6 @@ class Model():
             self._change_mode()
         self.state.after_worker_tick(update_data=update_data)
 
-        from pprint import pprint
-        pprint(update_data)
-        pprint(alarm_data)
-        pprint(is_graph_update)
-
-
         return update_data,alarm_data,is_graph_update
 
     def _update_alarm(self,update_data:dict)->dict:
