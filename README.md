@@ -27,3 +27,11 @@
     그렇다고 치면 DW8090이면 이거 10진수로 2배하면 DB16180인건가?
     맞음
     ```
+
+
+pip install
+- pyqt5
+- pyqtgraph
+- pandas
+- openpyxl
+ 
