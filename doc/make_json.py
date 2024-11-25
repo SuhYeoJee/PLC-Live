@@ -3,8 +3,13 @@ if __debug__:
     sys.path.append(r"X:\Github\PLC-Live")
 from src.module.config_manager import ConfigManager
 import pprint
+import json
 
-cm = ConfigManager('./doc/addrs.txt')
+
+TEXT_PATH = './doc/addrs.txt'
+JSON_PATH = './doc/plc_addr4.json'
+
+cm = ConfigManager(TEXT_PATH)
 
 def get_addr_with_option(key)->str:
     '''config key값으로 옵션생성'''
@@ -32,11 +37,23 @@ def get_plc_addr_section()->dict:
     return res
 
 def get_table_data_section()->dict:
-    # 테이블 룰 복기
-    res = {"table_data":{}}
-    for key,val in cm.get_section_items('TABLE').items():
-        res["table_data"][key] = val
+    '''TABLE_DATA 섹션 반환'''
+    res = {"TABLE_DATA":{}}
+    for table_info,table_name in cm.get_section_items('TABLE_HEAD').items():
+        table_start_addr,table_size = table_info.split(',')
+        table_size = int(table_size)
+        new_dict = {}
+        for key,val in cm.get_section_items(table_name).items():
+            new_dict[val] = get_addr_with_option(key)
+        res["TABLE_DATA"][table_name] = {"table" :{"addrs":list(new_dict.values()), "start_addr":table_start_addr, "size":table_size},"addrs":new_dict}
+    return res
+
+def get_json()->dict:
+    res = get_plc_addr_section()
+    res.update(get_table_data_section())
+    with open(JSON_PATH, "w") as json_file:
+        json.dump(res, json_file, indent=4)
     return res
 
 if __name__ == "__main__":
-    pprint.pprint(get_table_data_section())
+    get_json()

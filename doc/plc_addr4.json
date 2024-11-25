@@ -1,0 +1,49 @@
+{
+    "PLC_ADDR": {
+        "AUTOMATIC": {},
+        "PROGRAM": {},
+        "PROGRAM_LIST": {},
+        "PROGRAM_VIEW": {
+            "PROGRAM_VIEW_PRGNO": "%DW5002#01i00",
+            "PROGRAM_VIEW_TABLE_PRG1_STEPDIMENSION": "%DW5100#01I02",
+            "PROGRAM_VIEW_TABLE_1": "%DW6000#01F02",
+            "PROGRAM_VIEW_PRGNAME": "%DW5090#10S00"
+        },
+        "ALARM": {
+            "PROGRAM_VIEW_TABLE_1": "%DW6000#01F02"
+        },
+        "SYSTEM": {}
+    },
+    "TABLE_DATA": {
+        "PROGRAM_TABLE": {
+            "table": {
+                "addrs": [
+                    "%DW2100#01I00",
+                    "%DW2102#01I00",
+                    "%DW2103#01I00"
+                ],
+                "start_addr": "DW2100",
+                "size": 10
+            },
+            "addrs": {
+                "PROGRAM_TABLE_PRG1_STEPDIMENSION": "%DW2100#01I00",
+                "PROGRAM_TABLE_PRG1_CHARGEDIMENSION": "%DW2102#01I00",
+                "PROGRAM_TABLE_PRG1_FWDTIME": "%DW2103#01I00"
+            }
+        },
+        "PROGRAM_TAB3LE": {
+            "table": {
+                "addrs": [
+                    "%DW2303#01I00",
+                    "%DW2306#01I00"
+                ],
+                "start_addr": "DW2300",
+                "size": 10
+            },
+            "addrs": {
+                "PROGRAM_TAB3LE_PRG76_FWDTIME": "%DW2303#01I00",
+                "PROGRAM_TAB3LE_PRG76_CHARGEDIMENSION": "%DW2306#01I00"
+            }
+        }
+    }
+}
