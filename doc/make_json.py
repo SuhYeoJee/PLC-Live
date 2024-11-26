@@ -19,6 +19,10 @@ def get_addr_with_option(key)->str:
 
     if datatype == 'S':
         value_type = datatype
+    elif datatype == 'B':
+        ...
+    elif datatype == 'A':
+        ...
     elif exponent >= 0: # int
         value_type = 'i' if 'U' in datatype else 'I'
     else: #exponent < 0 # float
