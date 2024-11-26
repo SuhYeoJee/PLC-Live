@@ -1,4 +1,10 @@
 {
+    "DATASET":{
+        "CONNECT_WAIT":{
+            "PLC_ADDR":["SYSTEM","ALARM"],
+            "TABLE":["PROGRAM_TABLE","PROGRAM_TAB3LE"]
+        }
+    },
     "PLC_ADDR": {
         "AUTOMATIC": {},
         "PROGRAM": {},

@@ -54,15 +54,24 @@ class state_wait():
     def get_dataset(self):
         '''
         PLC_ADDR[DATASET][STATE_NAME] 아래의 항목을 self.dataset에 등록
+        PLC_ADDR[DATASET][TABLE] 아래의 항목을 self.dataset에 등록
         '''
         try:
             dataset_list = self.dataset["PLC_ADDR"]
             self.dataset.pop("PLC_ADDR")
             for i in dataset_list:
                 self.dataset.update({i:self.addrs["PLC_ADDR"][i]})
+
+            dataset_table_list = self.dataset["TABLE"]
+            self.dataset.pop("TABLE")
+
+            self.dataset["TABLE_DATAS"] = {}
+            self.dataset["TABLE_ADDRS"] = {}
+            for table_name in dataset_table_list:
+                self.dataset["TABLE_DATAS"].update({table_name:self.addrs["TABLE_DATA"][table_name]['table']})
+                self.dataset["TABLE_ADDRS"].update({table_name:self.addrs["TABLE_DATA"][table_name]['addrs']})
         except Exception as e:
             print(e)
-            ...
         # print(self.dataset)
 
 
@@ -162,5 +171,5 @@ class view_wait(state_wait):
 # ===========================================================================================
 
 if __name__ == "__main__":
-    m = exit_wait()
+    m = connect_wait()
     m.get_dataset()

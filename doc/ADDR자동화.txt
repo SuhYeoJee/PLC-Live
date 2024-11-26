@@ -11,11 +11,6 @@ DW1234, 1, 16U, 1
 DW2090, 10, UTF-8, 0
 
 
-model._get_update_data 함수 수정필
-model.table_data 관련 삭제필
-state.get_dataset 함수 수정필
-
-
 state.dataset["AUTOMATIC"] = { # 테이블이 아닌 항목
     "AUTOMATIC_PRGNO" : "%DW5004#01I00",
     "AUTOMATIC_PRGNAME" : "%DW2090#10S00",
@@ -25,6 +20,6 @@ state.dataset["TABLE_DATAS"] = {    # 테이블 입력
    "TABLE1-2" : {START,SIZE,LIST},
 }
 state.dataset["TABLE_ADDRS"] = { # 테이블 주소
-    "AUTOMATIC_PRGNO" : "%DW5004#01I00",
-    "AUTOMATIC_PRGNAME" : "%DW2090#10S00",
+    "TABLE1-1" : {"AUTOMATIC_PRGNO" : "%DW5004#01I00"},
+    "TABLE1-2" : {"AUTOMATIC_PRGNO" : "%DW5004#01I00"},
 }
