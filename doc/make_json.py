@@ -48,9 +48,27 @@ def get_table_data_section()->dict:
         res["TABLE_DATA"][table_name] = {"table" :{"addrs":list(new_dict.values()), "start_addr":table_start_addr, "size":table_size},"addrs":new_dict}
     return res
 
+def get_dataset_section()->dict:
+    '''DATASET 섹션 반환'''
+    res = {
+        "CONNECT_WAIT":{
+            "PLC_ADDR":["SYSTEM","ALARM"],
+            "TABLE":["PROGRAM_TABLE","PROGRAM_TAB3LE"] #temp
+        },
+        "START_WAIT":{
+            "PLC_ADDR":["SYSTEM","ALARM"]
+        },
+        "EXIT_WAIT":{
+            "PLC_ADDR":["AUTOMATIC","PROGRAM","PROGRAM_LIST","PROGRAM_VIEW","ALARM","SYSTEM"]
+        }
+    }
+    return res
+
+
 def get_json()->dict:
     res = get_plc_addr_section()
     res.update(get_table_data_section())
+    res.update(get_dataset_section())
     with open(JSON_PATH, "w") as json_file:
         json.dump(res, json_file, indent=4)
     return res
