@@ -61,7 +61,7 @@ class Model():
             elif section_name == "TABLE_DATAS":
                 for table_name,table_data in section_data.items():
                     new_datas.update(self.plc.read(table = table_data))
-                result.update({label: new_datas[base] for label, addr in self.state.dataset["TABLE_ADDRS"][table_name].items() if (base := addr.split('#')[0]) in new_datas})
+                    result.update({label: new_datas[base] for label, addr in self.state.dataset["TABLE_ADDRS"][table_name].items() if (base := addr.split('#')[0]) in new_datas})
             else:
                 new_datas.update(self.plc.read(single=list(section_data.values())))
                 result.update({label: new_datas[base] for label, addr in section_data.items() if (base := addr.split('#')[0]) in new_datas})

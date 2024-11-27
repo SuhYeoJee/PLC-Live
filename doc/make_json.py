@@ -7,7 +7,7 @@ import json
 
 
 TEXT_PATH = './doc/addrs.txt'
-JSON_PATH = './doc/plc_addr4.json'
+JSON_PATH = './doc/PLC_ADDR.json'
 
 cm = ConfigManager(TEXT_PATH)
 
@@ -20,9 +20,9 @@ def get_addr_with_option(key)->str:
     if datatype == 'S':
         value_type = datatype
     elif datatype == 'B':
-        ...
+        value_type = datatype
     elif datatype == 'A':
-        ...
+        value_type = datatype
     elif exponent >= 0: # int
         value_type = 'i' if 'U' in datatype else 'I'
     else: #exponent < 0 # float
@@ -55,17 +55,44 @@ def get_table_data_section()->dict:
 def get_dataset_section()->dict:
     '''DATASET 섹션 반환'''
     res = {
+        "DATASET":{
         "CONNECT_WAIT":{
             "PLC_ADDR":["SYSTEM","ALARM"],
-            "TABLE":["PROGRAM_TABLE","PROGRAM_TAB3LE"] #temp
         },
         "START_WAIT":{
             "PLC_ADDR":["SYSTEM","ALARM"]
         },
         "EXIT_WAIT":{
-            "PLC_ADDR":["AUTOMATIC","PROGRAM","PROGRAM_LIST","PROGRAM_VIEW","ALARM","SYSTEM"]
+            "PLC_ADDR":["AUTOMATIC","PROGRAM","PROGRAM_LIST","PROGRAM_VIEW","ALARM","SYSTEM"],
+            "TABLE":[
+                "PROGRAM_TABLE-1",
+                "PROGRAM_TABLE-2",
+                "PROGRAM_TABLE-3",
+                "PROGRAM_TABLE-4",
+                "PROGRAM_TABLE-5",
+                "PROGRAM_TABLE-6",
+                "PROGRAM_TABLE-7",
+                "PROGRAM_TABLE-8",
+                "PROGRAM_TABLE-9",
+                "PROGRAM_TABLE-10",
+                "PROGRAM_TABLE-11",
+                "PROGRAM_TABLE-12",
+
+                "PROGRAM_VIEW_TABLE-1",
+                "PROGRAM_VIEW_TABLE-2",
+                "PROGRAM_VIEW_TABLE-3",
+                "PROGRAM_VIEW_TABLE-4",
+                "PROGRAM_VIEW_TABLE-5",
+                "PROGRAM_VIEW_TABLE-6",
+                "PROGRAM_VIEW_TABLE-7",
+                "PROGRAM_VIEW_TABLE-8",
+                "PROGRAM_VIEW_TABLE-9",
+                "PROGRAM_VIEW_TABLE-10",
+                "PROGRAM_VIEW_TABLE-11",
+                "PROGRAM_VIEW_TABLE-12",
+                     ] #temp
         }
-    }
+    }}
     return res
 
 
