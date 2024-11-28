@@ -1,42 +1,42 @@
 {
     "PLC_ADDR": {
         "AUTOMATIC": {
-            "AUTOMATIC_PRGNO": "%DW5004#01i00",
+            "AUTOMATIC_PRGNO": "%DW5004#01I00",
             "AUTOMATIC_PRGNAME": "%DW2090#10S00",
-            "AUTOMATIC_SET_WORKCOUNT": "%DW2014#01i00",
-            "AUTOMATIC_ACTUAL_WORKCOUNT": "%DW3100#01I00",
-            "AUTOMATIC_SET_WORKSTEP": "%DW2080#01I00",
-            "AUTOMATIC_ACTUAL_WORKSTEP": "%DW60#01I00",
-            "AUTOMATIC_SET_LOWERDIMENSION": "%DW6000#01F02",
-            "AUTOMATIC_ACTUAL_LOWERDIMENSION": "%DW10#01F02",
-            "AUTOMATIC_SET_UPPERPREPRESSINGPS": "%DW1002#01F02",
-            "AUTOMATIC_ACTUAL_UPPERPREPRESSINGPS": "%DW0#01F02",
-            "AUTOMATIC_SET_FINALPRESSURE": "%DW2012#01I01",
-            "AUTOMATIC_ACTUAL_FINALPRESSURE": "%DW300#01I01",
-            "AUTOMATIC_SET_PRESSINGTIME": "%DW2082#01F01",
-            "AUTOMATIC_SET_PRESSINGSIZE": "%DW2081#01F02",
-            "AUTOMATIC_ACTUAL_PRESSINGSIZE": "%DW2902#01F02",
-            "AUTOMATIC_SET_CYCLETIME": "%DW2700#01f01",
-            "AUTOMATIC_ACTUAL_CYCLETIME": "%DW2704#01F01",
-            "AUTOMATIC_ACTUAL_CYCLETIME2": "%DW2706#01F01",
-            "AUTOMATIC_CAR_DIADROPOFFNO": "%DW2800#01I00",
-            "AUTOMATIC_COUNT_OK": "%DW2920#01I00",
-            "AUTOMATIC_COUNT_NG": "%DW2922#01I00",
-            "AUTOMATIC_ERROR_PLUS": "%DW2904#01F02",
-            "AUTOMATIC_ERROR_MINUS": "%DW2905#01F02",
-            "AUTOMATIC_SEGSIZE_1": "%DW2910#01F02",
-            "AUTOMATIC_SEGSIZE_2": "%DW2911#01F02",
-            "AUTOMATIC_SEGSIZE_3": "%DW2912#01F02"
+            "AUTOMATIC_SET_WORKCOUNT": "%DW2014#01I00",
+            "AUTOMATIC_ACTUAL_WORKCOUNT": "%DW3100#01i00",
+            "AUTOMATIC_SET_WORKSTEP": "%DW2080#01i00",
+            "AUTOMATIC_ACTUAL_WORKSTEP": "%DW60#01i00",
+            "AUTOMATIC_SET_LOWERDIMENSION": "%DW6000#01f02",
+            "AUTOMATIC_ACTUAL_LOWERDIMENSION": "%DW10#01f02",
+            "AUTOMATIC_SET_UPPERPREPRESSINGPS": "%DW1002#01f02",
+            "AUTOMATIC_ACTUAL_UPPERPREPRESSINGPS": "%DW0#01f02",
+            "AUTOMATIC_SET_FINALPRESSURE": "%DW2012#01i01",
+            "AUTOMATIC_ACTUAL_FINALPRESSURE": "%DW300#01i01",
+            "AUTOMATIC_SET_PRESSINGTIME": "%DW2082#01f01",
+            "AUTOMATIC_SET_PRESSINGSIZE": "%DW2081#01f02",
+            "AUTOMATIC_ACTUAL_PRESSINGSIZE": "%DW2902#01f02",
+            "AUTOMATIC_SET_CYCLETIME": "%DW2700#01F01",
+            "AUTOMATIC_ACTUAL_CYCLETIME": "%DW2704#01f01",
+            "AUTOMATIC_ACTUAL_CYCLETIME2": "%DW2706#01f01",
+            "AUTOMATIC_CAR_DIADROPOFFNO": "%DW2800#01i00",
+            "AUTOMATIC_COUNT_OK": "%DW2920#01i00",
+            "AUTOMATIC_COUNT_NG": "%DW2922#01i00",
+            "AUTOMATIC_ERROR_PLUS": "%DW2904#01f02",
+            "AUTOMATIC_ERROR_MINUS": "%DW2905#01f02",
+            "AUTOMATIC_SEGSIZE_1": "%DW2910#01f02",
+            "AUTOMATIC_SEGSIZE_2": "%DW2911#01f02",
+            "AUTOMATIC_SEGSIZE_3": "%DW2912#01f02"
         },
         "PROGRAM": {
-            "PROGRAM_PRGNO": "%DW5002#01i00",
-            "PROGRAM_USESTEP": "%DW5080#01i00",
+            "PROGRAM_PRGNO": "%DW5002#01I00",
+            "PROGRAM_USESTEP": "%DW5080#01I00",
             "PROGRAM_PRGNAME": "%DW5090#10S00",
-            "PROGRAM_LSTP": "%DW2030#01f02",
-            "PROGRAM_EJH": "%DW2712#01F02"
+            "PROGRAM_LSTP": "%DW2030#01F02",
+            "PROGRAM_EJH": "%DW2712#01f02"
         },
         "PROGRAM_LIST": {
-            "PROGRAM_LIST_PRG_SELECT": "%DW5002#01i00",
+            "PROGRAM_LIST_PRG_SELECT": "%DW5002#01I00",
             "PROGRAM_LIST_TABLE_PRG1": "%DW8090#10S00",
             "PROGRAM_LIST_TABLE_PRG2": "%DW8360#10S00",
             "PROGRAM_LIST_TABLE_PRG3": "%DW8630#10S00",
@@ -59,21 +59,21 @@
             "PROGRAM_LIST_TABLE_PRG20": "%DW13220#10S00"
         },
         "PROGRAM_VIEW": {
-            "PROGRAM_VIEW_PRGNO": "%DW5002#01i00",
-            "PROGRAM_VIEW_USESTEP": "%DW5080#01i00",
+            "PROGRAM_VIEW_PRGNO": "%DW5002#01I00",
+            "PROGRAM_VIEW_USESTEP": "%DW5080#01I00",
             "PROGRAM_VIEW_PRGNAME": "%DW5090#10S00",
-            "PROGRAM_VIEW_PRESSINGTIME": "%DW5082#01F01",
-            "PROGRAM_VIEW_SEGPRESSSIZE": "%DW5081#01F02"
+            "PROGRAM_VIEW_PRESSINGTIME": "%DW5082#01f01",
+            "PROGRAM_VIEW_SEGPRESSSIZE": "%DW5081#01f02"
         },
         "ALARM": {
             "APM_X_ERROR": "%DX7000#01A01",
             "APM_Y_ERROR": "%DX7100#01A01",
             "APM_Z_ERROR": "%DX7200#01A01",
-            "EMERGENCY_STOP": "%PX36#01A00",
+            "EMERGENCY_STOP": "%PX36#01a00",
             "HYD_PUMP_OVERLOAD": "%PX37#01A01",
-            "SERVO_X_ERROR": "%PX39#01A00",
-            "SERVO_Y_ERROR": "%PX3A#01A00",
-            "SERVO_Z_ERROR": "%PX3B#01A00",
+            "SERVO_X_ERROR": "%PX39#01a00",
+            "SERVO_Y_ERROR": "%PX3A#01a00",
+            "SERVO_Z_ERROR": "%PX3B#01a00",
             "UP_PUNCH_DIM_CONFIRM": "%MX226#01A01",
             "LOW_PUNCH_DIM_CONFIRM": "%MX227#01A01",
             "UPPER_PUNCH_NOT_UP_POSITION": "%MX2000#01A01",
@@ -94,7 +94,7 @@
             "NOT_UPPER_PUNCH_DIM_SET": "%MX2026#01A01",
             "NOT_LOWER_PUNCH_DIM_SET": "%MX2027#01A01",
             "HYD_PUMP_OFF": "%MX2028#01A01",
-            "SERVO_SEG_EJECT_ERROR": "%PX3C#01A00",
+            "SERVO_SEG_EJECT_ERROR": "%PX3C#01a00",
             "APM_SEG_EJECT_ERROR": "%DX7300#01A01",
             "LEFT_CAR_NOT_BWD_PS": "%MX2010#01A01",
             "RIGHT_CAR_NOT_BWD_PS": "%MX2011#01A01",
@@ -114,584 +114,584 @@
             "SEG_EJECT_CONTINUOUS_NG": "%MX203D#01A01"
         },
         "SYSTEM": {
-            "SYSTEM_RUN": "%MX120#01B00"
+            "SYSTEM_RUN": "%MX120#01i00"
         }
     },
     "TABLE_DATA": {
         "PROGRAM_TABLE-1": {
             "table": {
                 "addrs": [
-                    "%DW2100#01f02",
-                    "%DW2102#01f02",
-                    "%DW2103#01f01",
-                    "%DW2105#01i00",
-                    "%DW2106#01f01",
-                    "%DW2107#01F02",
-                    "%DW2108#01i01"
+                    "%DW2100#01F02",
+                    "%DW2102#01F02",
+                    "%DW2103#01F01",
+                    "%DW2105#01I00",
+                    "%DW2106#01F01",
+                    "%DW2107#01f02",
+                    "%DW2108#01I01"
                 ],
                 "start_addr": "%DW2100",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_TABLE_PRG1_STEPDIMENSION": "%DW2100#01f02",
-                "PROGRAM_TABLE_PRG1_CHARGEDIMENSION": "%DW2102#01f02",
-                "PROGRAM_TABLE_PRG1_FWDTIME": "%DW2103#01f01",
-                "PROGRAM_TABLE_PRG1_OSCCOUNT": "%DW2105#01i00",
-                "PROGRAM_TABLE_PRG1_BWDTIME": "%DW2106#01f01",
-                "PROGRAM_TABLE_PRG1_PRESSPOSITION": "%DW2107#01F02",
-                "PROGRAM_TABLE_PRG1_FINALPRESSURE": "%DW2108#01i01"
+                "PROGRAM_TABLE_PRG1_STEPDIMENSION": "%DW2100#01F02",
+                "PROGRAM_TABLE_PRG1_CHARGEDIMENSION": "%DW2102#01F02",
+                "PROGRAM_TABLE_PRG1_FWDTIME": "%DW2103#01F01",
+                "PROGRAM_TABLE_PRG1_OSCCOUNT": "%DW2105#01I00",
+                "PROGRAM_TABLE_PRG1_BWDTIME": "%DW2106#01F01",
+                "PROGRAM_TABLE_PRG1_PRESSPOSITION": "%DW2107#01f02",
+                "PROGRAM_TABLE_PRG1_FINALPRESSURE": "%DW2108#01I01"
             }
         },
         "PROGRAM_TABLE-2": {
             "table": {
                 "addrs": [
-                    "%DW2110#01f02",
-                    "%DW2112#01f02",
-                    "%DW2113#01f01",
-                    "%DW2115#01i00",
-                    "%DW2116#01f01",
-                    "%DW2117#01F02",
-                    "%DW2118#01i01"
+                    "%DW2110#01F02",
+                    "%DW2112#01F02",
+                    "%DW2113#01F01",
+                    "%DW2115#01I00",
+                    "%DW2116#01F01",
+                    "%DW2117#01f02",
+                    "%DW2118#01I01"
                 ],
                 "start_addr": "%DW2110",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_TABLE_PRG2_STEPDIMENSION": "%DW2110#01f02",
-                "PROGRAM_TABLE_PRG2_CHARGEDIMENSION": "%DW2112#01f02",
-                "PROGRAM_TABLE_PRG2_FWDTIME": "%DW2113#01f01",
-                "PROGRAM_TABLE_PRG2_OSCCOUNT": "%DW2115#01i00",
-                "PROGRAM_TABLE_PRG2_BWDTIME": "%DW2116#01f01",
-                "PROGRAM_TABLE_PRG2_PRESSPOSITION": "%DW2117#01F02",
-                "PROGRAM_TABLE_PRG2_FINALPRESSURE": "%DW2118#01i01"
+                "PROGRAM_TABLE_PRG2_STEPDIMENSION": "%DW2110#01F02",
+                "PROGRAM_TABLE_PRG2_CHARGEDIMENSION": "%DW2112#01F02",
+                "PROGRAM_TABLE_PRG2_FWDTIME": "%DW2113#01F01",
+                "PROGRAM_TABLE_PRG2_OSCCOUNT": "%DW2115#01I00",
+                "PROGRAM_TABLE_PRG2_BWDTIME": "%DW2116#01F01",
+                "PROGRAM_TABLE_PRG2_PRESSPOSITION": "%DW2117#01f02",
+                "PROGRAM_TABLE_PRG2_FINALPRESSURE": "%DW2118#01I01"
             }
         },
         "PROGRAM_TABLE-3": {
             "table": {
                 "addrs": [
-                    "%DW2120#01f02",
-                    "%DW2122#01f02",
-                    "%DW2123#01f01",
-                    "%DW2125#01i00",
-                    "%DW2126#01f01",
-                    "%DW2127#01F02",
-                    "%DW2128#01i01"
+                    "%DW2120#01F02",
+                    "%DW2122#01F02",
+                    "%DW2123#01F01",
+                    "%DW2125#01I00",
+                    "%DW2126#01F01",
+                    "%DW2127#01f02",
+                    "%DW2128#01I01"
                 ],
                 "start_addr": "%DW2120",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_TABLE_PRG3_STEPDIMENSION": "%DW2120#01f02",
-                "PROGRAM_TABLE_PRG3_CHARGEDIMENSION": "%DW2122#01f02",
-                "PROGRAM_TABLE_PRG3_FWDTIME": "%DW2123#01f01",
-                "PROGRAM_TABLE_PRG3_OSCCOUNT": "%DW2125#01i00",
-                "PROGRAM_TABLE_PRG3_BWDTIME": "%DW2126#01f01",
-                "PROGRAM_TABLE_PRG3_PRESSPOSITION": "%DW2127#01F02",
-                "PROGRAM_TABLE_PRG3_FINALPRESSURE": "%DW2128#01i01"
+                "PROGRAM_TABLE_PRG3_STEPDIMENSION": "%DW2120#01F02",
+                "PROGRAM_TABLE_PRG3_CHARGEDIMENSION": "%DW2122#01F02",
+                "PROGRAM_TABLE_PRG3_FWDTIME": "%DW2123#01F01",
+                "PROGRAM_TABLE_PRG3_OSCCOUNT": "%DW2125#01I00",
+                "PROGRAM_TABLE_PRG3_BWDTIME": "%DW2126#01F01",
+                "PROGRAM_TABLE_PRG3_PRESSPOSITION": "%DW2127#01f02",
+                "PROGRAM_TABLE_PRG3_FINALPRESSURE": "%DW2128#01I01"
             }
         },
         "PROGRAM_TABLE-4": {
             "table": {
                 "addrs": [
-                    "%DW2130#01f02",
-                    "%DW2132#01f02",
-                    "%DW2133#01f01",
-                    "%DW2135#01i00",
-                    "%DW2136#01f01",
-                    "%DW2137#01F02",
-                    "%DW2138#01i01"
+                    "%DW2130#01F02",
+                    "%DW2132#01F02",
+                    "%DW2133#01F01",
+                    "%DW2135#01I00",
+                    "%DW2136#01F01",
+                    "%DW2137#01f02",
+                    "%DW2138#01I01"
                 ],
                 "start_addr": "%DW2130",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_TABLE_PRG4_STEPDIMENSION": "%DW2130#01f02",
-                "PROGRAM_TABLE_PRG4_CHARGEDIMENSION": "%DW2132#01f02",
-                "PROGRAM_TABLE_PRG4_FWDTIME": "%DW2133#01f01",
-                "PROGRAM_TABLE_PRG4_OSCCOUNT": "%DW2135#01i00",
-                "PROGRAM_TABLE_PRG4_BWDTIME": "%DW2136#01f01",
-                "PROGRAM_TABLE_PRG4_PRESSPOSITION": "%DW2137#01F02",
-                "PROGRAM_TABLE_PRG4_FINALPRESSURE": "%DW2138#01i01"
+                "PROGRAM_TABLE_PRG4_STEPDIMENSION": "%DW2130#01F02",
+                "PROGRAM_TABLE_PRG4_CHARGEDIMENSION": "%DW2132#01F02",
+                "PROGRAM_TABLE_PRG4_FWDTIME": "%DW2133#01F01",
+                "PROGRAM_TABLE_PRG4_OSCCOUNT": "%DW2135#01I00",
+                "PROGRAM_TABLE_PRG4_BWDTIME": "%DW2136#01F01",
+                "PROGRAM_TABLE_PRG4_PRESSPOSITION": "%DW2137#01f02",
+                "PROGRAM_TABLE_PRG4_FINALPRESSURE": "%DW2138#01I01"
             }
         },
         "PROGRAM_TABLE-5": {
             "table": {
                 "addrs": [
-                    "%DW2140#01f02",
-                    "%DW2142#01f02",
-                    "%DW2143#01f01",
-                    "%DW2145#01i00",
-                    "%DW2146#01f01",
-                    "%DW2147#01F02",
-                    "%DW2148#01i01"
+                    "%DW2140#01F02",
+                    "%DW2142#01F02",
+                    "%DW2143#01F01",
+                    "%DW2145#01I00",
+                    "%DW2146#01F01",
+                    "%DW2147#01f02",
+                    "%DW2148#01I01"
                 ],
                 "start_addr": "%DW2140",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_TABLE_PRG5_STEPDIMENSION": "%DW2140#01f02",
-                "PROGRAM_TABLE_PRG5_CHARGEDIMENSION": "%DW2142#01f02",
-                "PROGRAM_TABLE_PRG5_FWDTIME": "%DW2143#01f01",
-                "PROGRAM_TABLE_PRG5_OSCCOUNT": "%DW2145#01i00",
-                "PROGRAM_TABLE_PRG5_BWDTIME": "%DW2146#01f01",
-                "PROGRAM_TABLE_PRG5_PRESSPOSITION": "%DW2147#01F02",
-                "PROGRAM_TABLE_PRG5_FINALPRESSURE": "%DW2148#01i01"
+                "PROGRAM_TABLE_PRG5_STEPDIMENSION": "%DW2140#01F02",
+                "PROGRAM_TABLE_PRG5_CHARGEDIMENSION": "%DW2142#01F02",
+                "PROGRAM_TABLE_PRG5_FWDTIME": "%DW2143#01F01",
+                "PROGRAM_TABLE_PRG5_OSCCOUNT": "%DW2145#01I00",
+                "PROGRAM_TABLE_PRG5_BWDTIME": "%DW2146#01F01",
+                "PROGRAM_TABLE_PRG5_PRESSPOSITION": "%DW2147#01f02",
+                "PROGRAM_TABLE_PRG5_FINALPRESSURE": "%DW2148#01I01"
             }
         },
         "PROGRAM_TABLE-6": {
             "table": {
                 "addrs": [
-                    "%DW2150#01f02",
-                    "%DW2152#01f02",
-                    "%DW2153#01f01",
-                    "%DW2155#01i00",
-                    "%DW2156#01f01",
-                    "%DW2157#01F02",
-                    "%DW2158#01i01"
+                    "%DW2150#01F02",
+                    "%DW2152#01F02",
+                    "%DW2153#01F01",
+                    "%DW2155#01I00",
+                    "%DW2156#01F01",
+                    "%DW2157#01f02",
+                    "%DW2158#01I01"
                 ],
                 "start_addr": "%DW2150",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_TABLE_PRG6_STEPDIMENSION": "%DW2150#01f02",
-                "PROGRAM_TABLE_PRG6_CHARGEDIMENSION": "%DW2152#01f02",
-                "PROGRAM_TABLE_PRG6_FWDTIME": "%DW2153#01f01",
-                "PROGRAM_TABLE_PRG6_OSCCOUNT": "%DW2155#01i00",
-                "PROGRAM_TABLE_PRG6_BWDTIME": "%DW2156#01f01",
-                "PROGRAM_TABLE_PRG6_PRESSPOSITION": "%DW2157#01F02",
-                "PROGRAM_TABLE_PRG6_FINALPRESSURE": "%DW2158#01i01"
+                "PROGRAM_TABLE_PRG6_STEPDIMENSION": "%DW2150#01F02",
+                "PROGRAM_TABLE_PRG6_CHARGEDIMENSION": "%DW2152#01F02",
+                "PROGRAM_TABLE_PRG6_FWDTIME": "%DW2153#01F01",
+                "PROGRAM_TABLE_PRG6_OSCCOUNT": "%DW2155#01I00",
+                "PROGRAM_TABLE_PRG6_BWDTIME": "%DW2156#01F01",
+                "PROGRAM_TABLE_PRG6_PRESSPOSITION": "%DW2157#01f02",
+                "PROGRAM_TABLE_PRG6_FINALPRESSURE": "%DW2158#01I01"
             }
         },
         "PROGRAM_TABLE-7": {
             "table": {
                 "addrs": [
-                    "%DW2160#01f02",
-                    "%DW2162#01f02",
-                    "%DW2163#01f01",
-                    "%DW2165#01i00",
-                    "%DW2166#01f01",
-                    "%DW2167#01F02",
-                    "%DW2168#01i01"
+                    "%DW2160#01F02",
+                    "%DW2162#01F02",
+                    "%DW2163#01F01",
+                    "%DW2165#01I00",
+                    "%DW2166#01F01",
+                    "%DW2167#01f02",
+                    "%DW2168#01I01"
                 ],
                 "start_addr": "%DW2160",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_TABLE_PRG7_STEPDIMENSION": "%DW2160#01f02",
-                "PROGRAM_TABLE_PRG7_CHARGEDIMENSION": "%DW2162#01f02",
-                "PROGRAM_TABLE_PRG7_FWDTIME": "%DW2163#01f01",
-                "PROGRAM_TABLE_PRG7_OSCCOUNT": "%DW2165#01i00",
-                "PROGRAM_TABLE_PRG7_BWDTIME": "%DW2166#01f01",
-                "PROGRAM_TABLE_PRG7_PRESSPOSITION": "%DW2167#01F02",
-                "PROGRAM_TABLE_PRG7_FINALPRESSURE": "%DW2168#01i01"
+                "PROGRAM_TABLE_PRG7_STEPDIMENSION": "%DW2160#01F02",
+                "PROGRAM_TABLE_PRG7_CHARGEDIMENSION": "%DW2162#01F02",
+                "PROGRAM_TABLE_PRG7_FWDTIME": "%DW2163#01F01",
+                "PROGRAM_TABLE_PRG7_OSCCOUNT": "%DW2165#01I00",
+                "PROGRAM_TABLE_PRG7_BWDTIME": "%DW2166#01F01",
+                "PROGRAM_TABLE_PRG7_PRESSPOSITION": "%DW2167#01f02",
+                "PROGRAM_TABLE_PRG7_FINALPRESSURE": "%DW2168#01I01"
             }
         },
         "PROGRAM_TABLE-8": {
             "table": {
                 "addrs": [
-                    "%DW2170#01f02",
-                    "%DW2172#01f02",
-                    "%DW2173#01f01",
-                    "%DW2175#01i00",
-                    "%DW2176#01f01",
-                    "%DW2177#01F02",
-                    "%DW2178#01i01"
+                    "%DW2170#01F02",
+                    "%DW2172#01F02",
+                    "%DW2173#01F01",
+                    "%DW2175#01I00",
+                    "%DW2176#01F01",
+                    "%DW2177#01f02",
+                    "%DW2178#01I01"
                 ],
                 "start_addr": "%DW2170",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_TABLE_PRG8_STEPDIMENSION": "%DW2170#01f02",
-                "PROGRAM_TABLE_PRG8_CHARGEDIMENSION": "%DW2172#01f02",
-                "PROGRAM_TABLE_PRG8_FWDTIME": "%DW2173#01f01",
-                "PROGRAM_TABLE_PRG8_OSCCOUNT": "%DW2175#01i00",
-                "PROGRAM_TABLE_PRG8_BWDTIME": "%DW2176#01f01",
-                "PROGRAM_TABLE_PRG8_PRESSPOSITION": "%DW2177#01F02",
-                "PROGRAM_TABLE_PRG8_FINALPRESSURE": "%DW2178#01i01"
+                "PROGRAM_TABLE_PRG8_STEPDIMENSION": "%DW2170#01F02",
+                "PROGRAM_TABLE_PRG8_CHARGEDIMENSION": "%DW2172#01F02",
+                "PROGRAM_TABLE_PRG8_FWDTIME": "%DW2173#01F01",
+                "PROGRAM_TABLE_PRG8_OSCCOUNT": "%DW2175#01I00",
+                "PROGRAM_TABLE_PRG8_BWDTIME": "%DW2176#01F01",
+                "PROGRAM_TABLE_PRG8_PRESSPOSITION": "%DW2177#01f02",
+                "PROGRAM_TABLE_PRG8_FINALPRESSURE": "%DW2178#01I01"
             }
         },
         "PROGRAM_TABLE-9": {
             "table": {
                 "addrs": [
-                    "%DW2180#01f02",
-                    "%DW2182#01f02",
-                    "%DW2183#01f01",
-                    "%DW2185#01i00",
-                    "%DW2186#01f01",
-                    "%DW2187#01F02",
-                    "%DW2188#01i01"
+                    "%DW2180#01F02",
+                    "%DW2182#01F02",
+                    "%DW2183#01F01",
+                    "%DW2185#01I00",
+                    "%DW2186#01F01",
+                    "%DW2187#01f02",
+                    "%DW2188#01I01"
                 ],
                 "start_addr": "%DW2180",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_TABLE_PRG9_STEPDIMENSION": "%DW2180#01f02",
-                "PROGRAM_TABLE_PRG9_CHARGEDIMENSION": "%DW2182#01f02",
-                "PROGRAM_TABLE_PRG9_FWDTIME": "%DW2183#01f01",
-                "PROGRAM_TABLE_PRG9_OSCCOUNT": "%DW2185#01i00",
-                "PROGRAM_TABLE_PRG9_BWDTIME": "%DW2186#01f01",
-                "PROGRAM_TABLE_PRG9_PRESSPOSITION": "%DW2187#01F02",
-                "PROGRAM_TABLE_PRG9_FINALPRESSURE": "%DW2188#01i01"
+                "PROGRAM_TABLE_PRG9_STEPDIMENSION": "%DW2180#01F02",
+                "PROGRAM_TABLE_PRG9_CHARGEDIMENSION": "%DW2182#01F02",
+                "PROGRAM_TABLE_PRG9_FWDTIME": "%DW2183#01F01",
+                "PROGRAM_TABLE_PRG9_OSCCOUNT": "%DW2185#01I00",
+                "PROGRAM_TABLE_PRG9_BWDTIME": "%DW2186#01F01",
+                "PROGRAM_TABLE_PRG9_PRESSPOSITION": "%DW2187#01f02",
+                "PROGRAM_TABLE_PRG9_FINALPRESSURE": "%DW2188#01I01"
             }
         },
         "PROGRAM_TABLE-10": {
             "table": {
                 "addrs": [
-                    "%DW2190#01f02",
-                    "%DW2192#01f02",
-                    "%DW2193#01f01",
-                    "%DW2195#01i00",
-                    "%DW2196#01f01",
-                    "%DW2197#01F02",
-                    "%DW2198#01i01"
+                    "%DW2190#01F02",
+                    "%DW2192#01F02",
+                    "%DW2193#01F01",
+                    "%DW2195#01I00",
+                    "%DW2196#01F01",
+                    "%DW2197#01f02",
+                    "%DW2198#01I01"
                 ],
                 "start_addr": "%DW2190",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_TABLE_PRG10_STEPDIMENSION": "%DW2190#01f02",
-                "PROGRAM_TABLE_PRG10_CHARGEDIMENSION": "%DW2192#01f02",
-                "PROGRAM_TABLE_PRG10_FWDTIME": "%DW2193#01f01",
-                "PROGRAM_TABLE_PRG10_OSCCOUNT": "%DW2195#01i00",
-                "PROGRAM_TABLE_PRG10_BWDTIME": "%DW2196#01f01",
-                "PROGRAM_TABLE_PRG10_PRESSPOSITION": "%DW2197#01F02",
-                "PROGRAM_TABLE_PRG10_FINALPRESSURE": "%DW2198#01i01"
+                "PROGRAM_TABLE_PRG10_STEPDIMENSION": "%DW2190#01F02",
+                "PROGRAM_TABLE_PRG10_CHARGEDIMENSION": "%DW2192#01F02",
+                "PROGRAM_TABLE_PRG10_FWDTIME": "%DW2193#01F01",
+                "PROGRAM_TABLE_PRG10_OSCCOUNT": "%DW2195#01I00",
+                "PROGRAM_TABLE_PRG10_BWDTIME": "%DW2196#01F01",
+                "PROGRAM_TABLE_PRG10_PRESSPOSITION": "%DW2197#01f02",
+                "PROGRAM_TABLE_PRG10_FINALPRESSURE": "%DW2198#01I01"
             }
         },
         "PROGRAM_TABLE-11": {
             "table": {
                 "addrs": [
-                    "%DW2200#01f02",
-                    "%DW2202#01f02",
-                    "%DW2203#01f01",
-                    "%DW2205#01i00",
-                    "%DW2206#01f01",
-                    "%DW2207#01F02",
-                    "%DW2208#01i01"
+                    "%DW2200#01F02",
+                    "%DW2202#01F02",
+                    "%DW2203#01F01",
+                    "%DW2205#01I00",
+                    "%DW2206#01F01",
+                    "%DW2207#01f02",
+                    "%DW2208#01I01"
                 ],
                 "start_addr": "%DW2200",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_TABLE_PRG11_STEPDIMENSION": "%DW2200#01f02",
-                "PROGRAM_TABLE_PRG11_CHARGEDIMENSION": "%DW2202#01f02",
-                "PROGRAM_TABLE_PRG11_FWDTIME": "%DW2203#01f01",
-                "PROGRAM_TABLE_PRG11_OSCCOUNT": "%DW2205#01i00",
-                "PROGRAM_TABLE_PRG11_BWDTIME": "%DW2206#01f01",
-                "PROGRAM_TABLE_PRG11_PRESSPOSITION": "%DW2207#01F02",
-                "PROGRAM_TABLE_PRG11_FINALPRESSURE": "%DW2208#01i01"
+                "PROGRAM_TABLE_PRG11_STEPDIMENSION": "%DW2200#01F02",
+                "PROGRAM_TABLE_PRG11_CHARGEDIMENSION": "%DW2202#01F02",
+                "PROGRAM_TABLE_PRG11_FWDTIME": "%DW2203#01F01",
+                "PROGRAM_TABLE_PRG11_OSCCOUNT": "%DW2205#01I00",
+                "PROGRAM_TABLE_PRG11_BWDTIME": "%DW2206#01F01",
+                "PROGRAM_TABLE_PRG11_PRESSPOSITION": "%DW2207#01f02",
+                "PROGRAM_TABLE_PRG11_FINALPRESSURE": "%DW2208#01I01"
             }
         },
         "PROGRAM_TABLE-12": {
             "table": {
                 "addrs": [
-                    "%DW2210#01f02",
-                    "%DW2212#01f02",
-                    "%DW2213#01f01",
-                    "%DW2215#01i00",
-                    "%DW2216#01f01",
-                    "%DW2217#01F02",
-                    "%DW2218#01i01"
+                    "%DW2210#01F02",
+                    "%DW2212#01F02",
+                    "%DW2213#01F01",
+                    "%DW2215#01I00",
+                    "%DW2216#01F01",
+                    "%DW2217#01f02",
+                    "%DW2218#01I01"
                 ],
                 "start_addr": "%DW2210",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_TABLE_PRG12_STEPDIMENSION": "%DW2210#01f02",
-                "PROGRAM_TABLE_PRG12_CHARGEDIMENSION": "%DW2212#01f02",
-                "PROGRAM_TABLE_PRG12_FWDTIME": "%DW2213#01f01",
-                "PROGRAM_TABLE_PRG12_OSCCOUNT": "%DW2215#01i00",
-                "PROGRAM_TABLE_PRG12_BWDTIME": "%DW2216#01f01",
-                "PROGRAM_TABLE_PRG12_PRESSPOSITION": "%DW2217#01F02",
-                "PROGRAM_TABLE_PRG12_FINALPRESSURE": "%DW2218#01i01"
+                "PROGRAM_TABLE_PRG12_STEPDIMENSION": "%DW2210#01F02",
+                "PROGRAM_TABLE_PRG12_CHARGEDIMENSION": "%DW2212#01F02",
+                "PROGRAM_TABLE_PRG12_FWDTIME": "%DW2213#01F01",
+                "PROGRAM_TABLE_PRG12_OSCCOUNT": "%DW2215#01I00",
+                "PROGRAM_TABLE_PRG12_BWDTIME": "%DW2216#01F01",
+                "PROGRAM_TABLE_PRG12_PRESSPOSITION": "%DW2217#01f02",
+                "PROGRAM_TABLE_PRG12_FINALPRESSURE": "%DW2218#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-1": {
             "table": {
                 "addrs": [
-                    "%DW5100#01f02",
-                    "%DW5102#01f02",
-                    "%DW5103#01f01",
-                    "%DW5105#01i00",
-                    "%DW5106#01f01",
-                    "%DW5107#01F02",
-                    "%DW5108#01i01"
+                    "%DW5100#01F02",
+                    "%DW5102#01F02",
+                    "%DW5103#01F01",
+                    "%DW5105#01I00",
+                    "%DW5106#01F01",
+                    "%DW5107#01f02",
+                    "%DW5108#01I01"
                 ],
                 "start_addr": "%DW5100",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_VIEW_TABLE_PRG1_STEPDIMENSION": "%DW5100#01f02",
-                "PROGRAM_VIEW_TABLE_PRG1_CHARGEDIMENSION": "%DW5102#01f02",
-                "PROGRAM_VIEW_TABLE_PRG1_FWDTIME": "%DW5103#01f01",
-                "PROGRAM_VIEW_TABLE_PRG1_OSCCOUNT": "%DW5105#01i00",
-                "PROGRAM_VIEW_TABLE_PRG1_BWDTIME": "%DW5106#01f01",
-                "PROGRAM_VIEW_TABLE_PRG1_PRESSPOSITION": "%DW5107#01F02",
-                "PROGRAM_VIEW_TABLE_PRG1_FINALPRESSURE": "%DW5108#01i01"
+                "PROGRAM_VIEW_TABLE_PRG1_STEPDIMENSION": "%DW5100#01F02",
+                "PROGRAM_VIEW_TABLE_PRG1_CHARGEDIMENSION": "%DW5102#01F02",
+                "PROGRAM_VIEW_TABLE_PRG1_FWDTIME": "%DW5103#01F01",
+                "PROGRAM_VIEW_TABLE_PRG1_OSCCOUNT": "%DW5105#01I00",
+                "PROGRAM_VIEW_TABLE_PRG1_BWDTIME": "%DW5106#01F01",
+                "PROGRAM_VIEW_TABLE_PRG1_PRESSPOSITION": "%DW5107#01f02",
+                "PROGRAM_VIEW_TABLE_PRG1_FINALPRESSURE": "%DW5108#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-2": {
             "table": {
                 "addrs": [
-                    "%DW5110#01f02",
-                    "%DW5112#01f02",
-                    "%DW5113#01f01",
-                    "%DW5115#01i00",
-                    "%DW5116#01f01",
-                    "%DW5117#01F02",
-                    "%DW5118#01i01"
+                    "%DW5110#01F02",
+                    "%DW5112#01F02",
+                    "%DW5113#01F01",
+                    "%DW5115#01I00",
+                    "%DW5116#01F01",
+                    "%DW5117#01f02",
+                    "%DW5118#01I01"
                 ],
                 "start_addr": "%DW5110",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_VIEW_TABLE_PRG2_STEPDIMENSION": "%DW5110#01f02",
-                "PROGRAM_VIEW_TABLE_PRG2_CHARGEDIMENSION": "%DW5112#01f02",
-                "PROGRAM_VIEW_TABLE_PRG2_FWDTIME": "%DW5113#01f01",
-                "PROGRAM_VIEW_TABLE_PRG2_OSCCOUNT": "%DW5115#01i00",
-                "PROGRAM_VIEW_TABLE_PRG2_BWDTIME": "%DW5116#01f01",
-                "PROGRAM_VIEW_TABLE_PRG2_PRESSPOSITION": "%DW5117#01F02",
-                "PROGRAM_VIEW_TABLE_PRG2_FINALPRESSURE": "%DW5118#01i01"
+                "PROGRAM_VIEW_TABLE_PRG2_STEPDIMENSION": "%DW5110#01F02",
+                "PROGRAM_VIEW_TABLE_PRG2_CHARGEDIMENSION": "%DW5112#01F02",
+                "PROGRAM_VIEW_TABLE_PRG2_FWDTIME": "%DW5113#01F01",
+                "PROGRAM_VIEW_TABLE_PRG2_OSCCOUNT": "%DW5115#01I00",
+                "PROGRAM_VIEW_TABLE_PRG2_BWDTIME": "%DW5116#01F01",
+                "PROGRAM_VIEW_TABLE_PRG2_PRESSPOSITION": "%DW5117#01f02",
+                "PROGRAM_VIEW_TABLE_PRG2_FINALPRESSURE": "%DW5118#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-3": {
             "table": {
                 "addrs": [
-                    "%DW5120#01f02",
-                    "%DW5122#01f02",
-                    "%DW5123#01f01",
-                    "%DW5125#01i00",
-                    "%DW5126#01f01",
-                    "%DW5127#01F02",
-                    "%DW5128#01i01"
+                    "%DW5120#01F02",
+                    "%DW5122#01F02",
+                    "%DW5123#01F01",
+                    "%DW5125#01I00",
+                    "%DW5126#01F01",
+                    "%DW5127#01f02",
+                    "%DW5128#01I01"
                 ],
                 "start_addr": "%DW5120",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_VIEW_TABLE_PRG3_STEPDIMENSION": "%DW5120#01f02",
-                "PROGRAM_VIEW_TABLE_PRG3_CHARGEDIMENSION": "%DW5122#01f02",
-                "PROGRAM_VIEW_TABLE_PRG3_FWDTIME": "%DW5123#01f01",
-                "PROGRAM_VIEW_TABLE_PRG3_OSCCOUNT": "%DW5125#01i00",
-                "PROGRAM_VIEW_TABLE_PRG3_BWDTIME": "%DW5126#01f01",
-                "PROGRAM_VIEW_TABLE_PRG3_PRESSPOSITION": "%DW5127#01F02",
-                "PROGRAM_VIEW_TABLE_PRG3_FINALPRESSURE": "%DW5128#01i01"
+                "PROGRAM_VIEW_TABLE_PRG3_STEPDIMENSION": "%DW5120#01F02",
+                "PROGRAM_VIEW_TABLE_PRG3_CHARGEDIMENSION": "%DW5122#01F02",
+                "PROGRAM_VIEW_TABLE_PRG3_FWDTIME": "%DW5123#01F01",
+                "PROGRAM_VIEW_TABLE_PRG3_OSCCOUNT": "%DW5125#01I00",
+                "PROGRAM_VIEW_TABLE_PRG3_BWDTIME": "%DW5126#01F01",
+                "PROGRAM_VIEW_TABLE_PRG3_PRESSPOSITION": "%DW5127#01f02",
+                "PROGRAM_VIEW_TABLE_PRG3_FINALPRESSURE": "%DW5128#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-4": {
             "table": {
                 "addrs": [
-                    "%DW5130#01f02",
-                    "%DW5132#01f02",
-                    "%DW5133#01f01",
-                    "%DW5135#01i00",
-                    "%DW5136#01f01",
-                    "%DW5137#01F02",
-                    "%DW5138#01i01"
+                    "%DW5130#01F02",
+                    "%DW5132#01F02",
+                    "%DW5133#01F01",
+                    "%DW5135#01I00",
+                    "%DW5136#01F01",
+                    "%DW5137#01f02",
+                    "%DW5138#01I01"
                 ],
                 "start_addr": "%DW5130",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_VIEW_TABLE_PRG4_STEPDIMENSION": "%DW5130#01f02",
-                "PROGRAM_VIEW_TABLE_PRG4_CHARGEDIMENSION": "%DW5132#01f02",
-                "PROGRAM_VIEW_TABLE_PRG4_FWDTIME": "%DW5133#01f01",
-                "PROGRAM_VIEW_TABLE_PRG4_OSCCOUNT": "%DW5135#01i00",
-                "PROGRAM_VIEW_TABLE_PRG4_BWDTIME": "%DW5136#01f01",
-                "PROGRAM_VIEW_TABLE_PRG4_PRESSPOSITION": "%DW5137#01F02",
-                "PROGRAM_VIEW_TABLE_PRG4_FINALPRESSURE": "%DW5138#01i01"
+                "PROGRAM_VIEW_TABLE_PRG4_STEPDIMENSION": "%DW5130#01F02",
+                "PROGRAM_VIEW_TABLE_PRG4_CHARGEDIMENSION": "%DW5132#01F02",
+                "PROGRAM_VIEW_TABLE_PRG4_FWDTIME": "%DW5133#01F01",
+                "PROGRAM_VIEW_TABLE_PRG4_OSCCOUNT": "%DW5135#01I00",
+                "PROGRAM_VIEW_TABLE_PRG4_BWDTIME": "%DW5136#01F01",
+                "PROGRAM_VIEW_TABLE_PRG4_PRESSPOSITION": "%DW5137#01f02",
+                "PROGRAM_VIEW_TABLE_PRG4_FINALPRESSURE": "%DW5138#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-5": {
             "table": {
                 "addrs": [
-                    "%DW5140#01f02",
-                    "%DW5142#01f02",
-                    "%DW5143#01f01",
-                    "%DW5145#01i00",
-                    "%DW5146#01f01",
-                    "%DW5147#01F02",
-                    "%DW5148#01i01"
+                    "%DW5140#01F02",
+                    "%DW5142#01F02",
+                    "%DW5143#01F01",
+                    "%DW5145#01I00",
+                    "%DW5146#01F01",
+                    "%DW5147#01f02",
+                    "%DW5148#01I01"
                 ],
                 "start_addr": "%DW5140",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_VIEW_TABLE_PRG5_STEPDIMENSION": "%DW5140#01f02",
-                "PROGRAM_VIEW_TABLE_PRG5_CHARGEDIMENSION": "%DW5142#01f02",
-                "PROGRAM_VIEW_TABLE_PRG5_FWDTIME": "%DW5143#01f01",
-                "PROGRAM_VIEW_TABLE_PRG5_OSCCOUNT": "%DW5145#01i00",
-                "PROGRAM_VIEW_TABLE_PRG5_BWDTIME": "%DW5146#01f01",
-                "PROGRAM_VIEW_TABLE_PRG5_PRESSPOSITION": "%DW5147#01F02",
-                "PROGRAM_VIEW_TABLE_PRG5_FINALPRESSURE": "%DW5148#01i01"
+                "PROGRAM_VIEW_TABLE_PRG5_STEPDIMENSION": "%DW5140#01F02",
+                "PROGRAM_VIEW_TABLE_PRG5_CHARGEDIMENSION": "%DW5142#01F02",
+                "PROGRAM_VIEW_TABLE_PRG5_FWDTIME": "%DW5143#01F01",
+                "PROGRAM_VIEW_TABLE_PRG5_OSCCOUNT": "%DW5145#01I00",
+                "PROGRAM_VIEW_TABLE_PRG5_BWDTIME": "%DW5146#01F01",
+                "PROGRAM_VIEW_TABLE_PRG5_PRESSPOSITION": "%DW5147#01f02",
+                "PROGRAM_VIEW_TABLE_PRG5_FINALPRESSURE": "%DW5148#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-6": {
             "table": {
                 "addrs": [
-                    "%DW5150#01f02",
-                    "%DW5152#01f02",
-                    "%DW5153#01f01",
-                    "%DW5155#01i00",
-                    "%DW5156#01f01",
-                    "%DW5157#01F02",
-                    "%DW5158#01i01"
+                    "%DW5150#01F02",
+                    "%DW5152#01F02",
+                    "%DW5153#01F01",
+                    "%DW5155#01I00",
+                    "%DW5156#01F01",
+                    "%DW5157#01f02",
+                    "%DW5158#01I01"
                 ],
                 "start_addr": "%DW5150",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_VIEW_TABLE_PRG6_STEPDIMENSION": "%DW5150#01f02",
-                "PROGRAM_VIEW_TABLE_PRG6_CHARGEDIMENSION": "%DW5152#01f02",
-                "PROGRAM_VIEW_TABLE_PRG6_FWDTIME": "%DW5153#01f01",
-                "PROGRAM_VIEW_TABLE_PRG6_OSCCOUNT": "%DW5155#01i00",
-                "PROGRAM_VIEW_TABLE_PRG6_BWDTIME": "%DW5156#01f01",
-                "PROGRAM_VIEW_TABLE_PRG6_PRESSPOSITION": "%DW5157#01F02",
-                "PROGRAM_VIEW_TABLE_PRG6_FINALPRESSURE": "%DW5158#01i01"
+                "PROGRAM_VIEW_TABLE_PRG6_STEPDIMENSION": "%DW5150#01F02",
+                "PROGRAM_VIEW_TABLE_PRG6_CHARGEDIMENSION": "%DW5152#01F02",
+                "PROGRAM_VIEW_TABLE_PRG6_FWDTIME": "%DW5153#01F01",
+                "PROGRAM_VIEW_TABLE_PRG6_OSCCOUNT": "%DW5155#01I00",
+                "PROGRAM_VIEW_TABLE_PRG6_BWDTIME": "%DW5156#01F01",
+                "PROGRAM_VIEW_TABLE_PRG6_PRESSPOSITION": "%DW5157#01f02",
+                "PROGRAM_VIEW_TABLE_PRG6_FINALPRESSURE": "%DW5158#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-7": {
             "table": {
                 "addrs": [
-                    "%DW5160#01f02",
-                    "%DW5162#01f02",
-                    "%DW5163#01f01",
-                    "%DW5165#01i00",
-                    "%DW5166#01f01",
-                    "%DW5167#01F02",
-                    "%DW5168#01i01"
+                    "%DW5160#01F02",
+                    "%DW5162#01F02",
+                    "%DW5163#01F01",
+                    "%DW5165#01I00",
+                    "%DW5166#01F01",
+                    "%DW5167#01f02",
+                    "%DW5168#01I01"
                 ],
                 "start_addr": "%DW5160",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_VIEW_TABLE_PRG7_STEPDIMENSION": "%DW5160#01f02",
-                "PROGRAM_VIEW_TABLE_PRG7_CHARGEDIMENSION": "%DW5162#01f02",
-                "PROGRAM_VIEW_TABLE_PRG7_FWDTIME": "%DW5163#01f01",
-                "PROGRAM_VIEW_TABLE_PRG7_OSCCOUNT": "%DW5165#01i00",
-                "PROGRAM_VIEW_TABLE_PRG7_BWDTIME": "%DW5166#01f01",
-                "PROGRAM_VIEW_TABLE_PRG7_PRESSPOSITION": "%DW5167#01F02",
-                "PROGRAM_VIEW_TABLE_PRG7_FINALPRESSURE": "%DW5168#01i01"
+                "PROGRAM_VIEW_TABLE_PRG7_STEPDIMENSION": "%DW5160#01F02",
+                "PROGRAM_VIEW_TABLE_PRG7_CHARGEDIMENSION": "%DW5162#01F02",
+                "PROGRAM_VIEW_TABLE_PRG7_FWDTIME": "%DW5163#01F01",
+                "PROGRAM_VIEW_TABLE_PRG7_OSCCOUNT": "%DW5165#01I00",
+                "PROGRAM_VIEW_TABLE_PRG7_BWDTIME": "%DW5166#01F01",
+                "PROGRAM_VIEW_TABLE_PRG7_PRESSPOSITION": "%DW5167#01f02",
+                "PROGRAM_VIEW_TABLE_PRG7_FINALPRESSURE": "%DW5168#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-8": {
             "table": {
                 "addrs": [
-                    "%DW5170#01f02",
-                    "%DW5172#01f02",
-                    "%DW5173#01f01",
-                    "%DW5175#01i00",
-                    "%DW5176#01f01",
-                    "%DW5177#01F02",
-                    "%DW5178#01i01"
+                    "%DW5170#01F02",
+                    "%DW5172#01F02",
+                    "%DW5173#01F01",
+                    "%DW5175#01I00",
+                    "%DW5176#01F01",
+                    "%DW5177#01f02",
+                    "%DW5178#01I01"
                 ],
                 "start_addr": "%DW5170",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_VIEW_TABLE_PRG8_STEPDIMENSION": "%DW5170#01f02",
-                "PROGRAM_VIEW_TABLE_PRG8_CHARGEDIMENSION": "%DW5172#01f02",
-                "PROGRAM_VIEW_TABLE_PRG8_FWDTIME": "%DW5173#01f01",
-                "PROGRAM_VIEW_TABLE_PRG8_OSCCOUNT": "%DW5175#01i00",
-                "PROGRAM_VIEW_TABLE_PRG8_BWDTIME": "%DW5176#01f01",
-                "PROGRAM_VIEW_TABLE_PRG8_PRESSPOSITION": "%DW5177#01F02",
-                "PROGRAM_VIEW_TABLE_PRG8_FINALPRESSURE": "%DW5178#01i01"
+                "PROGRAM_VIEW_TABLE_PRG8_STEPDIMENSION": "%DW5170#01F02",
+                "PROGRAM_VIEW_TABLE_PRG8_CHARGEDIMENSION": "%DW5172#01F02",
+                "PROGRAM_VIEW_TABLE_PRG8_FWDTIME": "%DW5173#01F01",
+                "PROGRAM_VIEW_TABLE_PRG8_OSCCOUNT": "%DW5175#01I00",
+                "PROGRAM_VIEW_TABLE_PRG8_BWDTIME": "%DW5176#01F01",
+                "PROGRAM_VIEW_TABLE_PRG8_PRESSPOSITION": "%DW5177#01f02",
+                "PROGRAM_VIEW_TABLE_PRG8_FINALPRESSURE": "%DW5178#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-9": {
             "table": {
                 "addrs": [
-                    "%DW5180#01f02",
-                    "%DW5182#01f02",
-                    "%DW5183#01f01",
-                    "%DW5185#01i00",
-                    "%DW5186#01f01",
-                    "%DW5187#01F02",
-                    "%DW5188#01i01"
+                    "%DW5180#01F02",
+                    "%DW5182#01F02",
+                    "%DW5183#01F01",
+                    "%DW5185#01I00",
+                    "%DW5186#01F01",
+                    "%DW5187#01f02",
+                    "%DW5188#01I01"
                 ],
                 "start_addr": "%DW5180",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_VIEW_TABLE_PRG9_STEPDIMENSION": "%DW5180#01f02",
-                "PROGRAM_VIEW_TABLE_PRG9_CHARGEDIMENSION": "%DW5182#01f02",
-                "PROGRAM_VIEW_TABLE_PRG9_FWDTIME": "%DW5183#01f01",
-                "PROGRAM_VIEW_TABLE_PRG9_OSCCOUNT": "%DW5185#01i00",
-                "PROGRAM_VIEW_TABLE_PRG9_BWDTIME": "%DW5186#01f01",
-                "PROGRAM_VIEW_TABLE_PRG9_PRESSPOSITION": "%DW5187#01F02",
-                "PROGRAM_VIEW_TABLE_PRG9_FINALPRESSURE": "%DW5188#01i01"
+                "PROGRAM_VIEW_TABLE_PRG9_STEPDIMENSION": "%DW5180#01F02",
+                "PROGRAM_VIEW_TABLE_PRG9_CHARGEDIMENSION": "%DW5182#01F02",
+                "PROGRAM_VIEW_TABLE_PRG9_FWDTIME": "%DW5183#01F01",
+                "PROGRAM_VIEW_TABLE_PRG9_OSCCOUNT": "%DW5185#01I00",
+                "PROGRAM_VIEW_TABLE_PRG9_BWDTIME": "%DW5186#01F01",
+                "PROGRAM_VIEW_TABLE_PRG9_PRESSPOSITION": "%DW5187#01f02",
+                "PROGRAM_VIEW_TABLE_PRG9_FINALPRESSURE": "%DW5188#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-10": {
             "table": {
                 "addrs": [
-                    "%DW5190#01f02",
-                    "%DW5192#01f02",
-                    "%DW5193#01f01",
-                    "%DW5195#01i00",
-                    "%DW5196#01f01",
-                    "%DW5197#01F02",
-                    "%DW5198#01i01"
+                    "%DW5190#01F02",
+                    "%DW5192#01F02",
+                    "%DW5193#01F01",
+                    "%DW5195#01I00",
+                    "%DW5196#01F01",
+                    "%DW5197#01f02",
+                    "%DW5198#01I01"
                 ],
                 "start_addr": "%DW5190",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_VIEW_TABLE_PRG10_STEPDIMENSION": "%DW5190#01f02",
-                "PROGRAM_VIEW_TABLE_PRG10_CHARGEDIMENSION": "%DW5192#01f02",
-                "PROGRAM_VIEW_TABLE_PRG10_FWDTIME": "%DW5193#01f01",
-                "PROGRAM_VIEW_TABLE_PRG10_OSCCOUNT": "%DW5195#01i00",
-                "PROGRAM_VIEW_TABLE_PRG10_BWDTIME": "%DW5196#01f01",
-                "PROGRAM_VIEW_TABLE_PRG10_PRESSPOSITION": "%DW5197#01F02",
-                "PROGRAM_VIEW_TABLE_PRG10_FINALPRESSURE": "%DW5198#01i01"
+                "PROGRAM_VIEW_TABLE_PRG10_STEPDIMENSION": "%DW5190#01F02",
+                "PROGRAM_VIEW_TABLE_PRG10_CHARGEDIMENSION": "%DW5192#01F02",
+                "PROGRAM_VIEW_TABLE_PRG10_FWDTIME": "%DW5193#01F01",
+                "PROGRAM_VIEW_TABLE_PRG10_OSCCOUNT": "%DW5195#01I00",
+                "PROGRAM_VIEW_TABLE_PRG10_BWDTIME": "%DW5196#01F01",
+                "PROGRAM_VIEW_TABLE_PRG10_PRESSPOSITION": "%DW5197#01f02",
+                "PROGRAM_VIEW_TABLE_PRG10_FINALPRESSURE": "%DW5198#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-11": {
             "table": {
                 "addrs": [
-                    "%DW5200#01f02",
-                    "%DW5202#01f02",
-                    "%DW5203#01f01",
-                    "%DW5205#01i00",
-                    "%DW5206#01f01",
-                    "%DW5207#01F02",
-                    "%DW5208#01i01"
+                    "%DW5200#01F02",
+                    "%DW5202#01F02",
+                    "%DW5203#01F01",
+                    "%DW5205#01I00",
+                    "%DW5206#01F01",
+                    "%DW5207#01f02",
+                    "%DW5208#01I01"
                 ],
                 "start_addr": "%DW5200",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_VIEW_TABLE_PRG11_STEPDIMENSION": "%DW5200#01f02",
-                "PROGRAM_VIEW_TABLE_PRG11_CHARGEDIMENSION": "%DW5202#01f02",
-                "PROGRAM_VIEW_TABLE_PRG11_FWDTIME": "%DW5203#01f01",
-                "PROGRAM_VIEW_TABLE_PRG11_OSCCOUNT": "%DW5205#01i00",
-                "PROGRAM_VIEW_TABLE_PRG11_BWDTIME": "%DW5206#01f01",
-                "PROGRAM_VIEW_TABLE_PRG11_PRESSPOSITION": "%DW5207#01F02",
-                "PROGRAM_VIEW_TABLE_PRG11_FINALPRESSURE": "%DW5208#01i01"
+                "PROGRAM_VIEW_TABLE_PRG11_STEPDIMENSION": "%DW5200#01F02",
+                "PROGRAM_VIEW_TABLE_PRG11_CHARGEDIMENSION": "%DW5202#01F02",
+                "PROGRAM_VIEW_TABLE_PRG11_FWDTIME": "%DW5203#01F01",
+                "PROGRAM_VIEW_TABLE_PRG11_OSCCOUNT": "%DW5205#01I00",
+                "PROGRAM_VIEW_TABLE_PRG11_BWDTIME": "%DW5206#01F01",
+                "PROGRAM_VIEW_TABLE_PRG11_PRESSPOSITION": "%DW5207#01f02",
+                "PROGRAM_VIEW_TABLE_PRG11_FINALPRESSURE": "%DW5208#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-12": {
             "table": {
                 "addrs": [
-                    "%DW5210#01f02",
-                    "%DW5212#01f02",
-                    "%DW5213#01f01",
-                    "%DW5215#01i00",
-                    "%DW5216#01f01",
-                    "%DW5217#01F02",
-                    "%DW5218#01i01"
+                    "%DW5210#01F02",
+                    "%DW5212#01F02",
+                    "%DW5213#01F01",
+                    "%DW5215#01I00",
+                    "%DW5216#01F01",
+                    "%DW5217#01f02",
+                    "%DW5218#01I01"
                 ],
                 "start_addr": "%DW5210",
                 "size": 16
             },
             "addrs": {
-                "PROGRAM_VIEW_TABLE_PRG12_STEPDIMENSION": "%DW5210#01f02",
-                "PROGRAM_VIEW_TABLE_PRG12_CHARGEDIMENSION": "%DW5212#01f02",
-                "PROGRAM_VIEW_TABLE_PRG12_FWDTIME": "%DW5213#01f01",
-                "PROGRAM_VIEW_TABLE_PRG12_OSCCOUNT": "%DW5215#01i00",
-                "PROGRAM_VIEW_TABLE_PRG12_BWDTIME": "%DW5216#01f01",
-                "PROGRAM_VIEW_TABLE_PRG12_PRESSPOSITION": "%DW5217#01F02",
-                "PROGRAM_VIEW_TABLE_PRG12_FINALPRESSURE": "%DW5218#01i01"
+                "PROGRAM_VIEW_TABLE_PRG12_STEPDIMENSION": "%DW5210#01F02",
+                "PROGRAM_VIEW_TABLE_PRG12_CHARGEDIMENSION": "%DW5212#01F02",
+                "PROGRAM_VIEW_TABLE_PRG12_FWDTIME": "%DW5213#01F01",
+                "PROGRAM_VIEW_TABLE_PRG12_OSCCOUNT": "%DW5215#01I00",
+                "PROGRAM_VIEW_TABLE_PRG12_BWDTIME": "%DW5216#01F01",
+                "PROGRAM_VIEW_TABLE_PRG12_PRESSPOSITION": "%DW5217#01f02",
+                "PROGRAM_VIEW_TABLE_PRG12_FINALPRESSURE": "%DW5218#01I01"
             }
         }
     },

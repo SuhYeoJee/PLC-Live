@@ -32,26 +32,6 @@ class Model():
         self.alarms = {k:'off' for k in self.state.addrs["PLC_ADDR"]["ALARM"].keys()}
 
     # [PLC] -------------------------------------------------------------------------------------------
-    # def _get_update_data(self)->dict:
-    #     new_datas,result = {}, {}
-
-    #     for k,v in self.state.dataset.items():
-    #         new_datas = {}
-    #         if ('PROGRAM' in k) and (isinstance(self.table_data[k], list)):
-    #             new_datas.update(self.plc.read(single=self.table_data[k]))
-    #         else:
-    #             table_addrs = [addr for label, addr in v.items() if 'TABLE' in label]
-    #             if table_addrs:
-    #                 for start_addr,read_size in self.table_data[k].items():
-    #                     temp_datas = self.plc.read(table={"addrs":table_addrs,"start_addr":start_addr,"size":read_size})
-    #                     new_datas.update(temp_datas)
-    #                     table_addrs = [x for x in table_addrs if x not in temp_datas] #테이블 누락 확인필
-    #         addrs = [addr for label, addr in v.items() if 'TABLE' not in label]
-    #         new_datas.update(self.plc.read(single=addrs))
-    #         result.update({label: new_datas[base] for label, addr in v.items() if (base := addr.split('#')[0]) in new_datas})
-    #     return result
-    # ==============================
-
     def _get_update_data(self)->dict:
         result = {}
         for section_name, section_data in self.state.dataset.items():

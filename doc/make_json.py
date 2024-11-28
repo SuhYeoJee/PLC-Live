@@ -17,16 +17,16 @@ def get_addr_with_option(key)->str:
     size = int(size)
     exponent = int(exponent)
 
-    if datatype == 'S':
+    if datatype == 'S': #string
         value_type = datatype
-    elif datatype == 'B':
+    elif datatype == 'X': #bit
         value_type = datatype
-    elif datatype == 'A':
-        value_type = datatype
-    elif exponent >= 0: # int
-        value_type = 'i' if 'U' in datatype else 'I'
-    else: #exponent < 0 # float
-        value_type = 'f' if 'U' in datatype else 'F'
+    elif datatype == 'A': # alarm(A: 1=on) (a: 0=on)
+        value_type = 'a' if exponent == 0 else 'A'
+    elif exponent >= 0: # int (I: usigned) (i: signed)
+        value_type = 'I' if 'U' in datatype else 'i'
+    else: #exponent < 0 # float (F: usigned) (f: signed)
+        value_type = 'F' if 'U' in datatype else 'f'
 
     res = f'%{addr}#{size:02}{value_type}{abs(exponent):02}'
     return res
