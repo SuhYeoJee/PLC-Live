@@ -67,10 +67,10 @@ class Controller:
         update_data,alarm_data,is_graph_update = tick_data
         self.view.set_text(update_data)
         self.view.change_window_title(str(type(self.model.state).__name__))
-        self.view.set_graph_y(update_data['AUTOMATIC_SET_PRESSINGSIZE'])
 
 
         if is_graph_update:
+            self.view.set_graph_y(update_data['AUTOMATIC_SET_PRESSINGSIZE'])
             self.graph_points.append(float(update_data['AUTOMATIC_SEGSIZE_1']))
             print(self.graph_points)
             self.view.update_graph(self.graph_points)

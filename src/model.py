@@ -114,11 +114,11 @@ class Model():
         
 
     def _update_graph(self,update_data)->bool:
-        if 'AUTOMATIC_SEGSIZE_1' not in update_data.keys():
+        if 'AUTOMATIC_ACTUAL_WORKCOUNT' not in update_data.keys():
             return False
         
         # 그래프 갱신 판단
-        graph_value = update_data['AUTOMATIC_SEGSIZE_1']
+        graph_value = update_data['AUTOMATIC_ACTUAL_WORKCOUNT']
         if graph_value != self.graph_value:
             self.graph_value = graph_value
             return True

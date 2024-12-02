@@ -51,7 +51,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         self.ALARM_TABLE.setColumnWidth(0, 200)
     
     def init_graph(self):
-        self.graph_width = 7
+        self.graph_width = 4
         self.graph_widget = pg.PlotWidget()
         self.graph_widget.setBackground('w')
         self.horizontal_val = 0
