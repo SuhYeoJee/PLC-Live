@@ -25,8 +25,11 @@ class Worker(QThread):
     def run(self):
         while self.running:
             if self.model.state.use_tick: #틱갱신
-                # print('tick')
-                tick_data = self.model.worker_tick()
+                print('#################tick###################')
+                tick_data = self.model.worker_tick() # update_data,alarm_data,is_graph_update
+                import pprint
+                pprint.pprint(tick_data)
+                print('########################################')
                 self.data_generated.emit(tick_data)
             self.msleep(self.time)
 
@@ -53,6 +56,7 @@ class Controller:
         
     # -------------------------------------------------------------------------------------------
     def start_monitoring(self)->None:
+        self.view.clear_window()
         if self.worker is None or not self.worker.isRunning():
             self.graph_points = []
             self.worker = Worker(self.model,self.worker_time)

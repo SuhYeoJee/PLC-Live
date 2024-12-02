@@ -58,6 +58,7 @@ class Model():
         '''
         1. PLC 데이터 갱신
         2. state 전환
+        update_data,alarm_data,is_graph_update
         '''
         self.state.before_worker_tick()
 
@@ -82,15 +83,31 @@ class Model():
 
         # 기존 상태와 비교
         for label,value in alarms.items():
+            alarm_state = self._alarm_check(label,value)
             try:
-                if value != self.alarms[label]:
-                    result[label] = [value,get_now_str()]
+                if alarm_state != self.alarms[label]:
+                    result[label] = [alarm_state,get_now_str()]
+                    self.alarms[label] = alarm_state # update
+                else:
+                    ...
             except KeyError:
-                result[label] = [value,get_now_str()]
-        else:
-            self.alarms = alarms
+                result[label] = [alarm_state,get_now_str()]
 
         return result #{arr_label:['on',timestr]}
+
+    def _alarm_check(self,label,value):
+        try:
+            alarm_addr = self.state.dataset['ALARM'][label]
+            plc_addr,_,option = alarm_addr.partition('#')
+            if option[2] == 'A': #(1=on)
+                return 'on' if value == 1 else 'off'
+            elif option[2] == 'a': #(0=on)
+                return 'on' if value == 0 else 'off'
+            else:
+                raise(f'alarm_addr_option_err:{alarm_addr}')
+        except Exception as e:
+            print(e)
+        
 
     def _update_graph(self,update_data)->bool:
         if 'AUTOMATIC_SEGSIZE_1' not in update_data.keys():
