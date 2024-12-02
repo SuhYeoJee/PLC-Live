@@ -54,6 +54,8 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         self.graph_width = 7
         self.graph_widget = pg.PlotWidget()
         self.graph_widget.setBackground('w')
+        self.horizontal_val = 0
+        self.set_graph_y()
         QVBoxLayout(self.graph_frame).addWidget(self.graph_widget)
         self.vertical_line = pg.InfiniteLine(pos=0, angle=90, pen=pg.mkPen('r', width=2))
 
@@ -128,6 +130,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
     # --------------------------
     def _clear_graph(self)->None:
         self.graph_widget.clear()
+        self.set_graph_y()
 
     # --------------------------
     def clear_window(self)->None:
@@ -143,6 +146,13 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         for k,v in alarm_data.items():
             self._set_text_ALARM_TABLE(k,v)     
     # --------------------------
+
+    def set_graph_y(self,y:float=0.0):
+        self.horizontal_val = y
+        self.graph_widget.setYRange(float(self.horizontal_val)-0.2,float(self.horizontal_val)+0.2)
+
+
+
     def update_graph(self,graph_points:list):
         '''
         리스트 값을 그래프에 표기
@@ -159,7 +169,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         except: ...
         self.vertical_line = pg.InfiniteLine(pos=self.horizontalSlider.value(), angle=90, pen=pg.mkPen('r', width=2))
         self.graph_widget.addItem(self.vertical_line)
-        self.horizontal_line = pg.InfiniteLine(pos=0, angle=0, pen=pg.mkPen('k', width=2))
+        self.horizontal_line = pg.InfiniteLine(pos=self.horizontal_val, angle=0, pen=pg.mkPen('k', width=2))
         self.graph_widget.addItem(self.horizontal_line)
 
     # [external call] ===========================================================================================

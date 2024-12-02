@@ -67,6 +67,7 @@ class Controller:
         update_data,alarm_data,is_graph_update = tick_data
         self.view.set_text(update_data)
         self.view.change_window_title(str(type(self.model.state).__name__))
+        self.view.set_graph_y(update_data['AUTOMATIC_SET_PRESSINGSIZE'])
 
 
         if is_graph_update:
@@ -181,6 +182,7 @@ class Controller:
         if self.model.state == self.model.v_w:
             self.view.vertical_line.setPos(value)
             self.view.graph_widget.setXRange(value - self.view.graph_width/2, value + self.view.graph_width/2)
+            self.view.graph_widget.setYRange(float(self.view.horizontal_val)-0.2,float(self.view.horizontal_val)+0.2)
             self._view_update_data_from_session_data(value)
             
     def close_data(self):
