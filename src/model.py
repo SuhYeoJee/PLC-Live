@@ -27,7 +27,7 @@ class Model():
         self.s_w.next_state = self.e_w
         self.e_w.next_state = self.s_w
         # --------------------------
-        self.state = self.c_w # 초기상태
+        self.state = self.c_w # 초기상태 
         # --------------------------
         self.alarms = {k:'off' for k in self.state.addrs["PLC_ADDR"]["ALARM"].keys()}
 

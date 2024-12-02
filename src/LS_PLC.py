@@ -296,7 +296,11 @@ class LS_plc():
         data = b''.join(datas)
 
         if data_type == 'S': # string
-            result = re.sub(r'[\x00-\x1F\x7F]', '', data.decode('ASCII'))
+            # result = re.sub(r'[\x00-\x1F\x7F]', '', data.decode('ASCII'))
+            s = re.sub(r'[\x00-\x1F\x7F]', '', data.decode('ASCII'))
+            # 문자열 오류 TEST -> ETTS 수정
+            result = ''.join(s[i+1:i+2]+s[i:i+1]for i in range(0,len(s)-1,2))+(s[-1] if len(s)%2!=0 else '')
+
         elif data_type == 'I': # unsigned int
             result = int.from_bytes(data,'little') * pow(10,data_scale)
         elif data_type == 'i': # signed int

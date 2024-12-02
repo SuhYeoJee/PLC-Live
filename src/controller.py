@@ -110,7 +110,7 @@ class Controller:
 
     def connect_plc(self):
         self.model.c_w.use_tick=True
-        self.model.state = self.model.c_w
+        self.model.state = self.model.c_w 
         self.start_monitoring()
 
     def disconnect_plc(self):
@@ -160,6 +160,8 @@ class Controller:
         file_name = self.view.open_file_dialog()
         self.model.v_w = view_wait(file_name)
         self.model.state = self.model.v_w
+        self.view.clear_window()
+
 
         self.idxs = self._init_idxs()
         self.graph_points = [float(x) for x in self._init_graph_points_from_session_data(self.idxs)[1:]]

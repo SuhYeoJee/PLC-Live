@@ -31,6 +31,7 @@
 
 pip install
 - pyqt5
+- pyqt5designer
 - pyqtgraph
 - pandas
 - openpyxl
