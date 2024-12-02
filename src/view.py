@@ -95,6 +95,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
     # [view update] ===========================================================================================
     def set_text(self,update_data:dict)->None:
         for k,v in update_data.items():
+            if (type(v) == type('')) and ('#'in v) and ('%' in v) :continue
             if 'PROGRAM_TABLE' in k: # 테이블에 값 표시
                 self._set_text_PROGRAM_TABLE(k,v)
             elif 'PROGRAM_LIST_TABLE' in k:

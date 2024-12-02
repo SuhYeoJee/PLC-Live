@@ -66,6 +66,8 @@ class Controller:
     def _update_view(self,tick_data):
         update_data,alarm_data,is_graph_update = tick_data
         self.view.set_text(update_data)
+        self.view.change_window_title(str(type(self.model.state).__name__))
+
 
         if is_graph_update:
             self.graph_points.append(float(update_data['AUTOMATIC_SEGSIZE_1']))
@@ -161,7 +163,7 @@ class Controller:
         self.model.v_w = view_wait(file_name)
         self.model.state = self.model.v_w
         self.view.clear_window()
-
+        self.view.change_window_title(str(type(self.model.state).__name__))
 
         self.idxs = self._init_idxs()
         self.graph_points = [float(x) for x in self._init_graph_points_from_session_data(self.idxs)[1:]]
@@ -185,6 +187,7 @@ class Controller:
         self.view.clear_window()
         self.model.state.before_change_mode()
         self.model.state = self.model.c_w
+        self.view.change_window_title(str(type(self.model.state).__name__))
         print(f'_change_mode:{type(self.model.state).__name__}')
 
 # ===========================================================================================

@@ -366,12 +366,8 @@ class LS_plc():
 
         for addr in addrs: #addrs 순회는 비효율, 수정필
             plc_addr,_,option = addr.partition('#')
-            p = (int(plc_addr[3:]) - int(start_a[3:]))*2
-            print("==========")
-            print(p)
-            byte_addr = f'{start_byte_addr[:3]}{int(start_byte_addr[3:],16)+p:X}'
-            print(start_byte_addr)
-            print(byte_addr)
+            offset = (int(plc_addr[3:]) - int(start_a[3:]))*2
+            byte_addr = f'{start_byte_addr[:3]}{int(start_byte_addr[3:],16)+offset:X}'
             
             # byte_addr,_,option = self._addr_to_byte_addr(addr).partition('#')
             datas = []
@@ -382,7 +378,6 @@ class LS_plc():
                     datas.append(byte_dict[byte_addr_idx])
 
                 result[plc_addr] = self._data_decoding(datas,addr)
-                print(result[plc_addr])
             except KeyError: ...
             except Exception as e:
                 print(e)
