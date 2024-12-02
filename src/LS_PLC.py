@@ -95,7 +95,7 @@ class LS_plc():
 
         if addr_type in ['X','x']: # bit addr
             word_addr = f"{addr[:2]}W{addr[3:-1]}"
-        elif addr_type in ['B','b']: # byte addr
+        elif addr_type in ['B','b']: # byte addr #실제 호출되지 않음
             # word_addr = f"{addr[:2]}W{int(addr[3:], 16)//2:X}"
             word_addr = f"{addr[:2]}W{int(addr[3:], 10)//2}"
         else:
@@ -106,6 +106,10 @@ class LS_plc():
     def _addr_to_byte_addr(self,addr:str="%DW5004#01I00"):
         '''
         구간 읽기용 주소 변환
+        16진수로 곱해야한다
+        dw2125 -> dw424a
+        dw4250 으로 바꾸면 다른거 읽어옴 (dw2128)
+
         '''
         # DX5004 = DW500.4 = DBA00
         # DW5004 = DBA008, DBA009
@@ -296,11 +300,13 @@ class LS_plc():
         data = b''.join(datas)
 
         if data_type == 'S': # string
-            # result = re.sub(r'[\x00-\x1F\x7F]', '', data.decode('ASCII'))
-            s = re.sub(r'[\x00-\x1F\x7F]', '', data.decode('ASCII'))
-            # 문자열 오류 TEST -> ETTS 수정
-            result = ''.join(s[i+1:i+2]+s[i:i+1]for i in range(0,len(s)-1,2))+(s[-1] if len(s)%2!=0 else '')
-
+            try:
+                s = re.sub(r'[\x00-\x1F\x7F]', '', data.decode('ASCII'))
+                result = ''.join(s[i+1:i+2]+s[i:i+1]for i in range(0,len(s)-1,2))+(s[-1] if len(s)%2!=0 else '')
+            except Exception as e:
+                print(e)
+                print(data)
+                result = 'err'
         elif data_type == 'I': # unsigned int
             result = int.from_bytes(data,'little') * pow(10,data_scale)
         elif data_type == 'i': # signed int
@@ -371,7 +377,7 @@ class LS_plc():
                 print(e)
         return result
     # --------------------------
-    def string_read(self,addr="%DW8090#10S00",size=10): #모니터 프로그램 "10워드들" 고정
+    def string_read(self,addr="%DW2090#10S00",size=10): #모니터 프로그램 "10워드들" 고정
         result = {}
         byte_dict = self.multi_read(addr=addr,size=size)
         result[addr] = self._data_decoding(byte_dict.values(),addr)
@@ -454,8 +460,16 @@ if __name__ == "__main__":
     # test.single_read_test()
     # test.mulit_read_test()
     # test.table_read_test()
-    test.read_test()
+    # test.read_test()
     # test.plc.string_read()
     # test.string_read_test()
+    # print(test.plc._addr_to_byte_addr("%DW2125#00000"))
+
+    # print(test.plc.table_read(["%DW2152#01I00","%DW2158#01I00"], "%DB42A0#01I00",10))
+    # print(test.plc.table_read(["%DW2182#01I00","%DW2188#01I00"], "%DB4300#01I00",30))
+    
+    print(test.plc.read(single=["%DW2152#01I00"]))
+    print(test.plc.read(single=["%DW2182#01I00"]))
+    # 싱글로 읽으면 읽어짐..
 
     
