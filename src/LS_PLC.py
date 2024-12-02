@@ -361,9 +361,19 @@ class LS_plc():
     def table_read(self,addrs:list, start_addr:str, size:int):
         byte_dict = self.multi_read(start_addr, size)
         result = {}
+        start_a,_,option = start_addr.partition('#')
+        start_byte_addr,_,option = self._addr_to_byte_addr(start_addr).partition('#')
+
         for addr in addrs: #addrs 순회는 비효율, 수정필
             plc_addr,_,option = addr.partition('#')
-            byte_addr,_,option = self._addr_to_byte_addr(addr).partition('#')
+            p = (int(plc_addr[3:]) - int(start_a[3:]))*2
+            print("==========")
+            print(p)
+            byte_addr = f'{start_byte_addr[:3]}{int(start_byte_addr[3:],16)+p:X}'
+            print(start_byte_addr)
+            print(byte_addr)
+            
+            # byte_addr,_,option = self._addr_to_byte_addr(addr).partition('#')
             datas = []
             try:
                 datas.append(byte_dict[byte_addr])
@@ -372,6 +382,7 @@ class LS_plc():
                     datas.append(byte_dict[byte_addr_idx])
 
                 result[plc_addr] = self._data_decoding(datas,addr)
+                print(result[plc_addr])
             except KeyError: ...
             except Exception as e:
                 print(e)
@@ -465,11 +476,11 @@ if __name__ == "__main__":
     # test.string_read_test()
     # print(test.plc._addr_to_byte_addr("%DW2125#00000"))
 
-    # print(test.plc.table_read(["%DW2152#01I00","%DW2158#01I00"], "%DB42A0#01I00",10))
-    # print(test.plc.table_read(["%DW2182#01I00","%DW2188#01I00"], "%DB4300#01I00",30))
+    print(test.plc.table_read(["%DW2152#01I00","%DW2153#01I00","%DW2154#01I00","%DW2155#01I00","%DW2156#01I00","%DW2157#01I00","%DW2158#01I00"], "%DW2152#01I00",10))
+    # print(test.plc.table_read(["%DW2182#01I00","%DW2188#01I00"], "%DW2182#01I00",30))
     
-    print(test.plc.read(single=["%DW2152#01I00"]))
-    print(test.plc.read(single=["%DW2182#01I00"]))
+    # print(test.plc.read(single=["%DW2152#01I00"]))
+    # print(test.plc.read(single=["%DW2182#01I00"]))
     # 싱글로 읽으면 읽어짐..
 
     
