@@ -39,6 +39,10 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         connection_menu.addAction(self.disconnect_action)
 
     def init_table(self):
+        self.PROGRAM_TABLE.horizontalHeader().setVisible(True)
+        self.PROGRAM_VIEW_TABLE.horizontalHeader().setVisible(True)
+        self.PROGRAM_TABLE.verticalHeader().setVisible(True)
+        self.PROGRAM_VIEW_TABLE.verticalHeader().setVisible(True)
         self.PROGRAM_TABLE.setHorizontalHeaderLabels(["STEP\nDIMENSION","CHARGE\nDIMENSION","FWD\nTIME","SELECT\nCAR","OSC\nCOUNT","BWD\nTIME","PRESS\nPOSITION","FINAL\nPRESSURE","SELECT\nDIA"])
         self.PROGRAM_VIEW_TABLE.setHorizontalHeaderLabels(["STEP\nDIMENSION","CHARGE\nDIMENSION","FWD\nTIME","SELECT\nCAR","OSC\nCOUNT","BWD\nTIME","PRESS\nPOSITION","FINAL\nPRESSURE","SELECT\nDIA"])
         self.ALARM_TABLE.setHorizontalHeaderLabels(["TIME","ALARM","STATE"])
@@ -62,14 +66,15 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
             self.PROGRAM_TABLE.setItem(i, j, QTableWidgetItem(val))
     # --------------------------
     def _set_text_PROGRAM_LIST_TABLE(self, key, val)->None:
-        i = int(''.join(filter(str.isdigit, key)))-1
-        j = (i//10)*2+1
-        i = i%10
+        idx = int(''.join(filter(str.isdigit, key)))-1
+        j = (idx//10)*2+1
+        i = idx%10
         self.PROGRAM_LIST_TABLE.setItem(i, j, QTableWidgetItem(val))
-
-        for j,item in enumerate(["STEPDIMENSION","CHARGEDIMENSION","FWDTIME","SELECTCAR","OSCCOUNT","BWDTIME","PRESSPOSITION","FINALPRESSURE","SELECTDIA"]):
-            if not (item in key): continue
-            self.PROGRAM_LIST_TABLE.setItem(i, j, QTableWidgetItem(val))
+    
+    def _set_num_PROGRAM_LIST_TABLE(self)->None:
+        for idx in range(20):
+            self.PROGRAM_LIST_TABLE.setItem(idx%10, (idx//10)*2, QTableWidgetItem(str(idx+1)))
+        
     # --------------------------
     def _set_text_PROGRAM_VIEW_TABLE(self, key, val)->None:
         i = int(''.join(filter(str.isdigit, key)))-1
@@ -94,6 +99,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
 
     # [view update] ===========================================================================================
     def set_text(self,update_data:dict)->None:
+        self._set_num_PROGRAM_LIST_TABLE()
         for k,v in update_data.items():
             if (type(v) == type('')) and ('#'in v) and ('%' in v) :continue
             if 'PROGRAM_TABLE' in k: # 테이블에 값 표시
@@ -122,6 +128,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
     # --------------------------
     def _clear_graph(self)->None:
         self.graph_widget.clear()
+
     # --------------------------
     def clear_window(self)->None:
         self._clear_table(self.PROGRAM_TABLE)

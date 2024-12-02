@@ -1314,102 +1314,102 @@ off No</string>
       <column/>
       <item row="0" column="0">
        <property name="text">
-        <string>1</string>
+        <string/>
        </property>
       </item>
       <item row="0" column="2">
        <property name="text">
-        <string>11</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="0">
        <property name="text">
-        <string>2</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="2">
        <property name="text">
-        <string>12</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="0">
        <property name="text">
-        <string>3</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="2">
        <property name="text">
-        <string>13</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="0">
        <property name="text">
-        <string>4</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="2">
        <property name="text">
-        <string>14</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="0">
        <property name="text">
-        <string>5</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="2">
        <property name="text">
-        <string>15</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="0">
        <property name="text">
-        <string>6</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="2">
        <property name="text">
-        <string>16</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="0">
        <property name="text">
-        <string>7</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="2">
        <property name="text">
-        <string>17</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="0">
        <property name="text">
-        <string>8</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="2">
        <property name="text">
-        <string>18</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="0">
        <property name="text">
-        <string>9</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="2">
        <property name="text">
-        <string>19</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="0">
        <property name="text">
-        <string>10</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="2">
        <property name="text">
-        <string>20</string>
+        <string/>
        </property>
       </item>
      </widget>
