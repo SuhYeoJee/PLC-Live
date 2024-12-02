@@ -66,6 +66,10 @@
             "PROGRAM_VIEW_SEGPRESSSIZE": "%DW5081#01f02"
         },
         "ALARM": {
+            "SV1": "%DW7010#01i00",
+            "SV2": "%DW7110#01i00",
+            "SV3": "%DW7210#01i00",
+            "SV4": "%DW7310#01i00",
             "ALARM_APM_X_ERROR": "%DX7000#01A01",
             "ALARM_APM_Y_ERROR": "%DX7100#01A01",
             "ALARM_APM_Z_ERROR": "%DX7200#01A01",

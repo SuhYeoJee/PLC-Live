@@ -623,17 +623,76 @@ SIZE</string>
          <x>380</x>
          <y>150</y>
          <width>171</width>
-         <height>101</height>
+         <height>141</height>
         </rect>
        </property>
        <property name="title">
         <string>CAR LAYER</string>
        </property>
+       <widget class="QLabel" name="label_20">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>71</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>CAR</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="AUTOMATIC_CAR_CAR">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>20</y>
+          <width>71</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>AUTOMATIC_CAR_CAR</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="AUTOMATIC_CAR_SELECTDIA">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>60</y>
+          <width>71</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>AUTOMATIC_CAR_SELECTDIA</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_21">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>50</y>
+          <width>71</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Select
+DIA</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
        <widget class="QLabel" name="label_22">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>40</y>
+          <y>90</y>
           <width>71</width>
           <height>41</height>
          </rect>
@@ -650,7 +709,7 @@ off No</string>
         <property name="geometry">
          <rect>
           <x>90</x>
-          <y>50</y>
+          <y>100</y>
           <width>71</width>
           <height>21</height>
          </rect>
@@ -664,7 +723,7 @@ off No</string>
        <property name="geometry">
         <rect>
          <x>380</x>
-         <y>280</y>
+         <y>300</y>
          <width>171</width>
          <height>81</height>
         </rect>
@@ -1174,7 +1233,7 @@ off No</string>
        <number>9</number>
       </property>
       <attribute name="horizontalHeaderVisible">
-       <bool>false</bool>
+       <bool>true</bool>
       </attribute>
       <attribute name="horizontalHeaderCascadingSectionResizes">
        <bool>false</bool>
@@ -1195,7 +1254,7 @@ off No</string>
        <bool>false</bool>
       </attribute>
       <attribute name="verticalHeaderVisible">
-       <bool>false</bool>
+       <bool>true</bool>
       </attribute>
       <attribute name="verticalHeaderCascadingSectionResizes">
        <bool>false</bool>
@@ -1487,7 +1546,7 @@ off No</string>
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QLineEdit" name="SV1">
+   <widget class="QLineEdit" name="ALARM_SV1_ALARM">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -1497,10 +1556,10 @@ off No</string>
      </rect>
     </property>
     <property name="text">
-     <string>SV1</string>
+     <string>ALARM_SV1_ALARM</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="SV2">
+   <widget class="QLineEdit" name="ALARM_SV2_ALARM">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -1510,10 +1569,10 @@ off No</string>
      </rect>
     </property>
     <property name="text">
-     <string>SV2</string>
+     <string>ALARM_SV2_ALARM</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="SV3">
+   <widget class="QLineEdit" name="ALARM_SV3_ALARM">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -1523,10 +1582,10 @@ off No</string>
      </rect>
     </property>
     <property name="text">
-     <string>SV3</string>
+     <string>ALARM_SV3_ALARM</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="SV4">
+   <widget class="QLineEdit" name="ALARM_SV4_ALARM">
     <property name="geometry">
      <rect>
       <x>440</x>
@@ -1536,7 +1595,7 @@ off No</string>
      </rect>
     </property>
     <property name="text">
-     <string>SV4</string>
+     <string>ALARM_SV4_ALARM</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_32">
@@ -1598,7 +1657,7 @@ off No</string>
      <x>0</x>
      <y>0</y>
      <width>1669</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
