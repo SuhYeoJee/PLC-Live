@@ -340,10 +340,10 @@
                     "%DW2190#01F02",
                     "%DW2192#01F02",
                     "%DW2193#01F01",
-                    "%DW2195#01I00",
-                    "%DW2196#01F01",
-                    "%DW2197#01f02",
-                    "%DW2198#01I01"
+                    "%dw2195#01I00",
+                    "%dw2196#01F01",
+                    "%dw2197#01f02",
+                    "%dw2198#01I01"
                 ],
                 "start_addr": "%DW2190",
                 "size": 16
@@ -352,10 +352,10 @@
                 "PROGRAM_TABLE_PRG10_STEPDIMENSION": "%DW2190#01F02",
                 "PROGRAM_TABLE_PRG10_CHARGEDIMENSION": "%DW2192#01F02",
                 "PROGRAM_TABLE_PRG10_FWDTIME": "%DW2193#01F01",
-                "PROGRAM_TABLE_PRG10_OSCCOUNT": "%DW2195#01I00",
-                "PROGRAM_TABLE_PRG10_BWDTIME": "%DW2196#01F01",
-                "PROGRAM_TABLE_PRG10_PRESSPOSITION": "%DW2197#01f02",
-                "PROGRAM_TABLE_PRG10_FINALPRESSURE": "%DW2198#01I01"
+                "PROGRAM_TABLE_PRG10_OSCCOUNT": "%dw2195#01I00",
+                "PROGRAM_TABLE_PRG10_BWDTIME": "%dw2196#01F01",
+                "PROGRAM_TABLE_PRG10_PRESSPOSITION": "%dw2197#01f02",
+                "PROGRAM_TABLE_PRG10_FINALPRESSURE": "%dw2198#01I01"
             }
         },
         "PROGRAM_TABLE-11": {
@@ -364,10 +364,10 @@
                     "%DW2200#01F02",
                     "%DW2202#01F02",
                     "%DW2203#01F01",
-                    "%DW2205#01I00",
-                    "%DW2206#01F01",
-                    "%DW2207#01f02",
-                    "%DW2208#01I01"
+                    "%dw2205#01I00",
+                    "%dw2206#01F01",
+                    "%dw2207#01f02",
+                    "%dw2208#01I01"
                 ],
                 "start_addr": "%DW2200",
                 "size": 16
@@ -376,10 +376,10 @@
                 "PROGRAM_TABLE_PRG11_STEPDIMENSION": "%DW2200#01F02",
                 "PROGRAM_TABLE_PRG11_CHARGEDIMENSION": "%DW2202#01F02",
                 "PROGRAM_TABLE_PRG11_FWDTIME": "%DW2203#01F01",
-                "PROGRAM_TABLE_PRG11_OSCCOUNT": "%DW2205#01I00",
-                "PROGRAM_TABLE_PRG11_BWDTIME": "%DW2206#01F01",
-                "PROGRAM_TABLE_PRG11_PRESSPOSITION": "%DW2207#01f02",
-                "PROGRAM_TABLE_PRG11_FINALPRESSURE": "%DW2208#01I01"
+                "PROGRAM_TABLE_PRG11_OSCCOUNT": "%dw2205#01I00",
+                "PROGRAM_TABLE_PRG11_BWDTIME": "%dw2206#01F01",
+                "PROGRAM_TABLE_PRG11_PRESSPOSITION": "%dw2207#01f02",
+                "PROGRAM_TABLE_PRG11_FINALPRESSURE": "%dw2208#01I01"
             }
         },
         "PROGRAM_TABLE-12": {
@@ -388,10 +388,10 @@
                     "%DW2210#01F02",
                     "%DW2212#01F02",
                     "%DW2213#01F01",
-                    "%DW2215#01I00",
-                    "%DW2216#01F01",
-                    "%DW2217#01f02",
-                    "%DW2218#01I01"
+                    "%dw2215#01I00",
+                    "%dw2216#01F01",
+                    "%dw2217#01f02",
+                    "%dw2218#01I01"
                 ],
                 "start_addr": "%DW2210",
                 "size": 16
@@ -400,10 +400,10 @@
                 "PROGRAM_TABLE_PRG12_STEPDIMENSION": "%DW2210#01F02",
                 "PROGRAM_TABLE_PRG12_CHARGEDIMENSION": "%DW2212#01F02",
                 "PROGRAM_TABLE_PRG12_FWDTIME": "%DW2213#01F01",
-                "PROGRAM_TABLE_PRG12_OSCCOUNT": "%DW2215#01I00",
-                "PROGRAM_TABLE_PRG12_BWDTIME": "%DW2216#01F01",
-                "PROGRAM_TABLE_PRG12_PRESSPOSITION": "%DW2217#01f02",
-                "PROGRAM_TABLE_PRG12_FINALPRESSURE": "%DW2218#01I01"
+                "PROGRAM_TABLE_PRG12_OSCCOUNT": "%dw2215#01I00",
+                "PROGRAM_TABLE_PRG12_BWDTIME": "%dw2216#01F01",
+                "PROGRAM_TABLE_PRG12_PRESSPOSITION": "%dw2217#01f02",
+                "PROGRAM_TABLE_PRG12_FINALPRESSURE": "%dw2218#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-1": {
@@ -628,10 +628,10 @@
                     "%DW5190#01F02",
                     "%DW5192#01F02",
                     "%DW5193#01F01",
-                    "%DW5195#01I00",
-                    "%DW5196#01F01",
-                    "%DW5197#01f02",
-                    "%DW5198#01I01"
+                    "%dw5195#01I00",
+                    "%dw5196#01F01",
+                    "%dw5197#01f02",
+                    "%dw5198#01I01"
                 ],
                 "start_addr": "%DW5190",
                 "size": 16
@@ -640,10 +640,10 @@
                 "PROGRAM_VIEW_TABLE_PRG10_STEPDIMENSION": "%DW5190#01F02",
                 "PROGRAM_VIEW_TABLE_PRG10_CHARGEDIMENSION": "%DW5192#01F02",
                 "PROGRAM_VIEW_TABLE_PRG10_FWDTIME": "%DW5193#01F01",
-                "PROGRAM_VIEW_TABLE_PRG10_OSCCOUNT": "%DW5195#01I00",
-                "PROGRAM_VIEW_TABLE_PRG10_BWDTIME": "%DW5196#01F01",
-                "PROGRAM_VIEW_TABLE_PRG10_PRESSPOSITION": "%DW5197#01f02",
-                "PROGRAM_VIEW_TABLE_PRG10_FINALPRESSURE": "%DW5198#01I01"
+                "PROGRAM_VIEW_TABLE_PRG10_OSCCOUNT": "%dw5195#01I00",
+                "PROGRAM_VIEW_TABLE_PRG10_BWDTIME": "%dw5196#01F01",
+                "PROGRAM_VIEW_TABLE_PRG10_PRESSPOSITION": "%dw5197#01f02",
+                "PROGRAM_VIEW_TABLE_PRG10_FINALPRESSURE": "%dw5198#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-11": {
@@ -652,10 +652,10 @@
                     "%DW5200#01F02",
                     "%DW5202#01F02",
                     "%DW5203#01F01",
-                    "%DW5205#01I00",
-                    "%DW5206#01F01",
-                    "%DW5207#01f02",
-                    "%DW5208#01I01"
+                    "%dw5205#01I00",
+                    "%dw5206#01F01",
+                    "%dw5207#01f02",
+                    "%dw5208#01I01"
                 ],
                 "start_addr": "%DW5200",
                 "size": 16
@@ -664,10 +664,10 @@
                 "PROGRAM_VIEW_TABLE_PRG11_STEPDIMENSION": "%DW5200#01F02",
                 "PROGRAM_VIEW_TABLE_PRG11_CHARGEDIMENSION": "%DW5202#01F02",
                 "PROGRAM_VIEW_TABLE_PRG11_FWDTIME": "%DW5203#01F01",
-                "PROGRAM_VIEW_TABLE_PRG11_OSCCOUNT": "%DW5205#01I00",
-                "PROGRAM_VIEW_TABLE_PRG11_BWDTIME": "%DW5206#01F01",
-                "PROGRAM_VIEW_TABLE_PRG11_PRESSPOSITION": "%DW5207#01f02",
-                "PROGRAM_VIEW_TABLE_PRG11_FINALPRESSURE": "%DW5208#01I01"
+                "PROGRAM_VIEW_TABLE_PRG11_OSCCOUNT": "%dw5205#01I00",
+                "PROGRAM_VIEW_TABLE_PRG11_BWDTIME": "%dw5206#01F01",
+                "PROGRAM_VIEW_TABLE_PRG11_PRESSPOSITION": "%dw5207#01f02",
+                "PROGRAM_VIEW_TABLE_PRG11_FINALPRESSURE": "%dw5208#01I01"
             }
         },
         "PROGRAM_VIEW_TABLE-12": {
@@ -676,10 +676,10 @@
                     "%DW5210#01F02",
                     "%DW5212#01F02",
                     "%DW5213#01F01",
-                    "%DW5215#01I00",
-                    "%DW5216#01F01",
-                    "%DW5217#01f02",
-                    "%DW5218#01I01"
+                    "%dw5215#01I00",
+                    "%dw5216#01F01",
+                    "%dw5217#01f02",
+                    "%dw5218#01I01"
                 ],
                 "start_addr": "%DW5210",
                 "size": 16
@@ -688,10 +688,10 @@
                 "PROGRAM_VIEW_TABLE_PRG12_STEPDIMENSION": "%DW5210#01F02",
                 "PROGRAM_VIEW_TABLE_PRG12_CHARGEDIMENSION": "%DW5212#01F02",
                 "PROGRAM_VIEW_TABLE_PRG12_FWDTIME": "%DW5213#01F01",
-                "PROGRAM_VIEW_TABLE_PRG12_OSCCOUNT": "%DW5215#01I00",
-                "PROGRAM_VIEW_TABLE_PRG12_BWDTIME": "%DW5216#01F01",
-                "PROGRAM_VIEW_TABLE_PRG12_PRESSPOSITION": "%DW5217#01f02",
-                "PROGRAM_VIEW_TABLE_PRG12_FINALPRESSURE": "%DW5218#01I01"
+                "PROGRAM_VIEW_TABLE_PRG12_OSCCOUNT": "%dw5215#01I00",
+                "PROGRAM_VIEW_TABLE_PRG12_BWDTIME": "%dw5216#01F01",
+                "PROGRAM_VIEW_TABLE_PRG12_PRESSPOSITION": "%dw5217#01f02",
+                "PROGRAM_VIEW_TABLE_PRG12_FINALPRESSURE": "%dw5218#01I01"
             }
         }
     },
