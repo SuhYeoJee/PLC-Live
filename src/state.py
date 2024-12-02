@@ -108,8 +108,8 @@ class start_wait(state_wait):
         '''
         조건: SYSTEM_RUN 값이 1
         '''
-        # return True if val == 1 else False 
-        return True #debug
+        return True if val == 1 else False 
+        # return True #debug
 # -------------------------------------------------------------------------------------------
 class exit_wait(state_wait):
     def __init__(self):
@@ -123,8 +123,8 @@ class exit_wait(state_wait):
         '''
         조건: SYSTEM_RUN 값이 0
         '''
-        # return True if val == 0 else False 
-        return False #debug
+        return True if val == 0 else False 
+        # return False #debug
     
     def before_change_mode(self):...
     def after_change_mode(self):
