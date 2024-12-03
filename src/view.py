@@ -150,7 +150,8 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
     def set_graph_y(self,y:float=0.0):
         self.horizontal_val = y
         self.graph_widget.setYRange(float(self.horizontal_val)-0.2,float(self.horizontal_val)+0.2)
-
+        self.horizontal_line = pg.InfiniteLine(pos=self.horizontal_val, angle=0, pen=pg.mkPen('k', width=2))
+        self.graph_widget.addItem(self.horizontal_line)
 
 
     def update_graph(self,graph_points:list):
@@ -169,8 +170,6 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         except: ...
         self.vertical_line = pg.InfiniteLine(pos=self.horizontalSlider.value(), angle=90, pen=pg.mkPen('r', width=2))
         self.graph_widget.addItem(self.vertical_line)
-        self.horizontal_line = pg.InfiniteLine(pos=self.horizontal_val, angle=0, pen=pg.mkPen('k', width=2))
-        self.graph_widget.addItem(self.horizontal_line)
 
     # [external call] ===========================================================================================
     def open_file_dialog(self)->str:

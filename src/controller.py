@@ -126,6 +126,9 @@ class Controller:
     def _init_graph_points_from_session_data(self,idxs):
         graph_idxs = [int(x['graph']) for x in idxs]
         graph_points = [self.model.state.session.data['graph'][x-1]['AUTOMATIC_SEGSIZE_1'] for x in graph_idxs]
+        graph_y = [self.model.state.session.data['AUTOMATIC'][x-1]['AUTOMATIC_SET_PRESSINGSIZE'] for x in graph_idxs]
+        [self.view.set_graph_y(y) for y in graph_y]
+        
         return graph_points
     
     def _view_update_data_from_session_data(self,idx:int=-1):
@@ -169,6 +172,8 @@ class Controller:
         self.idxs = self._init_idxs()
         self.graph_points = [float(x) for x in self._init_graph_points_from_session_data(self.idxs)[1:]]
         self.view.update_graph(self.graph_points)
+
+
         self.slider_update(0)
         self._init_alarm_from_session_data()
 
