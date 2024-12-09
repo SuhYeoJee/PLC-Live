@@ -35,4 +35,4 @@ pip install
 - pyqtgraph
 - pandas
 - openpyxl
- 
+- pyinstaller
