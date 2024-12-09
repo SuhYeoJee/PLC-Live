@@ -1,0 +1,86 @@
+{
+    "DESCRIPTION":{
+        "DATASET":{
+        },
+        "PLC_ADDR":[
+            "plc에서 읽을 주소의 목록",
+            "그룹명을 key로 하는 딕셔너리",
+            "주소 이름과 주소+옵션을 매핑",
+            {
+                "옵션":"주소값 뒤에 #이후 5글자",
+                "옵션 없음": "#00000",
+                "옵션[0:2]":"byte 크기",
+                "옵션[2]":{
+                    "값 형식":["I","i","F","f","C"],
+                    "I":"unsigned int"
+                },
+                "옵션[3:5]":{
+                    "각 형식별 옵션":[],
+                    "I":""
+                }
+            }
+        ],
+        "TABLE_DATA":[
+            "MULTI READ로 읽을 테이블 단위 정의",
+            {
+                "테이블명" : {"시작주소1":"수량","시작주소2":"수량"},
+                "문자열 테이블명" : ["문자열1시작주소","문자열2시작주소"]
+            }
+        ]
+    },
+    "DATASET":{
+        "CONNECT_WAIT":{
+            "PLC_ADDR":["SYSTEM","ALARM"]
+        },    
+        "START_WAIT":{
+            "PLC_ADDR":["SYSTEM","ALARM"]
+        },
+        "EXIT_WAIT":{
+            "PLC_ADDR":["AUTOMATIC","PROGRAM","PROGRAM_LIST","PROGRAM_VIEW","ALARM","SYSTEM"]
+        }
+    },
+    "PLC_ADDR" : {
+        "AUTOMATIC" :{
+            "AUTOMATIC_PRGNO" : "%DW5004#01I00",
+            "AUTOMATIC_PRGNAME" : "%DW2090#10S00",
+            "AUTOMATIC_SEGSIZE_1" : "%DW2910#01f02",
+            "AUTOMATIC_SEGSIZE_3" : "%DW2912#01f02"
+        },
+        "PROGRAM":{
+            "PROGRAM_PRGNO":"%DW5004#01I00",
+            "PROGRAM_TABLE_PRG24_SELECTDIA":"%DW2339#00000"
+        },
+        "PROGRAM_LIST":{
+            "PROGRAM_LIST_PRG_SELECT":"%DW5002#01I00",
+            "PROGRAM_LIST_TABLE_PRG1":"%DW8090#10S00",
+            "PROGRAM_LIST_TABLE_PRG20":"%DW13220#10S00"
+        },
+        "PROGRAM_VIEW":{
+            "PROGRAM_VIEW_PRGNO":"%DW5002#01I00",
+            "PROGRAM_VIEW_TABLE_PRG1_STEPDIMENSION":"%DW5100#01F02"
+        },
+        "ALARM":{
+            "ALARM_SEG_EJECT_CONTINUOUS_NG":"%MW203D#01A00",
+            "ALARM_APM_X_ERROR":"%DB7000#01A01",
+            "ALARM_APM_Y_ERROR":"%DB7000#01A02",
+            "ALARM_APM_Z_ERROR":"%DB7000#01A03",
+            "ALARM_EMERGENCY_STOP":"%PW36#01a00"
+        },
+        "SYSTEM":{
+            "SYSTEM_RUN":"%MX120#00000"
+        }
+    },
+    "TABLE_DATA":{
+        "PROGRAM":{
+            "%DW2339" : 10,
+            "%DW2110" : 10
+        },
+        "PROGRAM_LIST":[
+            "%DW8090#10S00",
+            "%DW13220#10S00"
+        ],
+        "PROGRAM_VIEW":{
+            "%DW5100" : 10
+        }
+    }
+}

@@ -2,8 +2,8 @@ if __debug__:
     import sys
     sys.path.append(r"X:\Github\PLC-Live")
 # -------------------------------------------------------------------------------------------
+from src.module.queue_plus import QueuePlus
 import socket
-from module.queue_plus import queue_plus
 import re
 # ===========================================================================================
 BIT         = b'\x00\x00'
@@ -95,8 +95,9 @@ class LS_plc():
 
         if addr_type in ['X','x']: # bit addr
             word_addr = f"{addr[:2]}W{addr[3:-1]}"
-        elif addr_type in ['B','b']: # byte addr
-            word_addr = f"{addr[:2]}W{int(addr[3:], 16)//2:X}"
+        elif addr_type in ['B','b']: # byte addr #실제 호출되지 않음
+            # word_addr = f"{addr[:2]}W{int(addr[3:], 16)//2:X}"
+            word_addr = f"{addr[:2]}W{int(addr[3:], 10)//2}"
         else:
             word_addr = addr
 
@@ -105,6 +106,10 @@ class LS_plc():
     def _addr_to_byte_addr(self,addr:str="%DW5004#01I00"):
         '''
         구간 읽기용 주소 변환
+        16진수로 곱해야한다
+        dw2125 -> dw424a
+        dw4250 으로 바꾸면 다른거 읽어옴 (dw2128)
+
         '''
         # DX5004 = DW500.4 = DBA00
         # DW5004 = DBA008, DBA009
@@ -112,10 +117,12 @@ class LS_plc():
         addr_type = addr[2]
 
         if addr_type in ['X', 'x']:  # bit addr
-            byte_addr = f"{addr[:2]}B{int(addr[3:-1],16)*2:X}"
+            # byte_addr = f"{addr[:2]}B{int(addr[3:-1],16)*2:X}"
+            byte_addr = f"{addr[:2]}B{int(addr[3:-1],10)*2}"
         elif addr_type in ['W', 'w']:  # word addr
-            byte_addr = f"{addr[:2]}B{int(addr[3:], 16)*2:X}"
-            # byte_addr2 = f"{addr[:2]}B{int(addr[3:], 16)*2+1:X}"
+            # byte_addr = f"{addr[:2]}B{int(addr[3:], 16)*2:X}" #주소체계
+            byte_addr = f"{addr[:2]}B{int(addr[3:], 10)*2}"
+
         else:
             byte_addr = addr
 
@@ -192,7 +199,7 @@ class LS_plc():
         xgt_header = self._get_xgt_header(len(xgt_cmd))
         return xgt_header + xgt_cmd
     # [결과 해석] ===========================================================================================
-    def _get_read_result(self,recv:bytes,is_multi:bool=False)->queue_plus:
+    def _get_read_result(self,recv:bytes,is_multi:bool=False)->QueuePlus:
         recv_body = self._get_recv_body(recv)
         if is_multi:
             result = self._get_multi_read_recvs(recv_body)
@@ -217,7 +224,7 @@ class LS_plc():
         recv_body = recv[20:21+recv_length]
         return recv_body
     # --------------------------
-    def _get_single_read_recvs(self, recv_body:bytes)->queue_plus:
+    def _get_single_read_recvs(self, recv_body:bytes)->QueuePlus:
         '''
         single read     (10 + [2+data_length])
 
@@ -238,7 +245,7 @@ class LS_plc():
         error_info = recv_body[8:10]
         block_length = int.from_bytes(recv_body[8:10],'little')
 
-        result = queue_plus()
+        result = QueuePlus()
         idx = 10
         for i in range(block_length):
             data_length = int.from_bytes(recv_body[idx:idx+2],'little')
@@ -248,7 +255,7 @@ class LS_plc():
 
         return result
     # --------------------------
-    def _get_multi_read_recvs(self, recv_body:bytes)->queue_plus:
+    def _get_multi_read_recvs(self, recv_body:bytes)->QueuePlus:
         '''
         multi read     (12 + [data_length])
 
@@ -268,7 +275,7 @@ class LS_plc():
         block_length = int.from_bytes(recv_body[8:10],'little')
         data_cnt = int.from_bytes(recv_body[10:12],'little')
 
-        result = queue_plus()
+        result = QueuePlus()
         result.put_list_data([recv_body[12 + idx:12 + idx+1] for idx in range(data_cnt)])
         return result
     # --------------------------
@@ -293,7 +300,13 @@ class LS_plc():
         data = b''.join(datas)
 
         if data_type == 'S': # string
-            result = re.sub(r'[\x00-\x1F\x7F]', '', data.decode('ASCII'))
+            try:
+                s = re.sub(r'[\x00-\x1F\x7F]', '', data.decode('ASCII'))
+                result = ''.join(s[i+1:i+2]+s[i:i+1]for i in range(0,len(s)-1,2))+(s[-1] if len(s)%2!=0 else '')
+            except Exception as e:
+                print(e)
+                print(data)
+                result = 'err'
         elif data_type == 'I': # unsigned int
             result = int.from_bytes(data,'little') * pow(10,data_scale)
         elif data_type == 'i': # signed int
@@ -302,6 +315,10 @@ class LS_plc():
             result = int.from_bytes(data,'little') / pow(10,data_scale)
         elif data_type == 'f': # signed float
             result = int.from_bytes(data,'little',signed=True) / pow(10,data_scale)
+        elif data_type == "A": # alarm (1 = on)
+            result = 'on' if int.from_bytes(data,'little')  == 1 else 'off'
+        elif data_type == "a": # alarm (0 = on)
+            result = 'off' if int.from_bytes(data,'little')  == 1 else 'on'
         else:
             result = data.hex()
 
@@ -314,7 +331,8 @@ class LS_plc():
         result = {}
         for addr in addrs:
             plc_addr,_,option = addr.partition('#')
-            data_size = int(option[:2])
+            data_size = int(option[:2]) or 1
+
             # byte_queue에서 꺼내서 option에 맞춰서 디코딩
             datas = byte_queue.get_cnt_item(data_size)
             result[plc_addr] = self._data_decoding(datas,addr)
@@ -343,18 +361,33 @@ class LS_plc():
     def table_read(self,addrs:list, start_addr:str, size:int):
         byte_dict = self.multi_read(start_addr, size)
         result = {}
-        for addr in addrs:
+        start_a,_,option = start_addr.partition('#')
+        start_byte_addr,_,option = self._addr_to_byte_addr(start_addr).partition('#')
+
+        for addr in addrs: #addrs 순회는 비효율, 수정필
             plc_addr,_,option = addr.partition('#')
-            byte_addr,_,option = self._addr_to_byte_addr(addr).partition('#')
-
+            offset = (int(plc_addr[3:]) - int(start_a[3:]))*2
+            byte_addr = f'{start_byte_addr[:3]}{int(start_byte_addr[3:],16)+offset:X}'
+            
+            # byte_addr,_,option = self._addr_to_byte_addr(addr).partition('#')
             datas = []
-            datas.append(byte_dict[byte_addr])
-            if plc_addr[2] in ['W','w']:
-                byte_addr_idx = f"{byte_addr[:3]}{int(byte_addr[3:],16)+1:X}"
-                datas.append(byte_dict[byte_addr_idx])
+            try:
+                datas.append(byte_dict[byte_addr])
+                if plc_addr[2] in ['W','w']:
+                    byte_addr_idx = f"{byte_addr[:3]}{int(byte_addr[3:],16)+1:X}"
+                    datas.append(byte_dict[byte_addr_idx])
 
-            result[plc_addr] = self._data_decoding(datas,addr)
+                result[plc_addr] = self._data_decoding(datas,addr)
+            except KeyError: ...
+            except Exception as e:
+                print(e)
         return result
+    # --------------------------
+    def string_read(self,addr="%DW2090#10S00",size=10): #모니터 프로그램 "10워드들" 고정
+        result = {}
+        byte_dict = self.multi_read(addr=addr,size=size)
+        result[addr] = self._data_decoding(byte_dict.values(),addr)
+        return result[addr]
     # --------------------------
     def read(self,**kwargs)->dict:
         """
@@ -364,9 +397,14 @@ class LS_plc():
         """
         try:
             if "single" in kwargs.keys(): #최대 16개 주소 읽기
-                addr_blocks = [kwargs["single"][i:i + 2] for i in range(0, len(kwargs["single"]), 2)]
+                string_dict = {addr.split('#')[0]:self.string_read(addr) for addr in kwargs["single"] if 'S' in addr}
+                datas = [addr for addr in kwargs["single"] if 'S' not in addr]
+                addr_blocks = [datas[i:i + 2] for i in range(0, len(datas), 2)] if datas else []
+
                 results = [self.single_read(addr_block) for addr_block in addr_blocks]
                 result = {k: v for d in results for k, v in d.items()}
+                result.update(string_dict)
+
             elif "table" in kwargs.keys(): #연달아 읽기
                 result = self.table_read(**kwargs["table"])
             else:
@@ -376,8 +414,8 @@ class LS_plc():
             print(e)
             result = None
         finally:
+            # print(result)
             return result
-
 # ===========================================================================================
 class LS_plc_test():
     def __init__(self):
@@ -410,9 +448,17 @@ class LS_plc_test():
         self.plc.table_read(["%DX5000#01X00","%DX5001#01X00","%DX500F#01X00"], "%DX5000#01I00",3) # => DBA00,DBA01 / DBA02,DBA03 / DBA04,DBA05
         self.plc.table_read(["%DBA00#01X00","%DBA01#01X00","%DBA02#01X00"], "%DBA00#01I00",3) # => DBA00,DBA01 / DBA02,DBA03 / DBA04,DBA05
 
+    def string_read_test(self):
+        print(self.plc.string_read("%DW8090#10S00"))
+        print(self.plc.string_read("%DW2090#10S00"))
+
     def read_test(self):
-        self.plc.read(single = ["%DW500#01I00","%DW501#01i00","%DW502#01f00"])
-        self.plc.read(table = { "addrs":["%DW500#01I00","%DW501#01i00","%DW502#01f00"], "start_addr":"%DW500#01I00", "size": 3})
+        # self.plc.read(single = ["%DW500#01I00","%DW501#01i00","%DW502#01f00"])
+        # self.plc.read(table = { "addrs":["%DW500#01I00","%DW501#01i00","%DW502#01f00"], "start_addr":"%DW500#01I00", "size": 3})
+        # self.plc.read(table={"addrs":['%DW2339#00000'],"start_addr":"%DW2100","size":10})
+        # self.plc.read(table={"addrs":['%DW2339#00000'],"start_addr":"%DW2110","size":10})
+        # self.plc.read(table={"addrs":['%DW2339#00000'],"start_addr":"%DW2330","size":10})
+        self.plc.read(single = ["%DW8090#10S00","%DW500#01I00"])
 
 # ===========================================================================================
 if __name__ == "__main__":
@@ -420,5 +466,16 @@ if __name__ == "__main__":
     # test.single_read_test()
     # test.mulit_read_test()
     # test.table_read_test()
-    test.read_test()
+    # test.read_test()
+    # test.plc.string_read()
+    # test.string_read_test()
+    # print(test.plc._addr_to_byte_addr("%DW2125#00000"))
+
+    print(test.plc.table_read(["%DW2152#01I00","%DW2153#01I00","%DW2154#01I00","%DW2155#01I00","%DW2156#01I00","%DW2157#01I00","%DW2158#01I00"], "%DW2152#01I00",10))
+    # print(test.plc.table_read(["%DW2182#01I00","%DW2188#01I00"], "%DW2182#01I00",30))
+    
+    # print(test.plc.read(single=["%DW2152#01I00"]))
+    # print(test.plc.read(single=["%DW2182#01I00"]))
+    # 싱글로 읽으면 읽어짐..
+
     

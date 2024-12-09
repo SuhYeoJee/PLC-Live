@@ -1,0 +1,25 @@
+공간,주소,크기,데이터형식,소수점이상,소수점이하,최저,최고,자리수
+DW, 6000,1,16-bit Signed, 3, 2, -10, 30000, 1
+DW, 2090, 10, UTF-8
+
+-> %DW6000#01F02
+-> %DW2090#10S00
+
+주소, 크기, 형식, 자리수(10^n배)
+DW6000, 1, 16S, -2
+DW1234, 1, 16U, 1
+DW2090, 10, UTF-8, 0
+
+
+state.dataset["AUTOMATIC"] = { # 테이블이 아닌 항목
+    "AUTOMATIC_PRGNO" : "%DW5004#01I00",
+    "AUTOMATIC_PRGNAME" : "%DW2090#10S00",
+}
+state.dataset["TABLE_DATAS"] = {    # 테이블 입력
+   "TABLE1-1" : {START,SIZE,LIST},
+   "TABLE1-2" : {START,SIZE,LIST},
+}
+state.dataset["TABLE_ADDRS"] = { # 테이블 주소
+    "TABLE1-1" : {"AUTOMATIC_PRGNO" : "%DW5004#01I00"},
+    "TABLE1-2" : {"AUTOMATIC_PRGNO" : "%DW5004#01I00"},
+}
