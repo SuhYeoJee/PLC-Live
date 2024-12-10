@@ -44,8 +44,9 @@ class Controller:
         self.view = view
         self.worker = None
         self.graph_points = []
+        self._view_action_mapping()
 
-        # [action mapping] --------------------------
+    def _view_action_mapping(self):
         self.view.capture_action.triggered.connect(self.capture_data)
         self.view.print_action.triggered.connect(self.print_data)
         self.view.load_action.triggered.connect(self.load_data)
@@ -66,23 +67,15 @@ class Controller:
     def _update_view(self,tick_data):
         update_data,alarm_data,is_graph_update = tick_data
         self.view.set_text(update_data)
-        self.view.change_window_title(str(type(self.model.state).__name__))
 
         if is_graph_update:
             self.view.set_graph_y(update_data['AUTOMATIC_SET_PRESSINGSIZE'])
             self.graph_points.append(float(update_data['AUTOMATIC_SEGSIZE_1']))
             print(self.graph_points)
             self.view.update_graph(self.graph_points)
-            try:self.model.state.session.update_idx_sheet()
-            except AttributeError:...
-            except Exception as e:print(e)
 
         if alarm_data:
             print(alarm_data)
-            try:
-                self.model.state.session.update_data('alarm_list',alarm_data)
-            except AttributeError:...
-            except Exception as e:print(e)
             self.view.set_alarm(alarm_data)
     # --------------------------
     def exit_monitoring(self)->None:
@@ -111,69 +104,61 @@ class Controller:
         subprocess.run(["start", "mspaint", "/p",img_name], shell=True, cwd='./capture')
 
     def connect_plc(self):
-        self.model.c_w.use_tick=True
-        self.model.state = self.model.c_w 
+        self.change_mode(self.model.s_w)
         self.start_monitoring()
 
     def disconnect_plc(self):
-        self.model.c_w.use_tick=False
-        self.model.state.before_change_mode()
-        self.model.state = self.model.c_w
-        print(f'_change_mode:{type(self.model.state).__name__}')
         self.exit_monitoring()
+        self.change_mode(view_wait(),False)
 
-    def _init_graph_points_from_session_data(self,idxs):
-        graph_idxs = [int(x['graph']) for x in idxs]
-        graph_points = [self.model.state.session.data['graph'][x-1]['AUTOMATIC_SEGSIZE_1'] for x in graph_idxs]
-        graph_y = [self.model.state.session.data['AUTOMATIC'][x-1]['AUTOMATIC_SET_PRESSINGSIZE'] for x in graph_idxs]
-        [self.view.set_graph_y(y) for y in graph_y]
+    # def _init_graph_points_from_session_data(self,idxs):
+    #     graph_idxs = [int(x['graph']) for x in idxs]
+    #     graph_points = [self.model.state.session.data['graph'][x-1]['AUTOMATIC_SEGSIZE_1'] for x in graph_idxs]
+    #     graph_y = [self.model.state.session.data['AUTOMATIC'][x-1]['AUTOMATIC_SET_PRESSINGSIZE'] for x in graph_idxs]
+    #     [self.view.set_graph_y(y) for y in graph_y]
         
-        return graph_points
+    #     return graph_points
     
-    def _view_update_data_from_session_data(self,idx:int=-1):
-        update_data = {}
-        for sheet,sheet_idx in self.idxs[idx].items():
-            if sheet in ['idx','graph','ALARM']:
-                continue
-            update_data.update(self.model.state.session.data[sheet][sheet_idx-1])
-        self.view.set_text(update_data)
+    # def _view_update_data_from_session_data(self,idx:int=-1):
+    #     update_data = {}
+    #     for sheet,sheet_idx in self.idxs[idx].items():
+    #         if sheet in ['idx','graph','ALARM']:
+    #             continue
+    #         update_data.update(self.model.state.session.data[sheet][sheet_idx-1])
+    #     self.view.set_text(update_data)
 
-    def _init_idxs(self)->list:
-        '''
-        [{'ALARM': 1,'AUTOMATIC': 1,'SYSTEM': 1,'graph': 0,'idx': 0},
-        {'ALARM': 3,'AUTOMATIC': 3,'SYSTEM': 3,'graph': 3,'idx': 1},]
-        '''
-        def to_int(idx):
-            try:
-                int(idx)
-            except:
-                return 0
-            else:
-                return int(idx)
-        result = [{sheet: to_int(idx) for sheet, idx in idx_line.items()} for idx_line in self.model.state.session.data['idx'] if idx_line]
-        return result[1:]
+    # def _init_idxs(self)->list:
+    #     '''
+    #     [{'ALARM': 1,'AUTOMATIC': 1,'SYSTEM': 1,'graph': 0,'idx': 0},
+    #     {'ALARM': 3,'AUTOMATIC': 3,'SYSTEM': 3,'graph': 3,'idx': 1},]
+    #     '''
+    #     def to_int(idx):
+    #         try:
+    #             int(idx)
+    #         except:
+    #             return 0
+    #         else:
+    #             return int(idx)
+    #     result = [{sheet: to_int(idx) for sheet, idx in idx_line.items()} for idx_line in self.model.state.session.data['idx'] if idx_line]
+    #     return result[1:]
 
-    def _init_alarm_from_session_data(self):
-        alarm_datas = self.model.state.session.data['alarm_list']
-        for alarm_data in alarm_datas:
-            for k,v in alarm_data.items():
-                self.view.set_alarm({k:ast.literal_eval(v)}) 
+    # def _init_alarm_from_session_data(self):
+    #     alarm_datas = self.model.state.session.data['alarm_list']
+    #     for alarm_data in alarm_datas:
+    #         for k,v in alarm_data.items():
+    #             self.view.set_alarm({k:ast.literal_eval(v)}) 
 
 
     def load_data(self): #엑셀 파일열기
-        self.model.c_w.use_tick=False
         file_name = self.view.open_file_dialog()
-        self.model.v_w = view_wait(file_name)
-        self.model.state = self.model.v_w
-        self.view.clear_window()
-        self.view.change_window_title(str(type(self.model.state).__name__))
+        self.change_mode(view_wait(file_name))
 
         self.idxs = self._init_idxs()
         self.graph_points = [float(x) for x in self._init_graph_points_from_session_data(self.idxs)[1:]]
         self.view.update_graph(self.graph_points)
 
-
         self.slider_update(0)
+        self.slider_update(1)
         self._init_alarm_from_session_data()
 
     def slider_update(self, value): #슬라이더 갱신
@@ -189,12 +174,13 @@ class Controller:
             self.view.graph_widget.setYRange(float(self.view.horizontal_val)-0.2,float(self.view.horizontal_val)+0.2)
             self._view_update_data_from_session_data(value)
             
-    def close_data(self):
+    def change_mode(self,state=None,clear:bool=True):
         self.view.clear_window()
-        self.model.state.before_change_mode()
-        self.model.state = self.model.c_w
+        self.model._change_mode(state)
         self.view.change_window_title(str(type(self.model.state).__name__))
-        print(f'_change_mode:{type(self.model.state).__name__}')
+
+    def close_data(self):
+        self.change_mode()
 
 # ===========================================================================================
 

@@ -4,7 +4,7 @@ if __debug__:
 # -------------------------------------------------------------------------------------------
 from src.LS_PLC import LS_plc
 from src.module.plcl_utils import get_now_str
-from src.state import connect_wait, start_wait, exit_wait
+from src.state import view_wait, start_wait, exit_wait
 # --------------------------
 PLC_IP = '192.168.0.50'
 # ===========================================================================================
@@ -24,7 +24,7 @@ class Model():
     def _init_state(self)->None:
         self.s_w = start_wait()
         self.e_w = exit_wait()
-        self.v_w = None # view_wait
+        self.v_w = view_wait()
         self.s_w.next_state = self.e_w
         self.e_w.next_state = self.s_w
         # --------------------------
@@ -48,9 +48,12 @@ class Model():
         return result
 
     # ==============================
-    def _change_mode(self)->None:
+    def _change_mode(self,state=None)->None:
         self.state.before_change_mode()
-        self.state = self.state.next_state
+        if state:
+            self.state = self.state
+        else:
+            self.state = self.state.next_state
         print(f'_change_mode:{type(self.state).__name__}')
         self.state.after_change_mode()
 

@@ -168,7 +168,7 @@ class view_wait(state_wait):
     file view 모드
     각각 생성해서 호출
     '''
-    def __init__(self,file_name:str):
+    def __init__(self,file_name:str='nofile'):
         super().__init__()
         self.use_tick = False
         self.session = SessionData(file_name)

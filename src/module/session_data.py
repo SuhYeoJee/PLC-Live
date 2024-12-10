@@ -18,10 +18,11 @@ from pprint import pprint
 class SessionData:
     def __init__(self,file_name:str=None):
         if file_name: #load data
+            self.is_new:bool = False
+            if file_name == 'nofile':... # stay
             '''excel 파일에서 데이터 읽기'''
             self.file_name = file_name
             self._read_data_from_excel(file_name)
-            self.is_new:bool = False
         else: #new data
             '''json 파일에서 데이터형식 읽기'''
             self.file_name = get_now_str("./result/%Y-%m-%d_%H-%M-%S.xlsx")
