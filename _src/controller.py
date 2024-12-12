@@ -27,9 +27,9 @@ class Worker(QThread):
             if self.model.state.use_tick: #틱갱신
                 print('#################tick###################')
                 tick_data = self.model.worker_tick() # update_data,alarm_data,is_graph_update
-                import pprint
-                pprint.pprint(tick_data)
-                print('########################################')
+                # import pprint
+                # pprint.pprint(tick_data)
+                # print('########################################')
                 self.data_generated.emit(tick_data)
             self.msleep(self.time)
 

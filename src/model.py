@@ -55,7 +55,7 @@ class Model():
             self.state = state
         else:
             self.state = self.state.next_state
-        print(f'_change_mode:{type(self.state).__name__}')
+        # print(f'_change_mode:{type(self.state).__name__}')
         self.state.after_change_mode()
 
     def worker_tick(self)->list:
@@ -70,12 +70,6 @@ class Model():
             update_data = self._get_update_data() # plc 데이터 읽기
             alarm_data = self._update_alarm(update_data)
             is_graph_update = self._update_graph(update_data)
-
-            is_next = self.state._is_next(update_data[self.state.key]) # 읽은 항목에서 state체크
-            if is_next: # state 넘어가기
-                self._change_mode()
-                if self.state == self.e_w:
-                    self._init_model_data()
 
             self.state.after_worker_tick(update_data=update_data,alarm_data=alarm_data,is_graph_update=is_graph_update)
 

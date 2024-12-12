@@ -137,13 +137,21 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         self._clear_table(self.PROGRAM_LIST_TABLE)
         self._clear_table(self.PROGRAM_VIEW_TABLE)
         self._clear_table(self.ALARM_TABLE)
+        self.ALARM_TABLE.setRowCount(0)
         self._clear_graph()
         for line_edit in self.findChildren(QLineEdit):
             line_edit.clear()
     # --------------------------
-    def set_alarm(self,alarm_datas:dict)->None:
-        for alarm_name,alarm_data in alarm_datas.items():
-            self._set_text_ALARM_TABLE(alarm_name,alarm_data)     
+    def set_alarm(self,alarm_datas)->None:
+        if isinstance(alarm_datas, list): #view
+            for alarm_data in alarm_datas:
+                alarm_time = str(alarm_data["ALARM_TIME"])
+                alarm_name = str(alarm_data["ALARM_NAME"])
+                alarm_state = str(alarm_data["ALARM_STATE"])
+                self._set_text_ALARM_TABLE(alarm_name,[alarm_state,alarm_time])     
+        elif isinstance(alarm_datas, dict): #start/exit
+            for alarm_name,alarm_data in alarm_datas.items():
+                self._set_text_ALARM_TABLE(alarm_name,alarm_data)     
     # --------------------------
 
     def set_graph_y(self,y:float=0.0):
@@ -151,7 +159,6 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         self.graph_widget.setYRange(float(self.horizontal_val)-0.2,float(self.horizontal_val)+0.2)
         self.horizontal_line = pg.InfiniteLine(pos=self.horizontal_val, angle=0, pen=pg.mkPen('k', width=2))
         self.graph_widget.addItem(self.horizontal_line)
-
 
     def update_graph(self,graph_points:list):
         '''

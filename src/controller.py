@@ -3,7 +3,7 @@ if __debug__:
     sys.path.append(r"X:\Github\PLC-Live")
 # -------------------------------------------------------------------------------------------
 from src.module.pyqt_imports import *
-from src.module.plcl_utils import get_now_str
+from src.module.plcl_utils import get_now_str, is_float_str
 from src.model import Model
 from src.view import View    
 from src.module.pyqt_imports import *
@@ -27,9 +27,9 @@ class Worker(QThread):
             if self.model.state.use_tick: #틱갱신
                 print('#################tick###################')
                 tick_data = self.model.worker_tick() # update_data,alarm_data,is_graph_update
-                import pprint
-                pprint.pprint(tick_data)
-                print('########################################')
+                # import pprint
+                # pprint.pprint(tick_data)
+                # print('########################################')
                 self.data_generated.emit(tick_data)
             self.msleep(self.time)
 
@@ -67,9 +67,15 @@ class Controller:
         update_data,alarm_data,is_graph_update = tick_data
         self.view.set_text(update_data)
 
+
+        is_next = self.model.state._is_next(update_data[self.model.state.key]) # 읽은 항목에서 state체크
+        if is_next: # state 넘어가기
+            self.change_mode()
+
         if is_graph_update:
             print(self.model.graph_points)
-            self.view.set_graph_y(update_data['AUTOMATIC_SET_PRESSINGSIZE'])
+            if is_float_str(update_data['AUTOMATIC_SET_PRESSINGSIZE']):
+                self.view.set_graph_y(update_data['AUTOMATIC_SET_PRESSINGSIZE'])
             self.view.update_graph(self.model.graph_points)
 
         if alarm_data:
@@ -118,11 +124,11 @@ class Controller:
 
     def _init_graph_from_session_data(self):
         # set horiz_line
-        graph_y = [x['AUTOMATIC_SET_PRESSINGSIZE'] for x in self.model.state.session.data['AUTOMATIC']]
-        [self.view.set_graph_y(y) for y in graph_y]
+        graph_y = [x['AUTOMATIC_SET_PRESSINGSIZE'] for x in self.model.state.session.data['AUTOMATIC'] if is_float_str(x['AUTOMATIC_SET_PRESSINGSIZE'])]
+        [self.view.set_graph_y(y) for y in graph_y if is_float_str(y)]
         
         # set graph
-        graph_points = [x['AUTOMATIC_SEGSIZE_1'] for x in self.model.state.session.data['_graph']]
+        graph_points = [float(x['AUTOMATIC_SEGSIZE_1']) for x in self.model.state.session.data['_graph'] if is_float_str (x['AUTOMATIC_SEGSIZE_1'])]
         self.view.update_graph(graph_points)
 
     def load_data(self): #엑셀 파일열기
@@ -146,9 +152,23 @@ class Controller:
             self._view_update_data_from_session_data(value)
             
     def change_mode(self,state=None,clear:bool=True):
-        self.view.clear_window()
+
         self.model._change_mode(state)
-        self.view.change_window_title(str(type(self.model.state).__name__))
+        self.model._init_model_data()
+
+        if state == self.model.s_w: #클리어 안함
+            ...
+        elif clear:
+            self.view.clear_window() # 확인 후 클리어
+
+        try:
+            title_str =f'{str(type(self.model.state).__name__)} - {str(self.model.state.session.file_name)}'
+        except:
+            title_str =f'{str(type(self.model.state).__name__)}'
+        self.view.change_window_title(title_str)
+        print(f'_change_mode:{type(self.model.state).__name__}')
+
+
 
     def close_data(self):
         self.change_mode()
