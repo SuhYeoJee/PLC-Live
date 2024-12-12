@@ -52,7 +52,7 @@ class Model():
     def _change_mode(self,state=None)->None:
         self.state.before_change_mode()
         if state:
-            self.state = self.state
+            self.state = state
         else:
             self.state = self.state.next_state
         print(f'_change_mode:{type(self.state).__name__}')
@@ -80,7 +80,8 @@ class Model():
             self.state.after_worker_tick(update_data=update_data,alarm_data=alarm_data,is_graph_update=is_graph_update)
 
             return [update_data,alarm_data,is_graph_update]
-        except:
+        except Exception as e:
+            print(e)
             print('model.worker_tick error')
             return [{},{},False]
 

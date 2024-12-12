@@ -28,7 +28,6 @@ class SessionData:
             self.file_name = get_now_str("./result/%Y-%m-%d_%H-%M-%S.xlsx")
             self.is_new:bool = True
             self.data = self._get_data_form()
-            self.update_idx_sheet()
     # --------------------------
     def _get_data_form(self):
         '''

@@ -110,8 +110,11 @@ class Controller:
         self.change_mode(view_wait(),False)
 
     def _init_alarm_from_session_data(self):
-        alarm_datas = self.model.state.session.data['_alarm']
-        self.view.set_alarm(alarm_datas)
+        try:
+            alarm_datas = self.model.state.session.data['_alarm']
+            self.view.set_alarm(alarm_datas)
+        except KeyError:
+            ...
 
     def _init_graph_from_session_data(self):
         # set horiz_line

@@ -141,12 +141,9 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         for line_edit in self.findChildren(QLineEdit):
             line_edit.clear()
     # --------------------------
-    def set_alarm(self,alarm_datas:list)->None:
-        for alarm_data in alarm_datas:
-            alarm_time = alarm_data["ALARM_TIME"] 
-            alarm_name = alarm_data["ALARM_NAME"] 
-            alarm_state = alarm_data["ALARM_STATE"]
-            self._set_text_ALARM_TABLE(alarm_name,[alarm_state,alarm_time])     
+    def set_alarm(self,alarm_datas:dict)->None:
+        for alarm_name,alarm_data in alarm_datas.items():
+            self._set_text_ALARM_TABLE(alarm_name,alarm_data)     
     # --------------------------
 
     def set_graph_y(self,y:float=0.0):
