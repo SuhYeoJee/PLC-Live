@@ -102,7 +102,8 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
     def set_text(self,update_data:dict)->None:
         self._set_num_PROGRAM_LIST_TABLE()
         for k,v in update_data.items():
-            if (type(v) == type('')) and ('#'in v) and ('%' in v) :continue
+            if (type(v) == type('')) and ('#'in v) and ('%' in v) :
+                v = '-'
             if 'PROGRAM_TABLE' in k: # 테이블에 값 표시
                 self._set_text_PROGRAM_TABLE(k,v)
             elif 'PROGRAM_LIST_TABLE' in k:
@@ -168,7 +169,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         idx = len(graph_points)-1
         self.horizontalSlider.setMinimum(0)
         self.horizontalSlider.setMaximum(idx)
-        self.horizontalSlider.setValue(idx)
+        self.horizontalSlider.setValue(0)
 
         self.graph_widget.plot(graph_points, pen=pg.mkPen('g', width=self.graph_width))
         try: #기존 세로선 삭제

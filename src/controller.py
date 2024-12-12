@@ -67,7 +67,6 @@ class Controller:
         update_data,alarm_data,is_graph_update = tick_data
         self.view.set_text(update_data)
 
-
         is_next = self.model.state._is_next(update_data[self.model.state.key]) # 읽은 항목에서 state체크
         if is_next: # state 넘어가기
             self.change_mode()
@@ -82,11 +81,28 @@ class Controller:
             print(alarm_data)
             self.view.set_alarm(alarm_data)
     # --------------------------
+    def change_mode(self,state=None,clear:bool=True):
+
+        self.model._change_mode(state)
+        self.model._init_model_data()
+
+        if self.model.state == self.model.s_w: #클리어 안함
+            ...
+        elif clear:
+            self.view.clear_window() # 확인 후 클리어
+
+        try:
+            title_str =f'{str(type(self.model.state).__name__)} - {str(self.model.state.session.file_name)}'
+        except:
+            title_str =f'{str(type(self.model.state).__name__)}'
+        self.view.change_window_title(title_str)
+        print(f'_change_mode:{type(self.model.state).__name__}')
+    # --------------------------
     def exit_monitoring(self)->None:
         self.model.graph_points = []
         if self.worker is not None:
             self.worker.stop()
-
+            
     # [매핑함수] ===========================================================================================
     def capture_data(self):
         print('&capture_data')
@@ -101,20 +117,21 @@ class Controller:
         makedirs('./capture', exist_ok=True)
         screenshot.save(img_path, 'png')
         return img_name
-
+    # --------------------------
     def print_data(self):
         print('&print_data')
         img_name = self.capture_data()
         subprocess.run(["start", "mspaint", "/p",img_name], shell=True, cwd='./capture')
-
+    # --------------------------
     def connect_plc(self):
         self.change_mode(self.model.s_w)
         self.start_monitoring()
-
+    # --------------------------
     def disconnect_plc(self):
         self.exit_monitoring()
-        self.change_mode(view_wait(),False)
-
+        self.model.v_w = view_wait()
+        self.change_mode(self.model.v_w,False)
+    # --------------------------
     def _init_alarm_from_session_data(self):
         try:
             alarm_datas = self.model.state.session.data['_alarm']
@@ -133,10 +150,15 @@ class Controller:
 
     def load_data(self): #엑셀 파일열기
         file_name = self.view.open_file_dialog()
-        self.change_mode(view_wait(file_name))
+        self.model.v_w = view_wait(file_name)
+        self.change_mode(self.model.v_w)
         self._init_alarm_from_session_data()
         self._init_graph_from_session_data()
         self.slider_update(0)
+    # --------------------------
+    def close_data(self):
+        self.change_mode()
+    # --------------------------
 
     def slider_update(self, value): #슬라이더 갱신
         '''
@@ -150,28 +172,14 @@ class Controller:
             self.view.graph_widget.setXRange(value - self.view.graph_width/2, value + self.view.graph_width/2)
             self.view.graph_widget.setYRange(float(self.view.horizontal_val)-0.2,float(self.view.horizontal_val)+0.2)
             self._view_update_data_from_session_data(value)
-            
-    def change_mode(self,state=None,clear:bool=True):
 
-        self.model._change_mode(state)
-        self.model._init_model_data()
+    def _view_update_data_from_session_data(self,idx:int=0):
+        update_data = {}
+        idx = idx if idx < 0 else idx + 1 #세션데이터0번은 주소값(빈값)
+        for sheet,sheet_data in self.model.state.session.data.items():
+            update_data.update(sheet_data[idx])
+        self.view.set_text(update_data)
 
-        if state == self.model.s_w: #클리어 안함
-            ...
-        elif clear:
-            self.view.clear_window() # 확인 후 클리어
-
-        try:
-            title_str =f'{str(type(self.model.state).__name__)} - {str(self.model.state.session.file_name)}'
-        except:
-            title_str =f'{str(type(self.model.state).__name__)}'
-        self.view.change_window_title(title_str)
-        print(f'_change_mode:{type(self.model.state).__name__}')
-
-
-
-    def close_data(self):
-        self.change_mode()
 
 # ===========================================================================================
 

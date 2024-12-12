@@ -123,7 +123,9 @@ class exit_wait(state_wait):
         self.session.data["_graph"] = [{"AUTOMATIC_SEGSIZE_1" : "DW2910"}]
         self.session.data["_alarm"] = [{"ALARM_TIME":"","ALARM_NAME":"","ALARM_STATE":""}]
 
-    def before_worker_tick(self):...
+    def before_worker_tick(self):
+        self.session.save_data_to_excel()
+
     def after_worker_tick(self,**kwargs):
         '''새 값 기반 세션 업데이트'''
         update_data = kwargs['update_data']
