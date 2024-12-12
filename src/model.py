@@ -19,6 +19,7 @@ class Model():
 
     def _init_model_data(self)->None:
         self.graph_value = None
+        self.graph_points = []
         self.alarms = {k:'off' for k in self.state.addrs["PLC_ADDR"]["ALARM"].keys()}
 
     def _init_state(self)->None:
@@ -125,8 +126,8 @@ class Model():
         graph_value = update_data['AUTOMATIC_ACTUAL_WORKCOUNT']
         if graph_value != self.graph_value:
             self.graph_value = graph_value
+            self.graph_points.append(float(update_data['AUTOMATIC_SEGSIZE_1']))
             return True
-        
         return False 
 
 

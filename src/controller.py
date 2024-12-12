@@ -43,7 +43,6 @@ class Controller:
         self.model = model
         self.view = view
         self.worker = None
-        self.graph_points = []
         self._view_action_mapping()
 
     def _view_action_mapping(self):
@@ -59,7 +58,7 @@ class Controller:
     def start_monitoring(self)->None:
         self.view.clear_window()
         if self.worker is None or not self.worker.isRunning():
-            self.graph_points = []
+            self.model.graph_points = []
             self.worker = Worker(self.model,self.worker_time)
             self.worker.data_generated.connect(self._update_view)  
             self.worker.start()
@@ -69,17 +68,16 @@ class Controller:
         self.view.set_text(update_data)
 
         if is_graph_update:
+            print(self.model.graph_points)
             self.view.set_graph_y(update_data['AUTOMATIC_SET_PRESSINGSIZE'])
-            self.graph_points.append(float(update_data['AUTOMATIC_SEGSIZE_1']))
-            print(self.graph_points)
-            self.view.update_graph(self.graph_points)
+            self.view.update_graph(self.model.graph_points)
 
         if alarm_data:
             print(alarm_data)
             self.view.set_alarm(alarm_data)
     # --------------------------
     def exit_monitoring(self)->None:
-        self.graph_points = []
+        self.model.graph_points = []
         if self.worker is not None:
             self.worker.stop()
 
@@ -111,55 +109,25 @@ class Controller:
         self.exit_monitoring()
         self.change_mode(view_wait(),False)
 
-    # def _init_graph_points_from_session_data(self,idxs):
-    #     graph_idxs = [int(x['graph']) for x in idxs]
-    #     graph_points = [self.model.state.session.data['graph'][x-1]['AUTOMATIC_SEGSIZE_1'] for x in graph_idxs]
-    #     graph_y = [self.model.state.session.data['AUTOMATIC'][x-1]['AUTOMATIC_SET_PRESSINGSIZE'] for x in graph_idxs]
-    #     [self.view.set_graph_y(y) for y in graph_y]
+    def _init_alarm_from_session_data(self):
+        alarm_datas = self.model.state.session.data['_alarm']
+        self.view.set_alarm(alarm_datas)
+
+    def _init_graph_from_session_data(self):
+        # set horiz_line
+        graph_y = [x['AUTOMATIC_SET_PRESSINGSIZE'] for x in self.model.state.session.data['AUTOMATIC']]
+        [self.view.set_graph_y(y) for y in graph_y]
         
-    #     return graph_points
-    
-    # def _view_update_data_from_session_data(self,idx:int=-1):
-    #     update_data = {}
-    #     for sheet,sheet_idx in self.idxs[idx].items():
-    #         if sheet in ['idx','graph','ALARM']:
-    #             continue
-    #         update_data.update(self.model.state.session.data[sheet][sheet_idx-1])
-    #     self.view.set_text(update_data)
-
-    # def _init_idxs(self)->list:
-    #     '''
-    #     [{'ALARM': 1,'AUTOMATIC': 1,'SYSTEM': 1,'graph': 0,'idx': 0},
-    #     {'ALARM': 3,'AUTOMATIC': 3,'SYSTEM': 3,'graph': 3,'idx': 1},]
-    #     '''
-    #     def to_int(idx):
-    #         try:
-    #             int(idx)
-    #         except:
-    #             return 0
-    #         else:
-    #             return int(idx)
-    #     result = [{sheet: to_int(idx) for sheet, idx in idx_line.items()} for idx_line in self.model.state.session.data['idx'] if idx_line]
-    #     return result[1:]
-
-    # def _init_alarm_from_session_data(self):
-    #     alarm_datas = self.model.state.session.data['alarm_list']
-    #     for alarm_data in alarm_datas:
-    #         for k,v in alarm_data.items():
-    #             self.view.set_alarm({k:ast.literal_eval(v)}) 
-
+        # set graph
+        graph_points = [x['AUTOMATIC_SEGSIZE_1'] for x in self.model.state.session.data['_graph']]
+        self.view.update_graph(graph_points)
 
     def load_data(self): #엑셀 파일열기
         file_name = self.view.open_file_dialog()
         self.change_mode(view_wait(file_name))
-
-        self.idxs = self._init_idxs()
-        self.graph_points = [float(x) for x in self._init_graph_points_from_session_data(self.idxs)[1:]]
-        self.view.update_graph(self.graph_points)
-
-        self.slider_update(0)
-        self.slider_update(1)
         self._init_alarm_from_session_data()
+        self._init_graph_from_session_data()
+        self.slider_update(0)
 
     def slider_update(self, value): #슬라이더 갱신
         '''
