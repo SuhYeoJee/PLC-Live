@@ -3,7 +3,6 @@ if __debug__:
     sys.path.append(r"X:\Github\PLC-Live")
 # -------------------------------------------------------------------------------------------
 from src.module.pyqt_imports import *
-from src.module.plcl_utils import get_now_str
 import pyqtgraph as pg
 # ===========================================================================================
 
@@ -103,7 +102,8 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
     def set_text(self,update_data:dict)->None:
         self._set_num_PROGRAM_LIST_TABLE()
         for k,v in update_data.items():
-            if (type(v) == type('')) and ('#'in v) and ('%' in v) :continue
+            if (type(v) == type('')) and ('#'in v) and ('%' in v) :
+                v = '-'
             if 'PROGRAM_TABLE' in k: # 테이블에 값 표시
                 self._set_text_PROGRAM_TABLE(k,v)
             elif 'PROGRAM_LIST_TABLE' in k:
@@ -138,13 +138,21 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         self._clear_table(self.PROGRAM_LIST_TABLE)
         self._clear_table(self.PROGRAM_VIEW_TABLE)
         self._clear_table(self.ALARM_TABLE)
+        self.ALARM_TABLE.setRowCount(0)
         self._clear_graph()
         for line_edit in self.findChildren(QLineEdit):
             line_edit.clear()
     # --------------------------
-    def set_alarm(self,alarm_data:dict)->None:
-        for k,v in alarm_data.items():
-            self._set_text_ALARM_TABLE(k,v)     
+    def set_alarm(self,alarm_datas)->None:
+        if isinstance(alarm_datas, list): #view
+            for alarm_data in alarm_datas:
+                alarm_time = str(alarm_data["ALARM_TIME"])
+                alarm_name = str(alarm_data["ALARM_NAME"])
+                alarm_state = str(alarm_data["ALARM_STATE"])
+                self._set_text_ALARM_TABLE(alarm_name,[alarm_state,alarm_time])     
+        elif isinstance(alarm_datas, dict): #start/exit
+            for alarm_name,alarm_data in alarm_datas.items():
+                self._set_text_ALARM_TABLE(alarm_name,alarm_data)     
     # --------------------------
 
     def set_graph_y(self,y:float=0.0):
@@ -152,7 +160,6 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         self.graph_widget.setYRange(float(self.horizontal_val)-0.2,float(self.horizontal_val)+0.2)
         self.horizontal_line = pg.InfiniteLine(pos=self.horizontal_val, angle=0, pen=pg.mkPen('k', width=2))
         self.graph_widget.addItem(self.horizontal_line)
-
 
     def update_graph(self,graph_points:list):
         '''
@@ -162,7 +169,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         idx = len(graph_points)-1
         self.horizontalSlider.setMinimum(0)
         self.horizontalSlider.setMaximum(idx)
-        self.horizontalSlider.setValue(idx)
+        self.horizontalSlider.setValue(0)
 
         self.graph_widget.plot(graph_points, pen=pg.mkPen('g', width=self.graph_width))
         try: #기존 세로선 삭제

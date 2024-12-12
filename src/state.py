@@ -5,6 +5,9 @@ if __debug__:
 import json
 from src.module.session_data import SessionData
 # ===========================================================================================
+# DEBUG = True
+DEBUG = False
+# -------------------------------------------------------------------------------------------
 
 class state_wait():
     '''
@@ -74,27 +77,6 @@ class state_wait():
             print(e)
         # print(self.dataset)
 
-
-# -------------------------------------------------------------------------------------------
-class connect_wait(state_wait):
-    def __init__(self):
-        super().__init__()
-        self.dataset = self.addrs["DATASET"]["CONNECT_WAIT"]
-        self.get_dataset()
-        self.key = "SYSTEM_RUN"
-        self.use_tick = False
-
-    def _is_next(self,val)->bool:
-        '''
-        조건: 값이 정상적으로 읽어짐 (내용과 상관 없음)
-        '''
-        if val == None: # 연결실패
-            self.use_tick = False
-            print("PLC 연결 실패") #알림 띄워야함
-            return False
-        else:
-            return True # 연결 성공, 시작대기로 전환
-        
 # -------------------------------------------------------------------------------------------
 class start_wait(state_wait):
     def __init__(self):
@@ -108,8 +90,10 @@ class start_wait(state_wait):
         '''
         조건: SYSTEM_RUN 값이 1
         '''
-        return True if val == 1 else False 
-        # return True #debug
+        if DEBUG:
+            return True
+        else:
+            return True if val == 1 else False 
 # -------------------------------------------------------------------------------------------
 class exit_wait(state_wait):
     def __init__(self):
@@ -122,9 +106,12 @@ class exit_wait(state_wait):
     def _is_next(self,val)->bool:
         '''
         조건: SYSTEM_RUN 값이 0
+
         '''
-        return True if val == 0 else False 
-        # return False #debug
+        if DEBUG:
+            return False
+        else:
+            return True if val == 0 else False 
     
     def before_change_mode(self):...
     def after_change_mode(self):
@@ -133,31 +120,49 @@ class exit_wait(state_wait):
         SessionData 생성
         '''
         self.session = SessionData()
-        self.session.data["graph"] = [{"AUTOMATIC_SEGSIZE_1" : "DW2910"}]
+        self.session.data["_graph"] = [{"AUTOMATIC_SEGSIZE_1" : "DW2910"}]
+        self.session.data["_alarm"] = [{"ALARM_TIME":"","ALARM_NAME":"","ALARM_STATE":""}]
 
-    def before_worker_tick(self):...
+    def before_worker_tick(self):
+        self.session.save_data_to_excel()
+
     def after_worker_tick(self,**kwargs):
-        '''
-        worker_tick 실행된 다음 실행
-        _save_excel: SessionData 갱신, 저장
-        '''
+        '''새 값 기반 세션 업데이트'''
         update_data = kwargs['update_data']
-        self._save_excel(update_data)
+        alarm_data = kwargs['alarm_data']
 
-    def _save_excel(self,update_data):
-        graph_val = {}
+        if kwargs['is_graph_update']:
+            self._update_sesstion_data(update_data)
+            self._update_graph_data(update_data)
+        self._update_alarm_data(alarm_data)
+        
+        '''세션 데이터 파일로 저장'''
+        self.session.save_data_to_excel()
+
+    def _update_sesstion_data(self,update_data)->None:
+        '''세션데이터 - 일반 갱신'''
         for k,v in self.addrs["PLC_ADDR"].items():
             new_val = {}
             for addr_name in v.keys():
                 val = update_data.get(addr_name,None)
                 if val:
                     new_val[addr_name] = val
-                if addr_name in ["AUTOMATIC_SEGSIZE_1"]:
-                    graph_val[addr_name] = val
             self.session.update_data(k,new_val)
-        self.session.update_data("graph",graph_val)
-        
-        self.session.save_data_to_excel()
+
+    def _update_graph_data(self, update_data) -> None:
+        '''세션 데이터 - 그래프 갱신'''
+        graph_val = {"AUTOMATIC_SEGSIZE_1":update_data.get("AUTOMATIC_SEGSIZE_1",None)}
+        self.session.update_data("_graph", graph_val)
+
+    def _update_alarm_data(self,alarm_data):
+        '''세션 데이터 - 알람 갱신'''
+        # alarm_data = {arr_label:['on',timestr]}
+        new_alarm = {}
+        for alarm_label,alarm_info in alarm_data.items():
+            new_alarm["ALARM_TIME"] = alarm_info[1]
+            new_alarm["ALARM_NAME"] = alarm_label
+            new_alarm["ALARM_STATE"] = alarm_info[0]
+            self.session.update_data("_alarm", new_alarm)
 
 # -------------------------------------------------------------------------------------------
 class view_wait(state_wait):
@@ -165,7 +170,7 @@ class view_wait(state_wait):
     file view 모드
     각각 생성해서 호출
     '''
-    def __init__(self,file_name:str):
+    def __init__(self,file_name:str='nofile'):
         super().__init__()
         self.use_tick = False
         self.session = SessionData(file_name)
@@ -173,5 +178,5 @@ class view_wait(state_wait):
 # ===========================================================================================
 
 if __name__ == "__main__":
-    m = connect_wait()
+    m = exit_wait()
     m.get_dataset()

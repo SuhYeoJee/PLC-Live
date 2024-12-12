@@ -4,35 +4,36 @@ if __debug__:
 # -------------------------------------------------------------------------------------------
 from src.LS_PLC import LS_plc
 from src.module.plcl_utils import get_now_str
-from src.state import connect_wait, start_wait, exit_wait
+from src.state import view_wait, start_wait, exit_wait
 # --------------------------
-# from igzg.utils import get_config
+PLC_IP = '192.168.0.50'
 # ===========================================================================================
 class Model():
     '''
     worker_tick: plc 데이터 읽기, is_next 조건 확인 : 주기적으로 실행
     '''
     def __init__(self):
-        self.plc = LS_plc('192.168.0.50')
+        self.plc = LS_plc(PLC_IP)
         self._init_state()
-        # self.alarms = {} # {label:'on', label:'off'}
+        self._init_model_data()
+
+    def _init_model_data(self)->None:
         self.graph_value = None
+        self.graph_points = []
+        self.alarms = {k:'off' for k in self.state.addrs["PLC_ADDR"]["ALARM"].keys()}
 
     def _init_state(self)->None:
-        self.c_w = connect_wait()
         self.s_w = start_wait()
         self.e_w = exit_wait()
-        self.v_w = None # view mod
-        self.c_w.next_state = self.s_w
+        self.v_w = view_wait()
         self.s_w.next_state = self.e_w
         self.e_w.next_state = self.s_w
         # --------------------------
-        self.state = self.c_w # 초기상태 
-        # --------------------------
-        self.alarms = {k:'off' for k in self.state.addrs["PLC_ADDR"]["ALARM"].keys()}
+        self.state = self.s_w # 초기상태 
 
     # [PLC] -------------------------------------------------------------------------------------------
     def _get_update_data(self)->dict:
+        '''plc 주소에서 값 읽어 반환 {라벨:값}'''
         result = {}
         for section_name, section_data in self.state.dataset.items():
             new_datas = {}
@@ -48,10 +49,13 @@ class Model():
         return result
 
     # ==============================
-    def _change_mode(self)->None:
+    def _change_mode(self,state=None)->None:
         self.state.before_change_mode()
-        self.state = self.state.next_state
-        print(f'_change_mode:{type(self.state).__name__}')
+        if state:
+            self.state = state
+        else:
+            self.state = self.state.next_state
+        # print(f'_change_mode:{type(self.state).__name__}')
         self.state.after_change_mode()
 
     def worker_tick(self)->list:
@@ -67,20 +71,16 @@ class Model():
             alarm_data = self._update_alarm(update_data)
             is_graph_update = self._update_graph(update_data)
 
-            is_next = self.state._is_next(update_data[self.state.key]) # 읽은 항목에서 state체크
-            if is_next: # state 넘어가기
-                self._change_mode()
-                if self.state == self.e_w: #임시 알람 초기화
-                    self.alarms = {k:'off' for k in self.state.addrs["PLC_ADDR"]["ALARM"].keys()}
-
-            self.state.after_worker_tick(update_data=update_data)
+            self.state.after_worker_tick(update_data=update_data,alarm_data=alarm_data,is_graph_update=is_graph_update)
 
             return [update_data,alarm_data,is_graph_update]
-        except:
+        except Exception as e:
+            print(e)
             print('model.worker_tick error')
             return [{},{},False]
 
     def _update_alarm(self,update_data:dict)->dict:
+        '''알람 변동시 정보 반환 {arr_label:['on',timestr]}'''
         result = {}
         if not (alarms:={k:v for k,v in update_data.items() if 'ALARM' in k}):
             return result
@@ -100,6 +100,7 @@ class Model():
         return result #{arr_label:['on',timestr]}
 
     def _alarm_check(self,label,value):
+        '''알람 상태 (on/off) 반환'''
         try:
             alarm_addr = self.state.dataset['ALARM'][label]
             plc_addr,_,option = alarm_addr.partition('#')
@@ -112,17 +113,16 @@ class Model():
         except Exception as e:
             print(e)
         
-
     def _update_graph(self,update_data)->bool:
+        '''그래프 갱신 여부 반환'''
         if 'AUTOMATIC_ACTUAL_WORKCOUNT' not in update_data.keys():
             return False
-        
         # 그래프 갱신 판단
         graph_value = update_data['AUTOMATIC_ACTUAL_WORKCOUNT']
         if graph_value != self.graph_value:
             self.graph_value = graph_value
+            self.graph_points.append(float(update_data['AUTOMATIC_SEGSIZE_1']))
             return True
-        
         return False 
 
 

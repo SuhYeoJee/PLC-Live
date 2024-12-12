@@ -9,3 +9,10 @@ def get_now_str(format:str = "%Y-%m-%d %H:%M:%S")->str:
     now_str = datetime.now().strftime(format.encode('unicode-escape').decode()).encode().decode('unicode-escape')
 
     return now_str
+
+def is_float_str(target:str)->bool:
+    try:
+        float(target)
+        return True
+    except:
+        return False
