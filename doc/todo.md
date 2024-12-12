@@ -8,6 +8,11 @@ view, PLC 수정
  - 아니 테이블 읽은거 어디간거임?
 update_data에는 있는데 session.data에는 없어
 
+state.dataset["TABLE_ADDRS"]여기에만 있고 
+self.addrs["PLC_ADDR"] 여기에 없어서
+state._update_session_data에서 잘림
+여기서 table_Addrs순회루프를 새로 만드는게 
+
 뷰테이블 기능
 json자동
 

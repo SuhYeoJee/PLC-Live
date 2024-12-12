@@ -25,7 +25,8 @@ class Worker(QThread):
     def run(self):
         while self.running:
             if self.model.state.use_tick: #틱갱신
-                print('#################tick###################')
+                print(get_now_str())
+                # print('#################tick###################')
                 tick_data = self.model.worker_tick() # update_data,alarm_data,is_graph_update
                 # import pprint
                 # pprint.pprint(tick_data)
