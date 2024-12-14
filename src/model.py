@@ -3,7 +3,7 @@ if __debug__:
     sys.path.append(r"X:\Github\PLC-Live")
 # -------------------------------------------------------------------------------------------
 from src.LS_PLC import LS_plc
-from src.module.plcl_utils import get_now_str
+from src.module.plcl_utils import get_now_str,get_sort_vals_by_key
 from src.state import view_wait, start_wait, exit_wait
 # --------------------------
 PLC_IP = '192.168.0.50'
@@ -55,8 +55,27 @@ class Model():
             self.state = state
         else:
             self.state = self.state.next_state
-        # print(f'_change_mode:{type(self.state).__name__}')
-        self.state.after_change_mode()
+        self.state.after_change_mode(get_table_data_once=self.get_table_data_once)
+
+    def get_table_data_once(self):
+        '''
+        exit_wait state로 전환될 때 한 번만 실행
+        table 정보를 엑셀에 저장. - 해당 정보는 갱신되지 않음
+        
+        '''
+        read_target = self.state.addrs['TABLE_DATA']
+
+        table_datas = {}
+        for table_name,table_info in read_target.items():
+            if table_name == 'PROGRAM_TABLE':
+                new_datas = self.plc.read(table = table_info['table'])
+                self.state.session.data["PROGRAM_TABLE"] = [{label: new_datas[base] for label, addr in  table_info['addrs'].items() if (base := addr.split('#')[0]) in new_datas}]
+            else:
+                new_datas = self.plc.read(table = table_info['table'])
+                table_datas[table_name] = {label: new_datas[base] for label, addr in  table_info['addrs'].items() if (base := addr.split('#')[0]) in new_datas}
+        else:
+            self.state.session.data["PROGRAM_VIEW_TABLE"] = get_sort_vals_by_key(table_datas)
+            
 
     def worker_tick(self)->list:
         '''

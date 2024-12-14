@@ -114,7 +114,7 @@ class exit_wait(state_wait):
             return True if val == 0 else False 
     
     def before_change_mode(self):...
-    def after_change_mode(self):
+    def after_change_mode(self,**kwargs):
         '''
         exit_wait로 전환된 다음 실행
         SessionData 생성
@@ -122,6 +122,8 @@ class exit_wait(state_wait):
         self.session = SessionData()
         self.session.data["_graph"] = [{"AUTOMATIC_SEGSIZE_1" : "DW2910"}]
         self.session.data["_alarm"] = [{"ALARM_TIME":"","ALARM_NAME":"","ALARM_STATE":""}]
+        kwargs['get_table_data_once']()
+
 
     def before_worker_tick(self):
         self.session.save_data_to_excel()

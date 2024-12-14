@@ -4,15 +4,15 @@
 뷰테이블 기능
 json자동
 
-after change_mode에서 한 번만 읽으면 되는거잖슴
-table들어가는건 state 타깃에서 제하고 after에서 한번만 읽기.
-읽는건 모델인데 state.after_change_mode에서 어떻게 트리거 할거죠
 
 
 ## 확인사항
 
 - [x] 프로그램 270블록 - 24줄
-- [ ] 데이터 시작시 1회 저장
+- [x] 데이터 시작시 1회 저장
+- [ ] 로드시 테이블 읽기
+- [ ] 뷰 input받기
+- [ ] input에 따른 값 보여주기
 - [ ] LS_PLC connect 실패시 오류처리
  
 

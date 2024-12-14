@@ -66,7 +66,8 @@ def get_dataset_section()->dict:
             "PLC_ADDR":["AUTOMATIC","PROGRAM","PROGRAM_LIST","PROGRAM_VIEW","ALARM","SYSTEM"],
             "TABLE":[
                 "PROGRAM_TABLE", 
-                "PROGRAM_VIEW_TABLE",
+                "PROGRAM_VIEW_TABLE-1",
+                "PROGRAM_VIEW_TABLE-2",
                      ] #temp
         }
     }}
