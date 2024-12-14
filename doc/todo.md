@@ -1,21 +1,12 @@
 # todo
 
-view, PLC 수정
-
-동작 확인
-
-뷰테이블 벌크
- - 아니 테이블 읽은거 어디간거임?
-update_data에는 있는데 session.data에는 없어
-
-state.dataset["TABLE_ADDRS"]여기에만 있고 
-self.addrs["PLC_ADDR"] 여기에 없어서
-state._update_session_data에서 잘림
-여기서 table_Addrs순회루프를 새로 만드는게 
 
 뷰테이블 기능
 json자동
 
+after change_mode에서 한 번만 읽으면 되는거잖슴
+table들어가는건 state 타깃에서 제하고 after에서 한번만 읽기.
+읽는건 모델인데 state.after_change_mode에서 어떻게 트리거 할거죠
 
 
 ## 확인사항
