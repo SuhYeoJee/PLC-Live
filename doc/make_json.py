@@ -65,18 +65,7 @@ def get_dataset_section()->dict:
         "EXIT_WAIT":{
             "PLC_ADDR":["AUTOMATIC","PROGRAM","PROGRAM_LIST","PROGRAM_VIEW","ALARM","SYSTEM"],
             "TABLE":[
-                "PROGRAM_TABLE-1",
-                "PROGRAM_TABLE-2",
-                "PROGRAM_TABLE-3",
-                "PROGRAM_TABLE-4",
-                "PROGRAM_TABLE-5",
-                "PROGRAM_TABLE-6",
-                "PROGRAM_TABLE-7",
-                "PROGRAM_TABLE-8",
-                "PROGRAM_TABLE-9",
-                "PROGRAM_TABLE-10",
-                "PROGRAM_TABLE-11",
-                "PROGRAM_TABLE-12",
+                "PROGRAM_TABLE", 
 
                 "PROGRAM_VIEW_TABLE-1",
                 "PROGRAM_VIEW_TABLE-2",
