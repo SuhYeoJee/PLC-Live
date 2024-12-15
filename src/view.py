@@ -57,6 +57,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         self.set_graph_y()
         QVBoxLayout(self.graph_frame).addWidget(self.graph_widget)
         self.vertical_line = pg.InfiniteLine(pos=0, angle=90, pen=pg.mkPen('r', width=2))
+        self.PROGRAM_LIST_TABLE_func = print
 
 
     # [TABLE 라벨 매핑] ===========================================================================================
@@ -64,24 +65,35 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         i = int(''.join(filter(str.isdigit, key)))-1
         for j,item in enumerate(["STEPDIMENSION","CHARGEDIMENSION","FWDTIME","SELECTCAR","OSCCOUNT","BWDTIME","PRESSPOSITION","FINALPRESSURE","SELECTDIA"]):
             if not (item in key): continue
-            self.PROGRAM_TABLE.setItem(i, j, QTableWidgetItem(val))
+            self.PROGRAM_TABLE.setItem(i, j, QTableWidgetItem(str(val)))
     # --------------------------
     def _set_text_PROGRAM_LIST_TABLE(self, key, val)->None:
         idx = int(''.join(filter(str.isdigit, key)))-1
         j = (idx//10)*2+1
         i = idx%10
-        self.PROGRAM_LIST_TABLE.setItem(i, j, QTableWidgetItem(val))
+        self.PROGRAM_LIST_TABLE.setItem(i, j, QTableWidgetItem(str(val)))
     
-    def _set_num_PROGRAM_LIST_TABLE(self)->None:
-        for idx in range(20):
-            self.PROGRAM_LIST_TABLE.setItem(idx%10, (idx//10)*2, QTableWidgetItem(str(idx+1)))
+    # def _set_num_PROGRAM_LIST_TABLE(self)->None:
+    #     for idx in range(20):
+    #         self.PROGRAM_LIST_TABLE.setItem(idx%10, (idx//10)*2, QTableWidgetItem(str(idx+1)))
         
+    def _set_num_PROGRAM_LIST_TABLE(self) -> None:
+        for idx in range(20):
+            button = QPushButton(str(idx + 1))
+            button.clicked.connect(self._set_PROGRAM_LIST_TABLE_button(idx + 1))
+            self.PROGRAM_LIST_TABLE.setCellWidget(idx % 10, (idx // 10) * 2, button)
+
+    def _set_PROGRAM_LIST_TABLE_button(self, prg_no: int):
+        def set_PROGRAM_LIST_TABLE():
+            self.PROGRAM_LIST_TABLE_func(prg_no)
+        return set_PROGRAM_LIST_TABLE
+
     # --------------------------
     def _set_text_PROGRAM_VIEW_TABLE(self, key, val)->None:
         i = int(''.join(filter(str.isdigit, key)))-1
         for j,item in enumerate(["STEPDIMENSION","CHARGEDIMENSION","FWDTIME","SELECTCAR","OSCCOUNT","BWDTIME","PRESSPOSITION","FINALPRESSURE","SELECTDIA"]):
             if not (item in key): continue
-            self.PROGRAM_VIEW_TABLE.setItem(i, j, QTableWidgetItem(val))
+            self.PROGRAM_VIEW_TABLE.setItem(i, j, QTableWidgetItem(str(val)))
     # --------------------------
     def _set_text_ALARM_TABLE(self,key,val)->None:
         '''

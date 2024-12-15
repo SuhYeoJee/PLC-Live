@@ -54,7 +54,16 @@ class Controller:
         self.view.connect_action.triggered.connect(self.connect_plc)
         self.view.disconnect_action.triggered.connect(self.disconnect_plc)
         self.view.horizontalSlider.valueChanged.connect(self.slider_update)
-        
+        self.view.PROGRAM_LIST_TABLE_func = self.load_program_list_table
+
+    def load_program_list_table(self,prg_no:int):
+        '''program list table load'''
+        print(f"prg[{prg_no}]")
+        prg_data = self.model.state.session.data["PROGRAM_VIEW_TABLE"][prg_no-1]
+        prg_data.update({"PROGRAM_VIEW_PRGNO":prg_no,"PROGRAM_VIEW_USESTEP":'-',"PROGRAM_VIEW_PRGNAME":'-',"PROGRAM_VIEW_PRESSINGTIME":'-',"PROGRAM_VIEW_SEGPRESSSIZE":'-'})
+        # self.model.state.session.data["PROGRAM_VIEW"].append(prg_data)
+        self.view.set_text(prg_data)
+
     # -------------------------------------------------------------------------------------------
     def start_monitoring(self)->None:
         self.view.clear_window()
@@ -178,8 +187,13 @@ class Controller:
         update_data = {}
         idx = idx if idx < 0 else idx + 1 #세션데이터0번은 주소값(빈값)
         for sheet,sheet_data in self.model.state.session.data.items():
-            update_data.update(sheet_data[idx])
+            try:
+                update_data.update(sheet_data[idx])
+            except IndexError:
+                ... #데이터 없음
+        update_data.update(self.model.state.session.data["PROGRAM_TABLE"][0])
         self.view.set_text(update_data)
+        self.load_program_list_table(1)
 
 
 # ===========================================================================================
