@@ -1,9 +1,9 @@
 if __debug__:
     import sys
     sys.path.append(r"X:\Github\PLC-Live")
-
+# -------------------------------------------------------------------------------------------
 from src.module.config_manager import ConfigManager
-
+# -------------------------------------------------------------------------------------------
 
 def make_program_addrs(table_head:str="%DW5100,270",table_name:str="PROGRAM_VIEW_TABLE-1")->dict:
     start_addr,_ = table_head.split(',')
@@ -26,7 +26,7 @@ def make_program_addrs(table_head:str="%DW5100,270",table_name:str="PROGRAM_VIEW
 
 
 if __name__ == '__main__':
-    cm = ConfigManager('./doc/t.txt')
+    cm = ConfigManager('./doc/temp.txt')
     table_heads = cm.get_section_items("TABLE_HEAD")
 
     for k,v in table_heads.items():

@@ -54,22 +54,15 @@ def get_table_data_section()->dict:
 
 def get_dataset_section()->dict:
     '''DATASET 섹션 반환'''
+    table_sections = list(cm.get_section_items("TABLE_HEAD").values())
     res = {
         "DATASET":{
-        "CONNECT_WAIT":{
-            "PLC_ADDR":["SYSTEM","ALARM"],
-        },
         "START_WAIT":{
             "PLC_ADDR":["SYSTEM","ALARM"]
         },
         "EXIT_WAIT":{
             "PLC_ADDR":["AUTOMATIC","PROGRAM","PROGRAM_LIST","PROGRAM_VIEW","ALARM","SYSTEM"],
-            "TABLE":[
-                "PROGRAM_TABLE", 
-                "PROGRAM_VIEW_TABLE-1",
-                "PROGRAM_VIEW_TABLE-2",
-                "PROGRAM_VIEW_TABLE-3",
-                     ] #temp
+            "TABLE":table_sections
         }
     }}
     return res

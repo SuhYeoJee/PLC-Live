@@ -1,14 +1,13 @@
 # todo
 
-
+- 텍스트 자동생성
+    1. table_addr.txt 복사해서 temp.txt에 넣기
+    2. make_text.py 실행
+    3. addrs.txt에 non_table_addr.txt, temp.txt 이어붙이기
+    4. make_json.py 실행
 
 ## 확인사항
 
-- [x] 프로그램 270블록 - 24줄
-- [x] 데이터 시작시 1회 저장
-- [x] 로드시 테이블 읽기
-- [x] 뷰 input받기
-- [x] input에 따른 값 보여주기
 - [ ] LS_PLC connect 실패시 오류처리
  
 
