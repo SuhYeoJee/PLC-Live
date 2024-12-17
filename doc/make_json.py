@@ -68,6 +68,7 @@ def get_dataset_section()->dict:
                 "PROGRAM_TABLE", 
                 "PROGRAM_VIEW_TABLE-1",
                 "PROGRAM_VIEW_TABLE-2",
+                "PROGRAM_VIEW_TABLE-3",
                      ] #temp
         }
     }}
