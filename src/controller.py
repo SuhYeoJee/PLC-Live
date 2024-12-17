@@ -168,7 +168,8 @@ class Controller:
         self.slider_update(0)
     # --------------------------
     def close_data(self):
-        self.change_mode()
+        self.model.v_w = view_wait()
+        self.change_mode(self.model.v_w)
     # --------------------------
 
     def slider_update(self, value): #슬라이더 갱신

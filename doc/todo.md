@@ -11,6 +11,7 @@
 - [ ] LS_PLC connect 실패시 오류처리
 - [ ] 모니터 모드에서 현재 프로그램 1회 표시
     ㄴ 일단 현재 프로그램은 틱당 읽고 나머지는 최초 1회 읽기로 해둠
+- [ ] DISCONNECT시 뭔가 오류가 엄청 뜨는데 무시 가능
 
 pyinstaller --onefile main.py
 
