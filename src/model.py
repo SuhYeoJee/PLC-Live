@@ -41,11 +41,18 @@ class Model():
                 ...
             elif section_name == "TABLE_DATAS":
                 for table_name,table_data in section_data.items():
-                    new_datas.update(self.plc.read(table = table_data))
-                    result.update({label: new_datas[base] for label, addr in self.state.dataset["TABLE_ADDRS"][table_name].items() if (base := addr.split('#')[0]) in new_datas})
+                    if table_name == "PROGRAM_TABLE":
+                        new_datas.update(self.plc.read(table = table_data))
+                        result.update({label: new_datas[base] for label, addr in self.state.dataset["TABLE_ADDRS"][table_name].items() if (base := addr.split('#')[0]) in new_datas})
             else:
                 new_datas.update(self.plc.read(single=list(section_data.values())))
                 result.update({label: new_datas[base] for label, addr in section_data.items() if (base := addr.split('#')[0]) in new_datas})
+        for k in ["PROGRAM_LIST_PRG_SELECT"]:
+            try:
+                # 비갱신항목
+                result.pop(k)
+            except: ...
+
         return result
 
     # ==============================

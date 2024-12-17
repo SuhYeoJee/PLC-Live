@@ -60,8 +60,7 @@ class Controller:
         '''program list table load'''
         print(f"prg[{prg_no}]")
         prg_data = self.model.state.session.data["PROGRAM_VIEW_TABLE"][prg_no-1]
-        prg_data.update({"PROGRAM_VIEW_PRGNO":prg_no,"PROGRAM_VIEW_USESTEP":'-',"PROGRAM_VIEW_PRGNAME":'-',"PROGRAM_VIEW_PRESSINGTIME":'-',"PROGRAM_VIEW_SEGPRESSSIZE":'-'})
-        # self.model.state.session.data["PROGRAM_VIEW"].append(prg_data)
+        prg_data.update({"PROGRAM_LIST_PRG_SELECT":str(prg_no),"PROGRAM_VIEW_PRGNO":str(prg_no),"PROGRAM_VIEW_USESTEP":'-',"PROGRAM_VIEW_PRGNAME":'-',"PROGRAM_VIEW_PRESSINGTIME":'-',"PROGRAM_VIEW_SEGPRESSSIZE":'-'})
         self.view.set_text(prg_data)
 
     # -------------------------------------------------------------------------------------------
@@ -78,8 +77,6 @@ class Controller:
         self.view.set_text(update_data)
 
         is_next = self.model.state._is_next(update_data[self.model.state.key]) # 읽은 항목에서 state체크
-        if is_next: # state 넘어가기
-            self.change_mode()
 
         if is_graph_update:
             print(self.model.graph_points)
@@ -90,6 +87,10 @@ class Controller:
         if alarm_data:
             print(alarm_data)
             self.view.set_alarm(alarm_data)
+
+        if is_next: # state 넘어가기
+            self.change_mode()
+
     # --------------------------
     def change_mode(self,state=None,clear:bool=True):
 
