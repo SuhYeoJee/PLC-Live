@@ -74,6 +74,10 @@ class Controller:
     # --------------------------
     def _update_view(self,tick_data):
         update_data,alarm_data,is_graph_update = tick_data
+        if update_data != {}:
+            self.view.set_text({'connect_ok':'connect_ok'})
+        else:
+            self.view.set_text({'connect_ok':'connect_error'})
         self.view.set_text(update_data)
 
         is_next = self.model.state._is_next(update_data[self.model.state.key]) # 읽은 항목에서 state체크

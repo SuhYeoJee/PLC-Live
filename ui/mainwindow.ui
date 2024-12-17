@@ -1444,6 +1444,19 @@ SIZE</string>
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
+   <widget class="QLineEdit" name="connect_ok">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>910</y>
+      <width>231</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>connect</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

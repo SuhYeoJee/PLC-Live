@@ -5,5 +5,5 @@ if __debug__:
 from src.controller import main
 
 if __name__ == "__main__":
-    print("PRESS MONITOR: G1.2")
+    print("PRESS MONITOR: G1.3")
     main()
