@@ -48,7 +48,7 @@ class Model():
             else:
                 new_datas.update(self.plc.read(single=list(section_data.values())))
                 result.update({label: new_datas[base] for label, addr in section_data.items() if (base := addr.split('#')[0]) in new_datas})
-        for k in ["PROGRAM_LIST_PRG_SELECT","PROGRAM_LIST_TABLE_USE_STEP","PROGRAM_LIST_TABLE_PRESSING_TIME","PROGRAM_LIST_TABLE_PRESS_SIZE"]:
+        for k in ["PROGRAM_VIEW_PRGNO","PROGRAM_VIEW_USESTEP","PROGRAM_VIEW_PRESSINGTIME","PROGRAM_VIEW_PRESSSIZE"]:
             try:
                 # 비갱신항목
                 result.pop(k)
@@ -76,18 +76,16 @@ class Model():
         table_datas = {}
         for table_name,table_info in read_target.items():
             new_datas = self.plc.read(table = table_info['table'])
+            new_line = {label: new_datas[base] for label, addr in  table_info['addrs'].items() if (base := addr.split('#')[0]) in new_datas}
+            for k,v in new_line.items():
+                if "SELECTCAR" in k:
+                    new_line[k] = 'L' if str(v) == '0' else 'R'
+                elif "COMPENSATESELECT" in k:
+                    new_line[k] = 'NO' if str(v) == '0' else 'YES'
             if table_name == 'PROGRAM_TABLE':
-                new_line = {label: new_datas[base] for label, addr in  table_info['addrs'].items() if (base := addr.split('#')[0]) in new_datas}
-                for k,v in new_line.items():
-                    if "SELECT_CAR" in k:
-                        print(f'{k}:{v}')
-                        new_line[k] = '' if v == '' else ''
-                    elif "COMPENSATE_SELECT" in k:
-                        print(f'{k}:{v}')
-                        new_line[k] = '' if v == '' else ''
                 self.state.session.data["PROGRAM_TABLE"] = [new_line]
             else:
-                table_datas[table_name] = {label: new_datas[base] for label, addr in  table_info['addrs'].items() if (base := addr.split('#')[0]) in new_datas}
+                table_datas[table_name] = new_line
         else:
             self.state.session.data["PROGRAM_VIEW_TABLE"] = get_sort_vals_by_key(table_datas)
             

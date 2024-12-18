@@ -36,7 +36,7 @@
      </sizepolicy>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -64,16 +64,16 @@
        <number>10</number>
       </property>
       <attribute name="horizontalHeaderVisible">
-       <bool>false</bool>
+       <bool>true</bool>
       </attribute>
       <attribute name="horizontalHeaderCascadingSectionResizes">
        <bool>false</bool>
       </attribute>
       <attribute name="horizontalHeaderMinimumSectionSize">
-       <number>100</number>
+       <number>103</number>
       </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>100</number>
+       <number>103</number>
       </attribute>
       <attribute name="horizontalHeaderHighlightSections">
        <bool>true</bool>
@@ -85,7 +85,7 @@
        <bool>false</bool>
       </attribute>
       <attribute name="verticalHeaderVisible">
-       <bool>false</bool>
+       <bool>true</bool>
       </attribute>
       <attribute name="verticalHeaderCascadingSectionResizes">
        <bool>false</bool>
@@ -1140,7 +1140,7 @@ SIZE</string>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QLineEdit" name="PROGRAM_LIST_PRG_SELECT">
+      <widget class="QLineEdit" name="PROGRAM_VIEW_PRGNO">
        <property name="geometry">
         <rect>
          <x>110</x>
@@ -1150,10 +1150,10 @@ SIZE</string>
         </rect>
        </property>
        <property name="text">
-        <string>PROGRAM_LIST_PRG_SELECT</string>
+        <string>PROGRAM_VIEW_PRGNO</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="PROGRAM_LIST_TABLE_USE_STEP">
+      <widget class="QLineEdit" name="PROGRAM_VIEW_USESTEP">
        <property name="geometry">
         <rect>
          <x>320</x>
@@ -1163,7 +1163,7 @@ SIZE</string>
         </rect>
        </property>
        <property name="text">
-        <string>PROGRAM_LIST_TABLE_USE_STEP</string>
+        <string>PROGRAM_VIEW_USESTEP</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_71">
@@ -1182,17 +1182,17 @@ SIZE</string>
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <widget class="QLineEdit" name="PROGRAM_LIST_TABLE_PRESSING_TIME">
+      <widget class="QLineEdit" name="PROGRAM_VIEW_PRESSINGTIME">
        <property name="geometry">
         <rect>
-         <x>720</x>
+         <x>730</x>
          <y>20</y>
          <width>71</width>
          <height>31</height>
         </rect>
        </property>
        <property name="text">
-        <string>PROGRAM_LIST_TABLE_PRESSING_TIME</string>
+        <string>PROGRAM_VIEW_PRESSINGTIME</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_73">
@@ -1211,7 +1211,7 @@ SIZE</string>
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <widget class="QLineEdit" name="PROGRAM_LIST_TABLE_PRESS_SIZE">
+      <widget class="QLineEdit" name="PROGRAM_VIEW_PRESSSIZE">
        <property name="geometry">
         <rect>
          <x>970</x>
@@ -1221,7 +1221,7 @@ SIZE</string>
         </rect>
        </property>
        <property name="text">
-        <string>PROGRAM_LIST_TABLE_PRESS_SIZE</string>
+        <string>PROGRAM_VIEW_PRESSSIZE</string>
        </property>
       </widget>
      </widget>
@@ -1253,10 +1253,10 @@ SIZE</string>
        <bool>false</bool>
       </attribute>
       <attribute name="horizontalHeaderMinimumSectionSize">
-       <number>100</number>
+       <number>103</number>
       </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>100</number>
+       <number>103</number>
       </attribute>
       <attribute name="horizontalHeaderHighlightSections">
        <bool>true</bool>
@@ -1561,6 +1561,12 @@ SIZE</string>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
+    </property>
+    <property name="tickPosition">
+     <enum>QSlider::TicksBelow</enum>
+    </property>
+    <property name="tickInterval">
+     <number>1</number>
     </property>
    </widget>
    <widget class="QLineEdit" name="connect_ok">

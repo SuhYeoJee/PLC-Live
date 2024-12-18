@@ -60,7 +60,13 @@ class Controller:
         '''program list table load'''
         print(f"prg[{prg_no}]")
         prg_data = self.model.state.session.data["PROGRAM_VIEW_TABLE"][prg_no-1]
-        prg_data.update({"PROGRAM_LIST_PRG_SELECT":str(prg_no),"PROGRAM_VIEW_PRGNO":str(prg_no),"PROGRAM_VIEW_USESTEP":'-',"PROGRAM_VIEW_PRGNAME":'-',"PROGRAM_VIEW_PRESSINGTIME":'-',"PROGRAM_VIEW_SEGPRESSSIZE":'-'})
+        prg_data.update({"PROGRAM_VIEW_PRGNO":str(prg_no),"PROGRAM_VIEW_PRGNAME":'-'})
+        self.view.set_text(prg_data)
+
+    def load_program_table(self):
+        '''program table load'''
+        prg_data = self.model.state.session.data["PROGRAM_TABLE"][0]
+        # prg_data.update({"PROGRAM_VIEW_PRGNO":str(prg_no),"PROGRAM_VIEW_PRGNAME":'-'})
         self.view.set_text(prg_data)
 
     # -------------------------------------------------------------------------------------------
@@ -82,8 +88,14 @@ class Controller:
 
         is_next = self.model.state._is_next(update_data[self.model.state.key]) # 읽은 항목에서 state체크
 
+        try:
+            self.load_program_table()
+        except AttributeError:
+            ...
+
         if is_graph_update:
             print(self.model.graph_points)
+
             if is_float_str(update_data['AUTOMATIC_SET_PRESSINGSIZE']):
                 self.view.set_graph_y(update_data['AUTOMATIC_SET_PRESSINGSIZE'])
             self.view.update_graph(self.model.graph_points)

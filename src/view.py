@@ -42,8 +42,8 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         self.PROGRAM_VIEW_TABLE.horizontalHeader().setVisible(True)
         self.PROGRAM_TABLE.verticalHeader().setVisible(True)
         self.PROGRAM_VIEW_TABLE.verticalHeader().setVisible(True)
-        self.PROGRAM_TABLE.setHorizontalHeaderLabels(["STEP\nDIMENSION","CHARGE\nDIMENSION","FWD\nTIME","SELECT\nCAR","OSC\nCOUNT","BWD\nTIME","PRESS\nPOSITION","FINAL\nPRESSURE","SELECT\nDIA"])
-        self.PROGRAM_VIEW_TABLE.setHorizontalHeaderLabels(["STEP\nDIMENSION","CHARGE\nDIMENSION","FWD\nTIME","SELECT\nCAR","OSC\nCOUNT","BWD\nTIME","PRESS\nPOSITION","FINAL\nPRESSURE","SELECT\nDIA"])
+        self.PROGRAM_TABLE.setHorizontalHeaderLabels(["STEP\nDIMENSION","CHARGE\nDIMENSION","FWD\nTIME","SELECT\nCAR","OSC\nCOUNT","BWD\nTIME","PRESS\nPOSITION","FINAL\nPRESSURE","COMPENSATE\nSELECT","COMPENSATE\nDIMENSION"])
+        self.PROGRAM_VIEW_TABLE.setHorizontalHeaderLabels(["STEP\nDIMENSION","CHARGE\nDIMENSION","FWD\nTIME","SELECT\nCAR","OSC\nCOUNT","BWD\nTIME","PRESS\nPOSITION","FINAL\nPRESSURE","COMPENSATE\nSELECT","COMPENSATE\nDIMENSION"])
         self.ALARM_TABLE.setHorizontalHeaderLabels(["TIME","ALARM","STATE"])
         self.PROGRAM_LIST_TABLE.setColumnWidth(0, 50)
         self.PROGRAM_LIST_TABLE.setColumnWidth(2, 50)
@@ -63,7 +63,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
     # [TABLE 라벨 매핑] ===========================================================================================
     def _set_text_PROGRAM_TABLE(self, key, val)->None:
         i = int(''.join(filter(str.isdigit, key)))-1
-        for j,item in enumerate(["STEPDIMENSION","CHARGEDIMENSION","FWDTIME","SELECTCAR","OSCCOUNT","BWDTIME","PRESSPOSITION","FINALPRESSURE","COMPENSATESELECT","COMPENSATE_DIMENSION"]):
+        for j,item in enumerate(["STEPDIMENSION","CHARGEDIMENSION","FWDTIME","SELECTCAR","OSCCOUNT","BWDTIME","PRESSPOSITION","FINALPRESSURE","COMPENSATESELECT","COMPENSATEDIMENSION"]):
             if not (item in key): continue
             self.PROGRAM_TABLE.setItem(i, j, QTableWidgetItem(str(val)))
     # --------------------------
@@ -87,7 +87,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
     # --------------------------
     def _set_text_PROGRAM_VIEW_TABLE(self, key, val)->None:
         i = int(''.join(filter(str.isdigit, key)))-1
-        for j,item in enumerate(["STEPDIMENSION","CHARGEDIMENSION","FWDTIME","SELECTCAR","OSCCOUNT","BWDTIME","PRESSPOSITION","FINALPRESSURE","COMPENSATESELECT","COMPENSATE_DIMENSION"]):
+        for j,item in enumerate(["STEPDIMENSION","CHARGEDIMENSION","FWDTIME","SELECTCAR","OSCCOUNT","BWDTIME","PRESSPOSITION","FINALPRESSURE","COMPENSATESELECT","COMPENSATEDIMENSION"]):
             if not (item in key): continue
             self.PROGRAM_VIEW_TABLE.setItem(i, j, QTableWidgetItem(str(val)))
     # --------------------------
