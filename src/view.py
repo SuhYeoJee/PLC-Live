@@ -63,7 +63,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
     # [TABLE 라벨 매핑] ===========================================================================================
     def _set_text_PROGRAM_TABLE(self, key, val)->None:
         i = int(''.join(filter(str.isdigit, key)))-1
-        for j,item in enumerate(["STEPDIMENSION","CHARGEDIMENSION","FWDTIME","SELECTCAR","OSCCOUNT","BWDTIME","PRESSPOSITION","FINALPRESSURE","SELECTDIA"]):
+        for j,item in enumerate(["STEPDIMENSION","CHARGEDIMENSION","FWDTIME","SELECTCAR","OSCCOUNT","BWDTIME","PRESSPOSITION","FINALPRESSURE","COMPENSATESELECT","COMPENSATE_DIMENSION"]):
             if not (item in key): continue
             self.PROGRAM_TABLE.setItem(i, j, QTableWidgetItem(str(val)))
     # --------------------------
@@ -73,10 +73,6 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
         i = idx%10
         self.PROGRAM_LIST_TABLE.setItem(i, j, QTableWidgetItem(str(val)))
     
-    # def _set_num_PROGRAM_LIST_TABLE(self)->None:
-    #     for idx in range(20):
-    #         self.PROGRAM_LIST_TABLE.setItem(idx%10, (idx//10)*2, QTableWidgetItem(str(idx+1)))
-        
     def _set_num_PROGRAM_LIST_TABLE(self) -> None:
         for idx in range(20):
             button = QPushButton(str(idx + 1))
@@ -91,7 +87,7 @@ class View(QMainWindow, uic.loadUiType("./ui/mainwindow.ui")[0]) :
     # --------------------------
     def _set_text_PROGRAM_VIEW_TABLE(self, key, val)->None:
         i = int(''.join(filter(str.isdigit, key)))-1
-        for j,item in enumerate(["STEPDIMENSION","CHARGEDIMENSION","FWDTIME","SELECTCAR","OSCCOUNT","BWDTIME","PRESSPOSITION","FINALPRESSURE","SELECTDIA"]):
+        for j,item in enumerate(["STEPDIMENSION","CHARGEDIMENSION","FWDTIME","SELECTCAR","OSCCOUNT","BWDTIME","PRESSPOSITION","FINALPRESSURE","COMPENSATESELECT","COMPENSATE_DIMENSION"]):
             if not (item in key): continue
             self.PROGRAM_VIEW_TABLE.setItem(i, j, QTableWidgetItem(str(val)))
     # --------------------------

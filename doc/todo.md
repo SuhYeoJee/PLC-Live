@@ -1,20 +1,27 @@
 # todo
 
-- 텍스트 자동생성
-    1. table_addr.txt 복사해서 temp.txt에 넣기
-    2. make_text.py 실행
-    3. addrs.txt에 non_table_addr.txt, temp.txt 이어붙이기
-    4. make_json.py 실행
+
+
+ - [x] 오토 화면에 칸 2개 추가
+ - [ ] 프로그램 sc,sd 값나오게
+     ㄴ 이거 어디서 바꿔야한다고 보냐
+     ㄴ 세션에 저장되기 전에
+     ㄴ model.get_table_data_once
+ - [x] 프로그램 항목 추가
+ - [x] 프로그램 뷰 칸 3개 추가
 
 ## 확인사항
 
-- [ ] LS_PLC connect 실패시 오류처리
 - [ ] 모니터 모드에서 현재 프로그램 1회 표시
     ㄴ 일단 현재 프로그램은 틱당 읽고 나머지는 최초 1회 읽기로 해둠
+    ㄴ model._get_update_data 주석처리함 확인필
+    ㄴ model.get_table_data_once에서 실행
 
 pyinstaller --onefile main.py
-
- 
+ - [ ] 오토 화면에 칸 2개 추가
+ - [ ] 프로그램 sc,sd 값나오게
+ - [ ] 프로그램 항목 추가
+ - [ ] 프로그램 뷰 칸 3개 추가
 
 # 과제 
 

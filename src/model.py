@@ -40,14 +40,15 @@ class Model():
             if section_name == "TABLE_ADDRS":
                 ...
             elif section_name == "TABLE_DATAS":
-                for table_name,table_data in section_data.items():
-                    if table_name == "PROGRAM_TABLE":
-                        new_datas.update(self.plc.read(table = table_data))
-                        result.update({label: new_datas[base] for label, addr in self.state.dataset["TABLE_ADDRS"][table_name].items() if (base := addr.split('#')[0]) in new_datas})
+                ...
+                # for table_name,table_data in section_data.items():
+                #     if table_name == "PROGRAM_TABLE":
+                #         new_datas.update(self.plc.read(table = table_data))
+                #         result.update({label: new_datas[base] for label, addr in self.state.dataset["TABLE_ADDRS"][table_name].items() if (base := addr.split('#')[0]) in new_datas})
             else:
                 new_datas.update(self.plc.read(single=list(section_data.values())))
                 result.update({label: new_datas[base] for label, addr in section_data.items() if (base := addr.split('#')[0]) in new_datas})
-        for k in ["PROGRAM_LIST_PRG_SELECT"]:
+        for k in ["PROGRAM_LIST_PRG_SELECT","PROGRAM_LIST_TABLE_USE_STEP","PROGRAM_LIST_TABLE_PRESSING_TIME","PROGRAM_LIST_TABLE_PRESS_SIZE"]:
             try:
                 # 비갱신항목
                 result.pop(k)
@@ -74,11 +75,18 @@ class Model():
 
         table_datas = {}
         for table_name,table_info in read_target.items():
+            new_datas = self.plc.read(table = table_info['table'])
             if table_name == 'PROGRAM_TABLE':
-                new_datas = self.plc.read(table = table_info['table'])
-                self.state.session.data["PROGRAM_TABLE"] = [{label: new_datas[base] for label, addr in  table_info['addrs'].items() if (base := addr.split('#')[0]) in new_datas}]
+                new_line = {label: new_datas[base] for label, addr in  table_info['addrs'].items() if (base := addr.split('#')[0]) in new_datas}
+                for k,v in new_line.items():
+                    if "SELECT_CAR" in k:
+                        print(f'{k}:{v}')
+                        new_line[k] = '' if v == '' else ''
+                    elif "COMPENSATE_SELECT" in k:
+                        print(f'{k}:{v}')
+                        new_line[k] = '' if v == '' else ''
+                self.state.session.data["PROGRAM_TABLE"] = [new_line]
             else:
-                new_datas = self.plc.read(table = table_info['table'])
                 table_datas[table_name] = {label: new_datas[base] for label, addr in  table_info['addrs'].items() if (base := addr.split('#')[0]) in new_datas}
         else:
             self.state.session.data["PROGRAM_VIEW_TABLE"] = get_sort_vals_by_key(table_datas)

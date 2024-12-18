@@ -36,7 +36,7 @@
      </sizepolicy>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -58,22 +58,22 @@
        </size>
       </property>
       <property name="rowCount">
-       <number>10</number>
+       <number>24</number>
       </property>
       <property name="columnCount">
-       <number>10</number>
+       <number>9</number>
       </property>
       <attribute name="horizontalHeaderVisible">
-       <bool>false</bool>
+       <bool>true</bool>
       </attribute>
       <attribute name="horizontalHeaderCascadingSectionResizes">
        <bool>false</bool>
       </attribute>
       <attribute name="horizontalHeaderMinimumSectionSize">
-       <number>100</number>
+       <number>110</number>
       </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>100</number>
+       <number>110</number>
       </attribute>
       <attribute name="horizontalHeaderHighlightSections">
        <bool>true</bool>
@@ -85,16 +85,16 @@
        <bool>false</bool>
       </attribute>
       <attribute name="verticalHeaderVisible">
-       <bool>false</bool>
+       <bool>true</bool>
       </attribute>
       <attribute name="verticalHeaderCascadingSectionResizes">
        <bool>false</bool>
       </attribute>
       <attribute name="verticalHeaderMinimumSectionSize">
-       <number>40</number>
+       <number>25</number>
       </attribute>
       <attribute name="verticalHeaderDefaultSectionSize">
-       <number>40</number>
+       <number>25</number>
       </attribute>
       <attribute name="verticalHeaderHighlightSections">
        <bool>true</bool>
@@ -115,7 +115,20 @@
       <row/>
       <row/>
       <row/>
-      <column/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
       <column/>
       <column/>
       <column/>
@@ -608,7 +621,7 @@ SIZE</string>
        <property name="geometry">
         <rect>
          <x>380</x>
-         <y>130</y>
+         <y>280</y>
          <width>171</width>
          <height>81</height>
         </rect>
@@ -958,64 +971,6 @@ SIZE</string>
         </property>
        </widget>
       </widget>
-      <widget class="QLineEdit" name="AUTOMATIC_COMPENSATE">
-       <property name="geometry">
-        <rect>
-         <x>350</x>
-         <y>250</y>
-         <width>71</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>AUTOMATIC_COMPENSATE</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="AUTOMATIC_LAST_PRESSURE">
-       <property name="geometry">
-        <rect>
-         <x>350</x>
-         <y>350</y>
-         <width>71</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>AUTOMATIC_LAST_PRESSURE</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_20">
-       <property name="geometry">
-        <rect>
-         <x>340</x>
-         <y>220</y>
-         <width>101</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Compensate</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_21">
-       <property name="geometry">
-        <rect>
-         <x>340</x>
-         <y>320</y>
-         <width>111</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Last Pressure</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
      </widget>
      <widget class="QFrame" name="frame_4">
       <property name="geometry">
@@ -1153,77 +1108,6 @@ SIZE</string>
         <string>PROGRAM_LIST_PRG_SELECT</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="PROGRAM_LIST_TABLE_USE_STEP">
-       <property name="geometry">
-        <rect>
-         <x>320</x>
-         <y>20</y>
-         <width>71</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>PROGRAM_LIST_TABLE_USE_STEP</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_71">
-       <property name="geometry">
-        <rect>
-         <x>610</x>
-         <y>10</y>
-         <width>111</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>PRESSING TIME</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="PROGRAM_LIST_TABLE_PRESSING_TIME">
-       <property name="geometry">
-        <rect>
-         <x>720</x>
-         <y>20</y>
-         <width>71</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>PROGRAM_LIST_TABLE_PRESSING_TIME</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_73">
-       <property name="geometry">
-        <rect>
-         <x>820</x>
-         <y>10</y>
-         <width>161</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>SEG. PRESS SIZE</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="PROGRAM_LIST_TABLE_PRESS_SIZE">
-       <property name="geometry">
-        <rect>
-         <x>970</x>
-         <y>20</y>
-         <width>71</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>PROGRAM_LIST_TABLE_PRESS_SIZE</string>
-       </property>
-      </widget>
      </widget>
      <widget class="QTableWidget" name="PROGRAM_VIEW_TABLE">
       <property name="geometry">
@@ -1241,10 +1125,10 @@ SIZE</string>
        </size>
       </property>
       <property name="rowCount">
-       <number>10</number>
+       <number>24</number>
       </property>
       <property name="columnCount">
-       <number>10</number>
+       <number>9</number>
       </property>
       <attribute name="horizontalHeaderVisible">
        <bool>false</bool>
@@ -1253,10 +1137,10 @@ SIZE</string>
        <bool>false</bool>
       </attribute>
       <attribute name="horizontalHeaderMinimumSectionSize">
-       <number>100</number>
+       <number>110</number>
       </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>100</number>
+       <number>110</number>
       </attribute>
       <attribute name="horizontalHeaderHighlightSections">
        <bool>true</bool>
@@ -1274,10 +1158,10 @@ SIZE</string>
        <bool>false</bool>
       </attribute>
       <attribute name="verticalHeaderMinimumSectionSize">
-       <number>40</number>
+       <number>25</number>
       </attribute>
       <attribute name="verticalHeaderDefaultSectionSize">
-       <number>40</number>
+       <number>25</number>
       </attribute>
       <attribute name="verticalHeaderHighlightSections">
        <bool>true</bool>
@@ -1298,7 +1182,20 @@ SIZE</string>
       <row/>
       <row/>
       <row/>
-      <column/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
       <column/>
       <column/>
       <column/>
@@ -1484,22 +1381,6 @@ SIZE</string>
       </property>
       <property name="text">
        <string>PROGRAM LIST</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_70">
-      <property name="geometry">
-       <rect>
-        <x>800</x>
-        <y>20</y>
-        <width>111</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>USE STEP</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
