@@ -211,7 +211,6 @@ class Controller:
                 ... #데이터 없음
         update_data.update(self.model.state.session.data["PROGRAM_TABLE"][0])
         self.view.set_text(update_data)
-        self.load_program_list_table(1)
 
 
 # ===========================================================================================

@@ -5,8 +5,8 @@ if __debug__:
 import json
 from src.module.session_data import SessionData
 # ===========================================================================================
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 # -------------------------------------------------------------------------------------------
 
 class state_wait():
